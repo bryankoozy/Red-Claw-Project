@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -147,4 +148,155 @@
   
   
 </body>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Red Claw Integrity Project</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Sidebar Toggle Button -->
+  <button class="toggle-sidebar-btn" onclick="toggleSidebar()">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <!-- Main container splits into sidebar and main content -->
+  <div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+
+      <div class="logo-section">
+        <img src="img/Chilli Crab logo.png" alt="Red Claw Logo" />
+      </div>
+      <div class="auth-buttons">
+        <button class="auth-btn" onclick="showModal('login')">
+          <i class="fas fa-sign-in-alt"></i>
+          <span>Login</span>
+        </button>
+        <button class="auth-btn" onclick="showModal('register')">
+          <i class="fas fa-user-plus"></i>
+          <span>Register</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+      <!-- Header -->
+      <div class="header">
+        <div class="hand-container">
+          <img src="img/corrupt1.jpg" alt="Corruption Image" class="header-image" />
+          <div class="header-text-overlay">
+            <div class="title-box">
+              <h1 class="main-title">The Red Claw Integrity Project</h1>
+            </div>
+            <div class="find-out-more-container">
+              <a href="#content-section" class="find-out-more">
+                <span>Find out more</span>
+                <i class="fas fa-arrow-down"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content Section -->
+      <div class="content-section" id="content-section">
+        <div class="app-description">
+          <p>&lt;Description of web application&gt;</p>
+          <p>
+            Welcome to The Red Claw Integrity Project - a comprehensive platform
+            designed to promote ethical practices and integrity in digital
+            environments through education and AI-powered solutions.
+          </p>
+        </div>
+
+        <div class="modules-container">
+          <div class="module-card">
+            <div class="module-icon">📚</div>
+            <h3 class="module-title">IntegrityEdu</h3>
+            <p class="module-description">
+              &lt;Description&gt;<br />
+              Educational resources and training modules to build integrity
+              awareness and ethical decision-making skills.
+            </p>
+            <button class="explore-btn" onclick="exploreModule('edu')">Explore</button>
+          </div>
+
+          <div class="module-card">
+            <div class="module-icon">🤖</div>
+            <h3 class="module-title">IntegrityAI</h3>
+            <p class="module-description">
+              &lt;Description&gt;<br />
+              AI-powered tools and analytics to detect, prevent, and address
+              integrity violations in real-time.
+            </p>
+            <button class="explore-btn" onclick="exploreModule('ai')">Explore</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('login')">
+        <i class="fas fa-times"></i>
+      </span>
+      <h2>Login</h2>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="loginEmail">Email:</label>
+          <input type="email" id="loginEmail" name="email" required />
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Password:</label>
+          <input type="password" id="loginPassword" name="password" required />
+        </div>
+        <button type="submit" class="form-btn">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Register Modal -->
+  <div id="registerModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('register')">
+        <i class="fas fa-times"></i>
+      </span>
+      <h2>Register</h2>
+      <form id="registerForm">
+        <div class="form-group">
+          <label for="registerName">Full Name:</label>
+          <input type="text" id="registerName" name="name" required />
+        </div>
+        <div class="form-group">
+          <label for="registerEmail">Email:</label>
+          <input type="email" id="registerEmail" name="email" required />
+        </div>
+        <div class="form-group">
+          <label for="registerPassword">Password:</label>
+          <input type="password" id="registerPassword" name="password" required />
+        </div>
+        <div class="form-group">
+          <label for="registerConfirmPassword">Confirm Password:</label>
+          <input type="password" id="registerConfirmPassword" name="confirmPassword" required />
+        </div>
+        <button type="submit" class="form-btn">Register</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- JavaScript logic (user auth, modal, dashboard) -->
+  <script src="script.js"></script>
+  
+  
+</body>
+>>>>>>> bb38ddfc23888165588272adc9018bac65cef72b
 </html>

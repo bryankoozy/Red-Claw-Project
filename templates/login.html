@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Login - Red Claw{% endblock %}
+
+{% block content %}
+
+
+<div class="login-container">
+  <h1 class="login-logo">Red Claw Integrity</h1>
+  
+  <div class="login-section">
+    <h2 class="login-title">Welcome back</h2>
+    <p class="login-subtitle">Enter your credentials to access your account</p>
+    
+    <form id="loginForm" method="POST" action="{{ url_for('login') }}" class="login-form">
+      <div class="form-group">
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" name="email" placeholder="email@domain.com" required />
+      </div>
+      
+      <div class="form-group">
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" name="password" placeholder="Enter your password" required />
+      </div>
+      
+      <div class="forgot-password">
+        <a href="#">Forgot your password?</a>
+      </div>
+      
+      <button type="submit" class="login-btn">Sign in</button>
+    </form>
+    
+    <div class="divider">or continue with</div>
+    
+    <button class="google-btn" onclick="handleGoogleLogin()">
+      <div class="google-icon">G</div>
+      Google
+    </button>
+    
+    <div class="signup-link">
+      Don't have an account? <a href="{{ url_for('register') }}">Sign up</a>
+    </div>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+{% endblock %}

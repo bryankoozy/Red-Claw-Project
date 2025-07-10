@@ -1,14 +1,3 @@
-
-function showModal(type) {
-  document.getElementById(type + "Modal").style.display = "block";
-  document.body.style.overflow = "hidden";
-}
-
-function closeModal(type) {
-  document.getElementById(type + "Modal").style.display = "none";
-  document.body.style.overflow = "auto";
-}
-
 function toggleSidebar() {
   const sidebar = document.getElementById('sidebar');
   const mainContent = document.getElementById('mainContent');
@@ -30,19 +19,6 @@ function exploreModule(type) {
   alert("You clicked: " + type);
 }
 
-// Close modal when clicking outside
-window.onclick = function(event) {
-  const loginModal = document.getElementById('loginModal');
-  const registerModal = document.getElementById('registerModal');
-  
-  if (event.target === loginModal) {
-    closeModal('login');
-  }
-  if (event.target === registerModal) {
-    closeModal('register');
-  }
-}
-
 // Add smooth scrolling behavior
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
@@ -51,4 +27,23 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       behavior: 'smooth'
     });
   });
+});
+
+
+
+// Register Page
+function handleGoogleSignup() {
+  // Add your Google OAuth integration here
+  alert('Google sign-up functionality would be implemented here');
+}
+
+// Optional: Add form validation
+document.getElementById('registerForm').addEventListener('submit', function(e) {
+  const password = document.getElementById('registerPassword').value;
+  const confirmPassword = document.getElementById('registerConfirmPassword').value;
+  
+  if (password !== confirmPassword) {
+    e.preventDefault();
+    alert('Passwords do not match!');
+  }
 });

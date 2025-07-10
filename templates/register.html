@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Register - Red Claw{% endblock %}
+
+{% block content %}
+
+<div class="register-container">
+  <h1 class="register-logo">Red Claw Integrity</h1>
+  
+  <div class="register-section">
+    <h2 class="register-title">Create an account</h2>
+    <p class="register-subtitle">Enter your details to sign up for this app</p>
+    
+    <form id="registerForm" method="POST" action="{{ url_for('register') }}" class="register-form">
+      <div class="form-group">
+        <label for="registerName">Full Name</label>
+        <input type="text" id="registerName" name="name" placeholder="John Doe" required />
+      </div>
+      
+      <div class="form-group">
+        <label for="registerEmail">Email</label>
+        <input type="email" id="registerEmail" name="email" placeholder="email@domain.com" required />
+      </div>
+      
+      <div class="form-group">
+        <label for="registerPassword">Password</label>
+        <input type="password" id="registerPassword" name="password" placeholder="Enter your password" required />
+      </div>
+      
+      <div class="form-group">
+        <label for="registerConfirmPassword">Confirm Password</label>
+        <input type="password" id="registerConfirmPassword" name="confirmPassword" placeholder="Confirm your password" required />
+      </div>
+      
+      <button type="submit" class="register-btn">Sign up with email</button>
+    </form>
+    
+    <div class="divider">or continue with</div>
+    
+    <button class="google-btn" onclick="handleGoogleSignup()">
+      <div class="google-icon">G</div>
+      Google
+    </button>
+    
+    <div class="terms">
+      By clicking continue, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+    </div>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+{% endblock %}
+

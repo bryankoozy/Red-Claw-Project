@@ -25,77 +25,26 @@
       </div>
       
       <div class="auth-buttons">
-
         <a href="{{ url_for('home') }}" class="auth-btn" style="text-decoration:none;">
           <i class="fas fa-home"></i>
           <span>Home</span>
         </a>
         
-        
-        <button class="auth-btn" onclick="showModal('login')">
+        <a href="{{ url_for('login') }}" class="auth-btn" style="text-decoration:none;">
           <i class="fas fa-sign-in-alt"></i>
           <span>Login</span>
-        </button>
-        <button class="auth-btn" onclick="showModal('register')">
+        </a>
+        
+        <a href="{{ url_for('register') }}" class="auth-btn" style="text-decoration:none;">
           <i class="fas fa-user-plus"></i>
           <span>Register</span>
-        </button>
+        </a>
       </div>
     </div>
 
     <!-- Main Content -->
     <div class="main-content" id="mainContent">
       {% block content %}{% endblock %}
-    </div>
-  </div>
-
-  <!-- Login Modal -->
-  <div id="loginModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('login')">
-        <i class="fas fa-times"></i>
-      </span>
-      <h2>Login</h2>
-      <form id="loginForm">
-        <div class="form-group">
-          <label for="loginEmail">Email:</label>
-          <input type="email" id="loginEmail" name="email" required />
-        </div>
-        <div class="form-group">
-          <label for="loginPassword">Password:</label>
-          <input type="password" id="loginPassword" name="password" required />
-        </div>
-        <button type="submit" class="form-btn">Login</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- Register Modal -->
-  <div id="registerModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('register')">
-        <i class="fas fa-times"></i>
-      </span>
-      <h2>Register</h2>
-      <form id="registerForm">
-        <div class="form-group">
-          <label for="registerName">Full Name:</label>
-          <input type="text" id="registerName" name="name" required />
-        </div>
-        <div class="form-group">
-          <label for="registerEmail">Email:</label>
-          <input type="email" id="registerEmail" name="email" required />
-        </div>
-        <div class="form-group">
-          <label for="registerPassword">Password:</label>
-          <input type="password" id="registerPassword" name="password" required />
-        </div>
-        <div class="form-group">
-          <label for="registerConfirmPassword">Confirm Password:</label>
-          <input type="password" id="registerConfirmPassword" name="confirmPassword" required />
-        </div>
-        <button type="submit" class="form-btn">Register</button>
-      </form>
     </div>
   </div>
 

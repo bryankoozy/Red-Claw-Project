@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Red Claw{% endblock %}
+
+{% block content %}
+<div class="header">
+  <div class="hand-container">
+    <img src="{{ url_for('static', filename='img/corrupt1.jpg') }}" alt="Corruption Image" class="header-image" />
+    <div class="header-text-overlay">
+      <div class="title-box">
+        <h1 class="main-title">The Red Claw Integrity Project</h1>
+      </div>
+      <div class="find-out-more-container">
+        <a href="#content-section" class="find-out-more">
+          <span>Find out more</span>
+          <i class="fas fa-arrow-down"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="content-section" id="content-section">
+  <div class="app-description">
+    <p>Welcome to The Red Claw Integrity Project — a comprehensive platform to promote ethical practices and integrity in digital environments through education and AI-powered solutions.</p>
+  </div>
+
+  <div class="modules-container">
+    <div class="module-card">
+      <div class="module-icon">📚</div>
+      <h3 class="module-title">IntegrityEdu</h3>
+      <p class="module-description">Educational resources and training modules to build integrity awareness and ethical decision-making skills.</p>
+      <a href="{{ url_for('integrityEdu') }}"><button class="explore-btn">Explore</button></a>
+    </div>
+
+    <div class="module-card">
+      <div class="module-icon">🤖</div>
+      <h3 class="module-title">IntegrityAI</h3>
+      <p class="module-description">AI-powered tools and analytics to detect, prevent, and address integrity violations in real-time.</p>
+    <a href="{{ url_for('integrityAI') }}"><button class="explore-btn">Explore</button></a>
+    </div>
+  </div>
+</div>
+{% endblock %}

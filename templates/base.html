@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>The Red Claw Integrity Project</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>{% block title %}Red Claw Integrity Project{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
@@ -14,17 +14,24 @@
     <i class="fas fa-bars"></i>
   </button>
 
-  <!-- Main container splits into sidebar and main content -->
   <div class="container">
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
-      <button class="close-btn" onclick="toggleSidebar()">
-        <i class="fas fa-times"></i>
-      </button>
+
       <div class="logo-section">
-        <img src="img/Chilli Crab logo.png" alt="Red Claw Logo" />
+        <a href="{{ url_for('home') }}">
+          <img src="{{ url_for('static', filename='img/chilli-crab-logo.png') }}" alt="Red Claw Logo" />
+        </a>
       </div>
+      
       <div class="auth-buttons">
+
+        <a href="{{ url_for('home') }}" class="auth-btn" style="text-decoration:none;">
+          <i class="fas fa-home"></i>
+          <span>Home</span>
+        </a>
+        
+        
         <button class="auth-btn" onclick="showModal('login')">
           <i class="fas fa-sign-in-alt"></i>
           <span>Login</span>
@@ -38,59 +45,7 @@
 
     <!-- Main Content -->
     <div class="main-content" id="mainContent">
-      <!-- Header -->
-      <div class="header">
-        <div class="hand-container">
-          <img src="img/corrupt1.jpg" alt="Corruption Image" class="header-image" />
-          <div class="header-text-overlay">
-            <div class="title-box">
-              <h1 class="main-title">The Red Claw Integrity Project</h1>
-            </div>
-            <div class="find-out-more-container">
-              <a href="#content-section" class="find-out-more">
-                <span>Find out more</span>
-                <i class="fas fa-arrow-down"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Content Section -->
-      <div class="content-section" id="content-section">
-        <div class="app-description">
-          <p>&lt;Description of web application&gt;</p>
-          <p>
-            Welcome to The Red Claw Integrity Project - a comprehensive platform
-            designed to promote ethical practices and integrity in digital
-            environments through education and AI-powered solutions.
-          </p>
-        </div>
-
-        <div class="modules-container">
-          <div class="module-card">
-            <div class="module-icon">📚</div>
-            <h3 class="module-title">IntegrityEdu</h3>
-            <p class="module-description">
-              &lt;Description&gt;<br />
-              Educational resources and training modules to build integrity
-              awareness and ethical decision-making skills.
-            </p>
-            <button class="explore-btn" onclick="exploreModule('edu')">Explore</button>
-          </div>
-
-          <div class="module-card">
-            <div class="module-icon">🤖</div>
-            <h3 class="module-title">IntegrityAI</h3>
-            <p class="module-description">
-              &lt;Description&gt;<br />
-              AI-powered tools and analytics to detect, prevent, and address
-              integrity violations in real-time.
-            </p>
-            <button class="explore-btn" onclick="exploreModule('ai')">Explore</button>
-          </div>
-        </div>
-      </div>
+      {% block content %}{% endblock %}
     </div>
   </div>
 
@@ -144,9 +99,6 @@
     </div>
   </div>
 
-  <!-- JavaScript logic (user auth, modal, dashboard) -->
-  <script src="script.js"></script>
-  
-  
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

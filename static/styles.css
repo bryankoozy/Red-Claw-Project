@@ -31,7 +31,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 30px;
-  border-right: 3px solid #4a90e2;
+  border-right: 3px solid #08386e;
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   position: fixed;
   height: 100vh;
@@ -44,29 +44,9 @@ body {
   transform: translateX(-100%);
 }
 
-/* Close Button */
-.close-btn {
-  background: rgba(255, 255, 255, 0.1);
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  color: white;
-  font-size: 18px;
-  align-self: flex-end;
-  cursor: pointer;
-  padding: 10px 12px;
-  border-radius: 50%;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(5px);
-  width: 45px;
-  height: 45px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
-.close-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: rotate(90deg);
-}
+
+
 
 /* Sidebar Toggle Button */
 .toggle-sidebar-btn {
@@ -99,11 +79,13 @@ body {
 /* Logo Section */
 .logo-section {
   text-align: center;
-  padding: 20px 0;
+  padding: 20px 20px 20px 20px;
   border-bottom: 2px solid rgba(255, 255, 255, 0.1);
 }
 
 .logo-section img {
+  margin-top: 40px;  /* adjust the value to your liking */
+
   width: 100%;
   max-width: 180px;
   border-radius: 15px;
@@ -380,6 +362,8 @@ body {
   transform: translateY(-3px);
   box-shadow: 0 8px 25px rgba(255, 165, 2, 0.4);
 }
+
+
 
 /* Modals */
 .modal {

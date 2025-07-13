@@ -38,6 +38,12 @@ body {
   z-index: 1000;
   box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+}
+
+.sidebar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
 }
 
 .sidebar.closed {

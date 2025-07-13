@@ -21,6 +21,11 @@ def integrityAI():
 def integrityEdu():
     return render_template("integrityEdu.html")
 
+@app.route("/settings")
+def settings():
+    return render_template("settings.html")
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':

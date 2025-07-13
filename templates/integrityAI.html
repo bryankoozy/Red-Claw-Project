@@ -5,17 +5,50 @@
 {% block content %}
 <div class="header">
   <div class="hand-container">
-    <img src="{{ url_for('static', filename='img/corrupt1.jpg') }}" alt="Modules Image" class="header-image" />
+    <img src="{{ url_for('static', filename='img/corrupt1.jpg') }}" alt="AI Concept Image" class="header-image" />
     <div class="header-text-overlay">
-      <div class="title-box">
-        <h1 class="main-title">IntegrityAI</h1>
-      </div>
+      <h1 class="main-title">IntegrityAI</h1>
     </div>
   </div>
 </div>
 
 <div class="content-section">
   <h2>Explore Our Learning Modules</h2>
-  <p>Access educational resources and AI tools to strengthen your knowledge and integrity skills.</p>
+  <p class="app-description">
+    Access educational resources and AI tools to strengthen your knowledge and integrity skills.
+  </p>
+
+  <div class="modules-container">
+    <!-- Download -->
+    <div class="module-card">
+      <div class="module-icon"><i class="fas fa-download"></i></div>
+      <h3 class="module-title">Download Template</h3>
+      <p class="module-description">Download a preformatted spreadsheet template to get started.</p>
+      <button class="explore-btn" onclick="downloadTemplate()">Download</button>
+    </div>
+
+    <!-- Upload -->
+    <div class="module-card">
+      <div class="module-icon"><i class="fas fa-upload"></i></div>
+      <h3 class="module-title">Upload Template</h3>
+      <p class="module-description">Upload your completed PDF for processing and analysis.</p>
+      <input type="file" id="fileInput" class="file-input" accept=".xlsx,.xls,.csv,.jpeg" onchange="handleFileUpload(event)">
+      <label for="fileInput" class="file-input-label">Choose File</label>
+      <div id="uploadStatus" class="status-message hidden"></div>
+    </div>
+  </div>
 </div>
+
+<section class="results-section">
+  <h2 class="results-title">Reveal Results</h2>
+  <div id="resultsContent" class="results-content"></div>
+</section>
+
+
+<button id="chatbotBtn" class="chatbot-fab" aria-label="Open AI Chatbot">
+  <i class="fas fa-robot"></i>
+</button>
+
+
+
 {% endblock %}

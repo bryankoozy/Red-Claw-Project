@@ -1,8 +1,22 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
+from flask_sqlalchemy import SQLAlchemy
+from dotenv import load_dotenv
+import os
+from models import User
+
+
+# Load environment variables
+ENV = os.getenv('FLASK_ENV', 'development')
+load_dotenv(f'.env.{ENV}')
 
 app = Flask(__name__)
-app.secret_key = "your_secret_key_here"  # needed for flash messages
+app.secret_key = "your_secret_key_here"  # needed for flash messages 
 
+
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
 
 
 @app.route("/")

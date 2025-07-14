@@ -1,1 +1,26 @@
+# Python virtual environment
 venv/
+
+# SQLite database (local dev only)
+site.db
+
+# Environment variables / secrets
+.env.*
+*.env
+
+# __pycache__ and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# IDE/editor settings
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db

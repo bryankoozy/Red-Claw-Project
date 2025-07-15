@@ -22,8 +22,10 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Initialize database tables
 db.init_app(app)
 
-with app.app_context():
-    db.create_all()
+if app.config['ENV'] == 'development':
+    with app.app_context():
+        db.create_all()
+
 
 @app.route("/")
 def home():

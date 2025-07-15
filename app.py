@@ -5,6 +5,12 @@ from dotenv import load_dotenv
 import os
 from models import db, User
 
+
+# only uncomment and use the below line during development mode. comment it when going to production
+# os.environ['FLASK_ENV'] = 'development'
+
+
+
 ENV = os.getenv('FLASK_ENV', 'production')
 
 # Load dotenv based on ENV
@@ -14,17 +20,25 @@ else:
     load_dotenv('.env.dev')
 
 app = Flask(__name__)
-app.config['ENV'] = ENV  # explicitly set it here
 
+
+
+app.config['ENV'] = ENV  # explicitly set it here
 app.secret_key = os.getenv('SECRET_KEY')
+
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+
 
 db.init_app(app)
 
 if ENV == 'development':
     with app.app_context():
         db.create_all()
+
+
+
 
 @app.route("/")
 def home():

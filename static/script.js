@@ -47,3 +47,7 @@ document.getElementById('registerForm').addEventListener('submit', function(e) {
     alert('Passwords do not match!');
   }
 });
+
+
+
+

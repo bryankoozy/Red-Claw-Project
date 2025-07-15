@@ -61,17 +61,41 @@
           <span>IntegrityAI</span>
         </a>
 
+        <a href="{{ url_for('logout') }}" class="auth-btn" style="text-decoration:none;">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </a>
+
 
 
       </div>
     </div>
 
+
     <!-- Main Content -->
     <div class="main-content" id="mainContent">
+
+      <!-- Flash Messages -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="flash-messages">
+            {% for category, message in messages %}
+              <div class="flash-message {{ category }}">
+                <span class="flash-close" onclick="this.parentElement.style.display='none'">&times;</span>
+                {{ message }}
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+      
       {% block content %}{% endblock %}
     </div>
   </div>
 
+
   <script src="{{ url_for('static', filename='script.js') }}"></script>
+  
+  
 </body>
 </html>

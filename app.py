@@ -5,27 +5,26 @@ from dotenv import load_dotenv
 import os
 from models import db, User
 
-# Load environment variables based on FLASK_ENV
-ENV = os.getenv('FLASK_ENV', 'development')
+ENV = os.getenv('FLASK_ENV', 'production')
+
+# Load dotenv based on ENV
 if ENV == 'production':
     load_dotenv('.env.prod')
 else:
     load_dotenv('.env.dev')
 
 app = Flask(__name__)
-app.secret_key = os.getenv('SECRET_KEY')
+app.config['ENV'] = ENV  # explicitly set it here
 
+app.secret_key = os.getenv('SECRET_KEY')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-
-# Initialize database tables
 db.init_app(app)
 
-if app.config['ENV'] == 'development':
+if ENV == 'development':
     with app.app_context():
         db.create_all()
-
 
 @app.route("/")
 def home():

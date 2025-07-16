@@ -15,6 +15,27 @@ function toggleSidebar() {
   }
 }
 
+// On page load, close sidebar by default if screen ≤ 850px
+window.addEventListener('DOMContentLoaded', () => {
+  const sidebar = document.getElementById('sidebar');
+  const mainContent = document.getElementById('mainContent');
+  const toggleBtn = document.querySelector('.toggle-sidebar-btn');
+  const icon = toggleBtn.querySelector('i');
+
+  if (window.innerWidth <= 850) {
+    sidebar.classList.add('closed');
+    mainContent.classList.add('sidebar-closed');
+    icon.className = 'fas fa-bars';
+  }
+});
+
+
+
+
+
+
+
+
 function exploreModule(type) {
   alert("You clicked: " + type);
 }
@@ -28,6 +49,12 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
   });
 });
+
+
+
+
+
+
 
 
 

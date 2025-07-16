@@ -23,6 +23,41 @@ body {
   position: relative;
 }
 
+
+
+/* Top Navigation Bar */
+.topnav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: linear-gradient(90deg, #2c5282, #1a365d);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+  z-index: 2000; /* Higher than sidebar */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.topnav-right a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 20px;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.topnav-right a:hover {
+  color: #ffa502;
+}
+
+
+
+
 /* Sidebar */
 .sidebar {
   width: 320px;
@@ -49,9 +84,6 @@ body {
 .sidebar.closed {
   transform: translateX(-100%);
 }
-
-
-
 
 
 /* Sidebar Toggle Button */
@@ -163,6 +195,7 @@ body {
   flex-direction: column;
   margin-left: 320px;
   transition: margin-left 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  padding-top: 60px;
 }
 
 .main-content.sidebar-closed {
@@ -372,16 +405,27 @@ body {
 
 
 
-/* Responsive Design */
-@media (max-width: 768px) {
+
+/* Small Screens (≤768px): Show sidebar and toggle button, hide topnav */
+@media (max-width: 850px) {
   .sidebar {
-    width: 280px;
+    display: flex;
+    flex-direction: column;
   }
-  
+
+  .topnav {
+    display: none;
+  }
+
   .main-content {
-    margin-left: 280px;
+    margin-left: 0;
+    padding-top: 0px;
   }
-  
+
+  .toggle-sidebar-btn {
+    display: block;
+  }
+
   .main-title {
     font-size: 2.5em;
   }
@@ -400,44 +444,26 @@ body {
   }
 }
 
-@media (max-width: 480px) {
+/* Large Screens (≥769px): Show topnav, hide sidebar and toggle button */
+@media (min-width: 851px) {
+  .topnav {
+    display: flex;
+  }
+
   .sidebar {
-    width: 100%;
+    display: none;
   }
-  
+
+  .toggle-sidebar-btn {
+    display: none;
+  }
+
   .main-content {
-    margin-left: 0;
-  }
-  
-  .main-content.sidebar-closed {
-    margin-left: 0;
-  }
-  
-  .main-title {
-    font-size: 2em;
-  }
-  
-  .title-box {
-    padding: 20px 30px;
-  }
-  
-  .find-out-more-container {
-    padding: 15px 30px;
-  }
-  
-  .find-out-more {
-    font-size: 1.1em;
-  }
-  
-  .content-section {
-    padding: 40px 20px;
-  }
-  
-  .modal-content {
-    width: 95%;
-    padding: 30px 20px;
+    margin-left: 0px; /* Adjust to sidebar width */
   }
 }
+
+
 
 
 
@@ -817,8 +843,13 @@ body {
 
 /* Flash message styles */
 .flash-messages {
-  margin: 20px 0;
-  z-index: 1000;
+  position: absolute; /* or fixed */
+  top: 4rem; /* Distance from top */
+  left: 50%;
+  transform: translateX(-50%); /* Center horizontally */
+  width: 90%; /* Adjust width as needed */
+  max-width: 500px; /* Maximum width */
+  z-index: 2000;
 }
 
 .flash-message {

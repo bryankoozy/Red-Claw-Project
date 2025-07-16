@@ -24,3 +24,6 @@ __pycache__/
 # OS files
 .DS_Store
 Thumbs.db
+
+
+create-sample-users.py

@@ -11,22 +11,32 @@
 
   <!-- Top Navigation Bar -->
   <div class="topnav">
-    <div class="topnav-right">
 
-      <a href="{{ url_for('home') }}"><i class="fas fa-home"></i> Home</a>
-      {% if 'user_id' not in session %}
-      <a href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a>
-      <a href="{{ url_for('register') }}"><i class="fas fa-user-plus"></i> Register</a>
-      {% else %}
-        {% if current_user.role == 'admin' %}
-          <a href="{{ url_for('dashboard') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+    <div class="logo-and-menu">
+      <div class="logo-container">
+        <a href="{{ url_for('home') }}">
+          <img src="{{ url_for('static', filename='img/chilli-crab-logo.png') }}" alt="Red Claw Logo" />
+        </a>
+      </div>
+
+
+      <div class="topnav-right">
+
+        <a href="{{ url_for('home') }}"><i class="fas fa-home"></i> Home</a>
+        {% if 'user_id' not in session %}
+        <a href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a>
+        <a href="{{ url_for('register') }}"><i class="fas fa-user-plus"></i> Register</a>
+        {% else %}
+          {% if current_user.role == 'admin' %}
+            <a href="{{ url_for('dashboard') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+          {% endif %}
+
+          <a href="{{ url_for('integrityAI') }}"><i class="fas fa-brain"></i> IntegrityAI</a>
+          <a href="{{ url_for('integrityEdu') }}"><i class="fas fa-book-open"></i> IntegrityEdu</a>
+          <a href="{{ url_for('settings') }}"><i class="fas fa-cog"></i> Settings</a>
+          <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
         {% endif %}
-
-        <a href="{{ url_for('settings') }}"><i class="fas fa-cog"></i> Settings</a>
-        <a href="{{ url_for('integrityEdu') }}"><i class="fas fa-book-open"></i> IntegrityEdu</a>
-        <a href="{{ url_for('integrityAI') }}"><i class="fas fa-brain"></i> IntegrityAI</a>
-        <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
-      {% endif %}
+      </div>
     </div>
   </div>
 
@@ -37,7 +47,7 @@
 
   <div class="container">
     <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
+    <div class="sidebar closed" id="sidebar">
 
       <div class="logo-section">
         <a href="{{ url_for('home') }}">
@@ -70,9 +80,9 @@
             </a>
           {% endif %}
 
-          <a href="{{ url_for('settings') }}" class="auth-btn" style="text-decoration:none;">
-            <i class="fas fa-cog"></i>
-            <span>Settings</span>
+          <a href="{{ url_for('integrityAI') }}" class="auth-btn" style="text-decoration:none;">
+            <i class="fas fa-brain"></i>
+            <span>IntegrityAI</span>
           </a>
 
           <a href="{{ url_for('integrityEdu') }}" class="auth-btn" style="text-decoration:none;">
@@ -80,9 +90,9 @@
             <span>IntegrityEdu</span>
           </a>
 
-          <a href="{{ url_for('integrityAI') }}" class="auth-btn" style="text-decoration:none;">
-            <i class="fas fa-brain"></i>
-            <span>IntegrityAI</span>
+          <a href="{{ url_for('settings') }}" class="auth-btn" style="text-decoration:none;">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
           </a>
 
           <a href="{{ url_for('logout') }}" class="auth-btn" style="text-decoration:none;">

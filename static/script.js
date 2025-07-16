@@ -1,3 +1,17 @@
+window.addEventListener('DOMContentLoaded', () => {
+  const sidebar = document.getElementById('sidebar');
+  const toggleBtn = document.querySelector('.toggle-sidebar-btn');
+  const icon = toggleBtn.querySelector('i');
+  
+  if (sidebar.classList.contains('closed')) {
+    icon.className = 'fas fa-bars';  // Sidebar is closed → show hamburger icon
+  } else {
+    icon.className = 'fas fa-times'; // Sidebar is open → show X icon
+  }
+});
+
+
+
 function toggleSidebar() {
   const sidebar = document.getElementById('sidebar');
   const mainContent = document.getElementById('mainContent');
@@ -14,23 +28,6 @@ function toggleSidebar() {
     icon.className = 'fas fa-times';
   }
 }
-
-// On page load, close sidebar by default if screen ≤ 850px
-window.addEventListener('DOMContentLoaded', () => {
-  const sidebar = document.getElementById('sidebar');
-  const mainContent = document.getElementById('mainContent');
-  const toggleBtn = document.querySelector('.toggle-sidebar-btn');
-  const icon = toggleBtn.querySelector('i');
-
-  if (window.innerWidth <= 850) {
-    sidebar.classList.add('closed');
-    mainContent.classList.add('sidebar-closed');
-    icon.className = 'fas fa-bars';
-  }
-});
-
-
-
 
 
 

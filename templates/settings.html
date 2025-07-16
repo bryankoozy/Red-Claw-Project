@@ -3,207 +3,111 @@
 {% block title %}Settings - Red Claw{% endblock %}
 
 {% block content %}
+<div class="settings-page">
 
-<style>
-  /* General styling */
-  .settings-header {
-      text-align: center;
-      padding: 30px 20px;
-      background: linear-gradient(135deg, #f0f0f0 0%, #e8e8e8 100%);
-      margin-bottom: 30px;
-      border-radius: 12px;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  }
-
-    .settings-header h1 {
-      margin: 0 0 8px 0;
-      font-size: 2.2em;
-      font-weight: 700;
-      color: #2c3e50;
-  }
-
-  .settings-header p {
-      margin: 0;
-      color: #7f8c8d;
-      font-size: 1.1em;
-  }
-
-
-  .settings-card {
-      background: #ffffff;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-      margin-bottom: 25px;
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
-      border: 1px solid #f1f2f6;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  .settings-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
-  }
-
- .form-group {
-      margin-bottom: 18px;
-  }
-
-  .form-label {
-      display: block;
-      font-weight: 600;
-      margin-bottom: 8px;
-      color: #2c3e50;
-      font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-  }
-
-  .input-group {
-      position: relative;
-      margin-bottom: 4px;
-  }
-
-  .input-icon {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      left: 15px;
-      font-size: 18px;
-      color: #95a5a6;
-      pointer-events: none;
-      z-index: 1;
-  }
-
-  .form-input {
-      padding: 14px 14px 14px 45px;
-      border: 2px solid #ecf0f1;
-      border-radius: 8px;
-      width: 100%;
-      font-size: 16px;
-      transition: all 0.3s ease;
-      font-family: inherit;
-      box-sizing: border-box;
-      background-color: #fafbfc;
-  }
-
-  .form-input:focus {
-      border-color: #3498db;
-      outline: none;
-      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
-      background-color: #ffffff;
-  }
-
-
-  .divider {
-      border: none;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, #ddd, transparent);
-      margin: 30px 0;
-  }
-
-
-</style>
-
-
-<div class="settings-header">
-    <h1>Settings</h1>
-    <p>Manage your account preferences</p>
-</div>
-
-
-<div class="settings-card">
-    <div class="form-group">
-        <label class="form-label">Username</label>
-        <div class="input-group">
-            <span class="input-icon">👤</span>
-            <input type="text" class="form-input" placeholder="Enter new username" value="john_doe">
-        </div>
+    <div class="settings-header">
+        <h1>Settings</h1>
+        <p>Manage your account preferences</p>
     </div>
 
-    <button class="auth-btn" onclick="updateField('username')">Change Username</button>
-</div>  
+    <div class="settings-card-parent">
 
+        <!-- Username -->
+        <div class="settings-card">
+            <div class="section-title">Account Information</div>
+            
+            <div class="current-info"><span class="current-label">Current username:</span> {{ current_user.name }}</div>
 
-
-
-<div class="settings-card">
-        <label class="form-label">Email Address</label>
-        <div class="input-group">
-            <span class="input-icon">✉️</span>
-            <input type="email" class="form-input" placeholder="Enter new email" value="john@example.com">
+            <form method="POST" action="{{ url_for('settings') }}">
+                <input type="hidden" name="action" value="update_username">
+                <div class="form-group">
+                    <label class="form-label" for="new_username">New Username</label>
+                    <div class="input-group">
+                        <span class="input-icon">👤</span>
+                        <input type="text" class="form-input" id="new_username" name="new_username" placeholder="Enter new username" required>
+                    </div>
+                </div>
+                <button class="auth-btn" type="submit">Change Username</button>
+            </form>
         </div>
-    <button class="auth-btn" onclick="updateField('email')">Change Email</button>
+
+        <!-- Email -->
+        <div class="settings-card">
+            <div class="current-info"><span class="current-label">Current email:</span> {{ current_user.email }}</div>
+
+            <form method="POST" action="{{ url_for('settings') }}">
+                <input type="hidden" name="action" value="update_email">
+                <div class="form-group">
+                    <label class="form-label" for="new_email">New Email</label>
+                    <div class="input-group">
+                        <span class="input-icon">✉️</span>
+                        <input type="email" class="form-input" id="new_email" name="new_email" placeholder="Enter new email" required>
+                    </div>
+                </div>
+                <button class="auth-btn" type="submit">Change Email</button>
+            </form>
+        </div>
+
+        <!-- Password -->
+        <div class="settings-card">
+            <div class="section-title">Security</div>
+
+            <form method="POST" action="{{ url_for('settings') }}">
+                <input type="hidden" name="action" value="update_password">
+
+                <div class="form-group">
+                    <label class="form-label" for="current_password">Current Password</label>
+                    <div class="input-group">
+                        <span class="input-icon">🔒</span>
+                        <input type="password" class="form-input" id="current_password" name="current_password" placeholder="Enter current password" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="new_password">New Password</label>
+                    <div class="input-group">
+                        <span class="input-icon">🔒</span>
+                        <input type="password" class="form-input" id="new_password" name="new_password" placeholder="Enter new password" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="confirm_password">Confirm Password</label>
+                    <div class="input-group">
+                        <span class="input-icon">🔒</span>
+                        <input type="password" class="form-input" id="confirm_password" name="confirm_password" placeholder="Confirm new password" required>
+                    </div>
+                </div>
+
+                <button class="auth-btn" type="submit">Change Password</button>
+            </form>
+        </div>
+
+        <!-- Contact Us -->
+        <div class="settings-card">
+            <div class="section-title">Support</div>
+
+            <form method="POST" action="{{ url_for('settings') }}">
+                <input type="hidden" name="action" value="contact">
+
+                <div class="form-group">
+                    <label class="form-label" for="subject">Subject</label>
+                    <div class="input-group">
+                        <span class="input-icon">📋</span>
+                        <input type="text" class="form-input" id="subject" name="subject" placeholder="What's this about?" required>
+                    </div>
+                </div>
+
+                <div class="form-group textarea-group">
+                    <label class="form-label" for="message">Message</label>
+                    <span class="textarea-icon">💬</span>
+                    <textarea class="form-textarea" id="message" name="message" placeholder="Tell us what's on your mind..." required></textarea>
+                </div>
+
+                <button class="auth-btn" type="submit">Send Message</button>
+            </form>
+        </div>
+
+    </div>
 </div>
-
-
-
-
-<div class="settings-card">
-  <div class="form-group">
-      <label class="form-label">New Password</label>
-      <div class="input-group">
-          <span class="input-icon">🔒</span>
-          <input type="password" class="form-input" placeholder="Enter new password">
-      </div>
-  </div>
-
-  <div class="form-group">
-      <label class="form-label">Confirm Password</label>
-      <div class="input-group">
-          <span class="input-icon">🔒</span>
-          <input type="password" class="form-input" placeholder="Confirm new password">
-      </div>
-  </div>
-
-    <button class="auth-btn" onclick="updateField('password')">Change Password</button>
-
-    <div class="divider"></div>
-
-    <div class="section-title">Support</div>
-</div>
-
-
-
-
-<div class="settings-card">
-  <button class="auth-btn contact-btn" onclick="contactUs()">Contact Us</button>
-</div>
-
-
-<script>
-    function updateField(fieldType) {
-        const btn = event.target;
-        const originalText = btn.textContent;
-        
-        btn.textContent = 'Updating...';
-        btn.disabled = true;
-        
-        setTimeout(() => {
-            btn.textContent = 'Updated!';
-            setTimeout(() => {
-                btn.textContent = originalText;
-                btn.disabled = false;
-            }, 1000);
-        }, 1500);
-    }
-
-    function contactUs() {
-        window.open('mailto:support@example.com?subject=Support Request', '_blank');
-    }
-
-    // Add interactive feedback to inputs
-    document.querySelectorAll('.form-input').forEach(input => {
-        input.addEventListener('focus', function() {
-            this.parentElement.style.transform = 'scale(1.02)';
-        });
-        
-        input.addEventListener('blur', function() {
-            this.parentElement.style.transform = 'scale(1)';
-        });
-    });
-</script>
 {% endblock %}

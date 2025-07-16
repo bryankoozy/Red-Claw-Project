@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
 import os
-from models import db, User
+from models import db, User, SupportMessage
 
 
 
@@ -36,12 +36,22 @@ db.init_app(app)
 
 
 
+
+
 @app.context_processor
 def inject_user():
     if 'user_id' in session:
         user = User.query.get(session['user_id'])
         return dict(current_user=user)
     return dict(current_user=None)
+
+
+
+
+
+
+
+
 
 def login_required(f):
     @wraps(f)
@@ -64,6 +74,14 @@ def admin_required(f):
             abort(403)  # Forbidden
         return f(*args, **kwargs)
     return decorated_function
+
+
+
+
+
+
+
+
 
 
 
@@ -91,11 +109,82 @@ def integrityEdu():
     user = User.query.get(session['user_id'])
     return render_template("integrityEdu.html", user=user)
 
-@app.route("/settings")
+
+
+
+
+
+
+
+
+
+
+
+
+@app.route("/settings", methods=["GET", "POST"])
 @login_required
 def settings():
     user = User.query.get(session['user_id'])
+
+    if request.method == "POST":
+        action = request.form.get('action')
+
+        if action == "update_username":
+            new_username = request.form.get('new_username').strip()
+            if new_username:
+                user.name = new_username
+                db.session.commit()
+                flash("Username updated successfully!", "success")
+            else:
+                flash("Invalid username.", "error")
+
+        elif action == "update_email":
+            new_email = request.form.get('new_email').strip()
+            if new_email:
+                existing = User.query.filter(User.email == new_email, User.id != user.id).first()
+                if existing:
+                    flash("Email already taken.", "error")
+                else:
+                    user.email = new_email
+                    db.session.commit()
+                    flash("Email updated successfully!", "success")
+            else:
+                flash("Invalid email.", "error")
+
+        elif action == "update_password":
+            current_password = request.form.get('current_password')
+            new_password = request.form.get('new_password')
+            confirm_password = request.form.get('confirm_password')
+
+            if not all([current_password, new_password, confirm_password]):
+                flash("Please fill all password fields.", "error")
+            elif not check_password_hash(user.password, current_password):
+                flash("Current password is incorrect.", "error")
+            elif new_password != confirm_password:
+                flash("New passwords do not match.", "error")
+            else:
+                user.password = generate_password_hash(new_password)
+                db.session.commit()
+                flash("Password updated successfully!", "success")
+
+        elif action == "contact":
+            subject = request.form.get('subject').strip()
+            message = request.form.get('message').strip()
+            if subject and message:
+                # Process message (email or DB)
+                flash("Message sent successfully!", "success")
+            else:
+                flash("Please fill in both subject and message.", "error")
+
+        return redirect(url_for('settings'))
+
     return render_template("settings.html", user=user)
+
+
+
+
+
+
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -119,6 +208,13 @@ def login():
             flash('Invalid email or password.', 'error')
 
     return render_template('login.html')
+
+
+
+
+
+
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -158,6 +254,16 @@ def register():
             print(f"Database error: {e}")
 
     return render_template('register.html')
+
+
+
+
+
+
+
+
+
+
 
 @app.route('/logout')
 def logout():

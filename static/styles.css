@@ -31,7 +31,7 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  height: 60px;
+  height: 80px;
   background: linear-gradient(90deg, #2c5282, #1a365d);
   display: flex;
   justify-content: space-between;
@@ -41,11 +41,23 @@ body {
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
+.logo-and-menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-container img {
+  height: 50px; /* Adjust size if needed */
+  width: 50px;
+}
+
+
 .topnav-right a {
   color: #fff;
   text-decoration: none;
   margin-left: 20px;
-  font-size: 14px;
+  font-size: 15px;
   text-transform: uppercase;
   font-weight: 600;
   transition: color 0.3s;
@@ -906,4 +918,179 @@ body {
 
 .flash-close:hover {
   opacity: 1;
+}
+
+
+
+
+
+
+
+
+
+
+.settings-page .settings-header {
+    text-align: center;
+    padding: 40px 40px 10px 40px;
+}
+
+.settings-page .settings-header h1 {
+    margin-bottom: 8px;
+    font-size: 2.2em;
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+.settings-page .settings-header p {
+    color: #7f8c8d;
+    font-size: 1.1em;
+}
+
+.settings-page .settings-card-parent {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.settings-page .settings-card {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin-bottom: 25px;
+    width: 100%;
+    max-width: 1200px;
+    border: 1px solid #f1f2f6;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.settings-page .settings-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+}
+
+.settings-page .form-group {
+    margin-bottom: 18px;
+}
+
+.settings-page .form-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #2c3e50;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.settings-page .input-group,
+.settings-page .textarea-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.settings-page .input-icon,
+.settings-page .textarea-icon {
+    font-size: 20px;
+    color: #95a5a6;
+}
+
+.settings-page .form-input,
+.settings-page .form-textarea {
+    flex: 1;
+    width: 100%;
+    padding: 14px;
+    border: 2px solid #ecf0f1;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #fafbfc;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.settings-page .form-input:focus,
+.settings-page .form-textarea:focus {
+    border-color: #ffa502;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 165, 2, 0.1);
+    background-color: #ffffff;
+}
+
+/* Optional: Override auth-btn only inside settings page */
+.settings-page .auth-btn {
+    background: linear-gradient(45deg, #ffa502, #ff8c00);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-shadow: 0 2px 10px rgba(255, 165, 2, 0.3);
+}
+
+.settings-page .auth-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(255, 165, 2, 0.4);
+}
+
+.settings-page .section-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative;
+}
+
+.settings-page .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 2px;
+    background: #ffa502;
+}
+
+.settings-page .success-message {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: 500;
+    display: none;
+}
+
+.settings-page .current-info {
+    background: #fff8f0;
+    border: 1px solid #ffd7a3;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: #2c3e50;
+}
+
+.settings-page .current-label {
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .settings-page .settings-card {
+        width: 90%;
+        max-width: none;
+    }
 }

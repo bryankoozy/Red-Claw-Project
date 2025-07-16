@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render_template, request, redirect, url_for, flash, session, abort
+from functools import wraps
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
@@ -6,8 +7,9 @@ import os
 from models import db, User
 
 
+
 # only uncomment and use the below line during development mode. comment it when going to production
-os.environ['FLASK_ENV'] = 'development'
+# os.environ['FLASK_ENV'] = 'development'
 
 
 
@@ -29,13 +31,39 @@ app.secret_key = os.getenv('SECRET_KEY')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-
-
 db.init_app(app)
 
-if ENV == 'development':
-    with app.app_context():
-        db.create_all()
+
+
+
+@app.context_processor
+def inject_user():
+    if 'user_id' in session:
+        user = User.query.get(session['user_id'])
+        return dict(current_user=user)
+    return dict(current_user=None)
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session:
+            flash('Please log in to access this page.', 'error')
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorated_function
+
+def admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session:
+            flash('Please log in to access this page.', 'error')
+            return redirect(url_for('login'))
+
+        user = User.query.get(session['user_id'])
+        if not user or user.role != 'admin':
+            abort(403)  # Forbidden
+        return f(*args, **kwargs)
+    return decorated_function
 
 
 
@@ -45,48 +73,37 @@ def home():
     return render_template("index.html")
 
 @app.route("/dashboard")
+@admin_required
 def dashboard():
-    # Check if user is logged in
-    if 'user_id' not in session:
-        flash('Please log in to access the dashboard.', 'error')
-        return redirect(url_for('login'))
-    
-    # Get current user
     user = User.query.get(session['user_id'])
     return render_template("dashboard.html", user=user)
 
+
 @app.route("/integrityAI")
+@login_required
 def integrityAI():
-    # Check if user is logged in
-    if 'user_id' not in session:
-        flash('Please log in to access this page.', 'error')
-        return redirect(url_for('login'))
-    
     user = User.query.get(session['user_id'])
     return render_template("integrityAI.html", user=user)
 
 @app.route("/integrityEdu")
+@login_required
 def integrityEdu():
-    # Check if user is logged in
-    if 'user_id' not in session:
-        flash('Please log in to access this page.', 'error')
-        return redirect(url_for('login'))
-    
     user = User.query.get(session['user_id'])
     return render_template("integrityEdu.html", user=user)
 
 @app.route("/settings")
+@login_required
 def settings():
-    # Check if user is logged in
-    if 'user_id' not in session:
-        flash('Please log in to access settings.', 'error')
-        return redirect(url_for('login'))
-    
     user = User.query.get(session['user_id'])
     return render_template("settings.html", user=user)
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    if 'user_id' in session:
+        flash('You are currently logged in.', 'info')
+        return redirect(url_for('home'))
+    
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
@@ -97,7 +114,7 @@ def login():
         if user and check_password_hash(user.password, password):
             session['user_id'] = user.id
             flash('Login successful!', 'success')
-            return redirect(url_for('dashboard'))
+            return redirect(url_for('home'))
         else:
             flash('Invalid email or password.', 'error')
 
@@ -105,6 +122,10 @@ def login():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    if 'user_id' in session:
+        flash('You are currently logged in.', 'info')
+        return redirect(url_for('home'))
+    
     if request.method == 'POST':
         name = request.form['name']
         email = request.form['email']
@@ -140,9 +161,35 @@ def register():
 
 @app.route('/logout')
 def logout():
-    session.pop('user_id', None)
-    flash('You have been logged out successfully.', 'success')
+    if 'user_id' in session:
+        session.pop('user_id')
+        flash('You have been logged out successfully.', 'success')
+    else:
+        flash('You are not logged in.', 'error')
     return redirect(url_for('home'))
 
+
+
+
+
+
+
+
+
 if __name__ == "__main__":
+    with app.app_context():
+        db.create_all()
+
+        admin_email = 'admin@example.com'
+        admin = User.query.filter_by(email=admin_email).first()
+
+        if not admin:
+            hashed_password = generate_password_hash('your_admin_password')  # Change this
+            admin = User(name='Admin', email=admin_email, password=hashed_password, role='admin')
+            db.session.add(admin)
+            db.session.commit()
+            print("Admin account created.")
+        else:
+            print("Admin account already exists.")
+
     app.run(host='0.0.0.0', port=5000, debug=True)

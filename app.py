@@ -9,7 +9,7 @@ from models import db, User, SupportMessage
 
 
 # only uncomment and use the below line during development mode. comment it when going to production
-# os.environ['FLASK_ENV'] = 'development'
+os.environ['FLASK_ENV'] = 'development'
 
 
 
@@ -132,11 +132,13 @@ def settings():
         if action == "update_username":
             new_username = request.form.get('new_username').strip()
             if new_username:
-                user.name = new_username
-                db.session.commit()
-                flash("Username updated successfully!", "success")
-            else:
-                flash("Invalid username.", "error")
+                existing = User.query.filter(User.name == new_username).first()
+                if existing and existing.id != user.id:
+                    flash("Username already taken.", "error")
+                else:
+                    user.name = new_username
+                    db.session.commit()
+                    flash("Username updated successfully!", "success")
 
         elif action == "update_email":
             new_email = request.form.get('new_email').strip()
@@ -169,9 +171,16 @@ def settings():
 
         elif action == "contact":
             subject = request.form.get('subject').strip()
-            message = request.form.get('message').strip()
-            if subject and message:
-                # Process message (email or DB)
+            message_text = request.form.get('message').strip()
+
+            if subject and message_text:
+                new_message = SupportMessage(
+                    user_id=user.id,
+                    subject=subject,
+                    message=message_text
+                )
+                db.session.add(new_message)
+                db.session.commit()
                 flash("Message sent successfully!", "success")
             else:
                 flash("Please fill in both subject and message.", "error")

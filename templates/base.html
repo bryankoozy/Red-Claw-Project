@@ -22,7 +22,16 @@
 
       <div class="topnav-right">
 
+        <div>
+        {% if 'user_id' in session %}
+        <div class="welcome-user">
+          Hello {{ current_user.name }}!
+        </div>
+        {% endif %}
+        </div>
+
         <a href="{{ url_for('home') }}"><i class="fas fa-home"></i> Home</a>
+
         {% if 'user_id' not in session %}
         <a href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a>
         <a href="{{ url_for('register') }}"><i class="fas fa-user-plus"></i> Register</a>
@@ -36,6 +45,8 @@
           <a href="{{ url_for('settings') }}"><i class="fas fa-cog"></i> Settings</a>
           <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
         {% endif %}
+
+
       </div>
     </div>
   </div>
@@ -48,14 +59,19 @@
   <div class="container">
     <!-- Sidebar -->
     <div class="sidebar closed" id="sidebar">
-
+      
+      {% if 'user_id' not in session %}
       <div class="logo-section">
         <a href="{{ url_for('home') }}">
           <img src="{{ url_for('static', filename='img/chilli-crab-logo.png') }}" alt="Red Claw Logo" />
         </a>
       </div>
+      {% else %}
+      <div class="welcome-user">
+        Hello {{ current_user.name }}!
+      </div>
+      {% endif %}
       
-
       <div class="auth-buttons">
         <a href="{{ url_for('home') }}" class="auth-btn" style="text-decoration:none;">
           <i class="fas fa-home"></i>

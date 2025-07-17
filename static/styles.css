@@ -11,7 +11,7 @@ html {
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  background: linear-gradient(135deg, #f5f5dc 0%, #e8e8e8 100%);
   color: white;
   min-height: 100vh;
   overflow-x: hidden;
@@ -48,8 +48,8 @@ body {
 }
 
 .logo-container img {
-  height: 50px; /* Adjust size if needed */
-  width: 50px;
+  height: 70px; /* Adjust size if needed */
+  width: 70px;
 }
 
 
@@ -69,6 +69,29 @@ body {
 
 
 
+
+/* Welcome User Styling */
+.welcome-user {
+  display: inline-flex;
+  align-items: center;
+  color: white;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 20px;
+  transition: transform 0.3s ease;
+}
+
+/* .welcome-user::before {
+  content: '\f007';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  margin-right: 8px;
+  font-size: 17px;
+} */
+
+/* .welcome-user:hover {
+  color: #ffa733;
+} */
 
 /* Sidebar */
 .sidebar {
@@ -425,6 +448,11 @@ body {
     flex-direction: column;
   }
 
+  .welcome-user {
+    justify-content: center;
+    margin: 10px auto;
+  }
+
   .topnav {
     display: none;
   }
@@ -458,12 +486,18 @@ body {
 
 /* Large Screens (≥769px): Show topnav, hide sidebar and toggle button */
 @media (min-width: 851px) {
+  
   .topnav {
     display: flex;
   }
 
   .sidebar {
     display: none;
+  }
+
+  .welcome-user {
+  margin-left: 20px;
+  margin-bottom: 5px;
   }
 
   .toggle-sidebar-btn {
@@ -483,17 +517,7 @@ body {
 /* Register page */
 
 /* Override base template background for register page */
-body {
-  background: linear-gradient(135deg, #f5f5dc 0%, #e8e8e8 100%) !important;
-}
 
-.container {
-  background: linear-gradient(135deg, #f5f5dc 0%, #e8e8e8 100%) !important;
-}
-
-.main-content {
-  background: linear-gradient(135deg, #f5f5dc 0%, #e8e8e8 100%) !important;
-}
 
 .register-container {
   max-width: 400px;

@@ -843,6 +843,7 @@ body {
   color: #333;
   max-width: 1400px;      /* wider box inside the section */
   margin: 0 auto;         /* center the white box */
+  margin-bottom: 40px;
 }
 
 

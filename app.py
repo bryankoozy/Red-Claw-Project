@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session, abort
+from flask import Flask, render_template, request, redirect, url_for, flash, session, abort, send_file
 from functools import wraps
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -9,7 +9,7 @@ from models import db, User, SupportMessage
 
 
 # only uncomment and use the below line during development mode. comment it when going to production
-os.environ['FLASK_ENV'] = 'development'
+# os.environ['FLASK_ENV'] = 'development'
 
 
 
@@ -45,12 +45,10 @@ def inject_user():
         return dict(current_user=user)
     return dict(current_user=None)
 
-
-
-
-
-
-
+#  integrityAI page
+@app.route('/download-template')
+def download_template():
+    return send_file('static/img/PACT Compliance Assessment_v2.pdf', as_attachment=True)
 
 
 def login_required(f):
@@ -212,7 +210,12 @@ def login():
         if user and check_password_hash(user.password, password):
             session['user_id'] = user.id
             flash('Login successful!', 'success')
-            return redirect(url_for('home'))
+
+            # Check if the user is an admin
+            if user.role == 'admin':
+                return redirect(url_for('dashboard'))
+            else:
+                return redirect(url_for('home'))
         else:
             flash('Invalid email or password.', 'error')
 
@@ -281,7 +284,7 @@ def logout():
         flash('You have been logged out successfully.', 'success')
     else:
         flash('You are not logged in.', 'error')
-    return redirect(url_for('home'))
+    return redirect(url_for('login'))
 
 
 

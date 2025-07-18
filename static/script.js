@@ -75,3 +75,18 @@ document.getElementById('registerForm').addEventListener('submit', function(e) {
 
 
 
+
+// integrityAI page
+function downloadTemplate() {
+    fetch('/download-template')
+        .then(res => res.blob())
+        .then(blob => {
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'PACT_Compliance_Template.pdf'; // Set download name
+            link.click();
+        })
+        .catch(() => alert('Download failed.'));
+}
+
+

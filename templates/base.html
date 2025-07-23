@@ -31,6 +31,8 @@
         </div>
 
         <a href="{{ url_for('home') }}"><i class="fas fa-home"></i> Home</a>
+        <a href="{{ url_for('aboutus') }}"><i class="fas fa-info-circle"></i> About Us</a>
+
 
         {% if 'user_id' not in session %}
         <a href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a>
@@ -77,7 +79,12 @@
           <i class="fas fa-home"></i>
           <span>Home</span>
         </a>
-        
+
+        <a href="{{ url_for('aboutus') }}" class="auth-btn" style="text-decoration:none;">
+          <i class="fas fa-info-circle"></i>
+          <span>About Us</span>
+        </a>
+
         {% if 'user_id' not in session %}
         <a href="{{ url_for('login') }}" class="auth-btn" style="text-decoration:none;">
           <i class="fas fa-sign-in-alt"></i>
@@ -169,6 +176,15 @@
         <h4>Contact</h4>
         <p><i class="fas fa-envelope"></i> bryankoo001@suss.edu.sg</p>
         <p><i class="fas fa-phone"></i> +65 9004 1509</p>
+
+        {% if 'user_id' in session %}
+        <p>
+          <a href="{{ url_for('settings') }}#support-message-section" class="support-link">
+            <i class="fas fa-comment-dots"></i> Send us a support message
+          </a>
+        </p>
+        {% endif %}
+
       </div>
     </div>
     

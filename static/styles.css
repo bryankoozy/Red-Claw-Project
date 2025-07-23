@@ -818,6 +818,7 @@ body {
   font-weight: 500;
   border-left: 4px solid;
   animation: slideIn 0.3s ease-in-out;
+  transition: opacity 0.5s ease;
 }
 
 .flash-message.success {
@@ -866,8 +867,6 @@ body {
 .flash-close:hover {
   opacity: 1;
 }
-
-
 
 /* =====================================
    SETTINGS PAGE STYLES
@@ -938,7 +937,7 @@ body {
 .settings-page .input-group,
 .settings-page .textarea-group {
   display: flex;
-  align-items: center;
+  align-items: flex-start; /* Changed from center to flex-start for better textarea alignment */
   gap: 10px;
   width: 100%;
   box-sizing: border-box;
@@ -948,6 +947,7 @@ body {
 .settings-page .textarea-icon {
   font-size: 20px;
   color: #95a5a6;
+  margin-top: 12px; /* Align icons with input content */
 }
 
 .settings-page .form-input,
@@ -961,6 +961,18 @@ body {
   background-color: #fafbfc;
   transition: all 0.3s ease;
   box-sizing: border-box;
+  font-family: inherit; /* Ensure consistent font */
+}
+
+/* Separate styling for inputs and textareas */
+.settings-page .form-input {
+  min-height: 48px; /* Standard input height */
+}
+
+.settings-page .form-textarea {
+  min-height: 120px; /* Adequate height for textarea */
+  resize: vertical; /* Allow vertical resizing only */
+  line-height: 1.5;
 }
 
 .settings-page .form-input:focus,
@@ -971,7 +983,14 @@ body {
   background-color: #ffffff;
 }
 
-/* Submit button override */
+/* Placeholder styling */
+.settings-page .form-input::placeholder,
+.settings-page .form-textarea::placeholder {
+  color: #95a5a6;
+  opacity: 1;
+}
+
+/* Submit button */
 .settings-page .auth-btn {
   background: linear-gradient(45deg, #ffa502, #ff8c00);
   color: white;
@@ -984,11 +1003,18 @@ body {
   transition: all 0.3s ease;
   width: 100%;
   box-shadow: 0 2px 10px rgba(255, 165, 2, 0.3);
+  margin-top: 10px;
 }
 
 .settings-page .auth-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 15px rgba(255, 165, 2, 0.4);
+  background: linear-gradient(45deg, #ff8c00, #ffa502);
+}
+
+.settings-page .auth-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(255, 165, 2, 0.3);
 }
 
 /* Section title styling */
@@ -1025,12 +1051,35 @@ body {
   display: none;
 }
 
+.settings-page .success-message.show {
+  display: block;
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Error message styling */
+.settings-page .error-message {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-weight: 500;
+  display: none;
+}
+
+.settings-page .error-message.show {
+  display: block;
+  animation: slideIn 0.3s ease-out;
+}
+
 /* Info block for current settings */
 .settings-page .current-info {
   background: #fff8f0;
   border: 1px solid #ffd7a3;
   border-radius: 6px;
-  padding: 10px;
+  padding: 12px;
   margin-bottom: 15px;
   font-size: 14px;
   color: #2c3e50;
@@ -1038,9 +1087,137 @@ body {
 
 .settings-page .current-label {
   font-weight: 600;
+  color: #e67e22;
 }
 
+/* Animation for messages */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
+/* Additional CSS for icon + label layout in support section */
+.settings-page .label-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.settings-page .label-icon {
+  font-size: 16px;
+  color: #95a5a6;
+}
+
+.settings-page .form-input-solo,
+.settings-page .form-textarea-solo {
+  width: 100%;
+  padding: 14px;
+  border: 2px solid #ecf0f1;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: #fafbfc;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.settings-page .form-input-solo {
+  min-height: 48px;
+}
+
+.settings-page .form-textarea-solo {
+  min-height: 120px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.settings-page .form-input-solo:focus,
+.settings-page .form-textarea-solo:focus {
+  border-color: #ffa502;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 165, 2, 0.1);
+  background-color: #ffffff;
+}
+
+.settings-page .form-input-solo::placeholder,
+.settings-page .form-textarea-solo::placeholder {
+  color: #95a5a6;
+  opacity: 1;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .settings-page .settings-header {
+    padding: 20px 20px 10px 20px;
+  }
+  
+  .settings-page .settings-header h1 {
+    font-size: 1.8em;
+  }
+  
+  .settings-page .settings-card-parent {
+    padding: 10px;
+  }
+  
+  .settings-page .settings-card {
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .settings-page .input-group,
+  .settings-page .textarea-group {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  
+  .settings-page .input-icon,
+  .settings-page .textarea-icon {
+    margin-top: 0;
+    align-self: flex-start;
+  }
+}
+
+/* Focus management for accessibility */
+.settings-page .form-input:focus-visible,
+.settings-page .form-textarea:focus-visible,
+.settings-page .form-input-solo:focus-visible,
+.settings-page .form-textarea-solo:focus-visible,
+.settings-page .auth-btn:focus-visible {
+  outline: 2px solid #ffa502;
+  outline-offset: 2px;
+}
+
+/* Loading state for buttons */
+.settings-page .auth-btn.loading {
+  opacity: 0.7;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.settings-page .auth-btn.loading::after {
+  content: '';
+  width: 16px;
+  height: 16px;
+  margin-left: 8px;
+  border: 2px solid transparent;
+  border-top: 2px solid white;
+  border-radius: 50%;
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
 
 /* =====================================
@@ -1125,6 +1302,23 @@ body {
   min-height: calc(100vh - 200px);
   display: flex;
   flex-direction: column;
+}
+
+.support-link {
+  color: #e74c3c; /* warm orange color to stand out */
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px; /* space between icon and text */
+  transition: color 0.3s ease;
+}
+
+.support-link:hover,
+.support-link:focus {
+  color: #e74c3c; /* darker orange on hover/focus */
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 
@@ -1272,16 +1466,6 @@ body {
     margin: 40px auto;
     padding: 15px;
   }
-
-  .founders-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-    
-  .founder-photo {
-    width: 120px;
-    height: 120px;
-  }
 }
 
 
@@ -1343,6 +1527,30 @@ body {
 
   .footer-section {
     padding: 0 10px;
+  }
+
+
+
+    /* Founders grid stacks in one column */
+  .founders-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  /* Scale down images slightly */
+  .founder-photo {
+    width: 120px;
+    height: 120px;
+  }
+
+  /* Reduce card padding for smaller screens */
+  .founder-card {
+    padding: 1rem;
+  }
+
+  /* Responsive container padding */
+  .about-container {
+    padding: 0 1rem;
   }
 }
 

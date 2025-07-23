@@ -44,13 +44,26 @@
       </button>
       
       <div class="terms">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+        By registering, you agree to our
+        <a href="#" class="modal-link" data-url="{{ url_for('static', filename='terms.html') }}">Terms of Service</a> and
+        <a href="#" class="modal-link" data-url="{{ url_for('static', filename='privacy.html') }}">Privacy Policy</a>.
       </div>
     </div>
   </div>
 </div>
 
-<script src="{{ url_for('static', filename='script.js') }}"></script>
+<!-- Single reusable modal -->
+<div id="modal" class="modal" role="dialog" aria-modal="true" tabindex="-1">
+  <div class="modal-content" role="document">
+    <button class="close" onclick="hideModal()" aria-label="Close modal">&times;</button>
+    <div id="modalBody">
+      <!-- Content will be loaded here -->
+    </div>
+  </div>
+</div>
+
+
+
+
 
 {% endblock %}
-

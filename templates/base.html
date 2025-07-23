@@ -35,8 +35,8 @@
 
 
         {% if 'user_id' not in session %}
-        <a href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a>
         <a href="{{ url_for('register') }}"><i class="fas fa-user-plus"></i> Register</a>
+        <a href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a>
         {% else %}
 
           <a href="{{ url_for('integrityAI') }}"><i class="fas fa-brain"></i> IntegrityAI</a>
@@ -86,15 +86,16 @@
         </a>
 
         {% if 'user_id' not in session %}
-        <a href="{{ url_for('login') }}" class="auth-btn" style="text-decoration:none;">
-          <i class="fas fa-sign-in-alt"></i>
-          <span>Login</span>
-        </a>
-        
         <a href="{{ url_for('register') }}" class="auth-btn" style="text-decoration:none;">
           <i class="fas fa-user-plus"></i>
           <span>Register</span>
         </a>
+
+        <a href="{{ url_for('login') }}" class="auth-btn" style="text-decoration:none;">
+          <i class="fas fa-sign-in-alt"></i>
+          <span>Login</span>
+        </a>
+
         {% else %}
 
           <a href="{{ url_for('integrityAI') }}" class="auth-btn" style="text-decoration:none;">

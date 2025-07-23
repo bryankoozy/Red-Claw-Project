@@ -27,18 +27,19 @@
 
   <div class="modules-container">
     <div class="module-card">
+      <div class="module-icon">🤖</div>
+      <h3 class="module-title">IntegrityAI</h3>
+      <p class="module-description">AI-powered tools and analytics to detect, prevent, and address integrity violations in real-time.</p>
+    <a href="{{ url_for('integrityAI') }}"><button class="explore-btn">Explore</button></a>
+    </div>
+      <div class="module-card">
       <div class="module-icon">📚</div>
       <h3 class="module-title">IntegrityEdu</h3>
       <p class="module-description">Educational resources and training modules to build integrity awareness and ethical decision-making skills.</p>
       <a href="{{ url_for('integrityEdu') }}"><button class="explore-btn">Explore</button></a>
     </div>
 
-    <div class="module-card">
-      <div class="module-icon">🤖</div>
-      <h3 class="module-title">IntegrityAI</h3>
-      <p class="module-description">AI-powered tools and analytics to detect, prevent, and address integrity violations in real-time.</p>
-    <a href="{{ url_for('integrityAI') }}"><button class="explore-btn">Explore</button></a>
-    </div>
+
   </div>
 </div>
 {% endblock %}

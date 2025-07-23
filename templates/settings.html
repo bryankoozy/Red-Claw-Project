@@ -12,6 +12,34 @@
 
     <div class="settings-card-parent">
 
+        {% if current_user.role == 'admin' %}
+        <div class="settings-card">
+            <div class="section-title">Manage User Roles</div>
+            <form method="POST" action="{{ url_for('settings') }}">
+                <input type="hidden" name="action" value="toggle_admin">
+
+                <div class="form-group">
+                    <label class="form-label" for="user_id">Select User</label>
+                    <div class="input-group">
+                        <span class="input-icon">🛡️</span>
+                        <select class="form-input" name="user_id" id="user_id" required>
+                            {% for u in all_users %}
+                                {% if u.id != user.id %}
+                                    <option value="{{ u.id }}">
+                                        {{ u.name }} ({{ u.email }}) — Role: {{ u.role }}
+                                    </option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <button class="auth-btn" type="submit">Toggle Admin Status</button>
+            </form>
+        </div>
+        {% endif %}
+
+    
         <!-- Username -->
         <div class="settings-card">
             <div class="section-title">Account Information</div>

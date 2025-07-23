@@ -9,7 +9,7 @@ from models import db, User, SupportMessage
 
 
 # only uncomment and use the below line during development mode. comment it when going to production
-os.environ['FLASK_ENV'] = 'development'
+# os.environ['FLASK_ENV'] = 'development'
 
 
 
@@ -187,9 +187,34 @@ def settings():
             else:
                 flash("Please fill in both subject and message.", "error")
 
-        return redirect(url_for('settings'))
+        elif action == "toggle_admin":
+            if user.role != 'admin':
+                flash("You are not authorized to perform this action.", "error")
+                return redirect(url_for('settings'))
 
-    return render_template("settings.html", user=user)
+            user_id = request.form.get('user_id')
+            target_user = User.query.get(user_id)
+
+            if not target_user:
+                flash("User not found.", "error")
+            elif target_user.id == user.id:
+                flash("You cannot change your own admin status.", "warning")
+            else:
+                if target_user.role == 'admin':
+                    target_user.role = 'user'
+                    flash(f"{target_user.name} has been demoted to user.", "success")
+                else:
+                    target_user.role = 'admin'
+                    flash(f"{target_user.name} has been promoted to admin.", "success")
+                db.session.commit()
+
+
+        return redirect(url_for('settings'))
+    
+    # Pass all users to the template if current user is admin
+    all_users = User.query.order_by(User.name).all() if user.role == 'admin' else []
+    return render_template("settings.html", user=user, all_users=all_users)
+
 
 
 

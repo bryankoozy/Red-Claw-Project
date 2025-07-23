@@ -105,6 +105,50 @@ function toggleSidebar() {
 
 
 
+// ------------------------------------
+// Modal for terms of service and privacy policy
+// ------------------------------------
+// Attach event listeners to links with class modal-link
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.modal-link').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const url = link.getAttribute('data-url');
+      showModal(url);
+    });
+  });
+});
+
+function showModal(file) {
+  fetch(file)
+    .then(response => {
+      if (!response.ok) throw new Error('Network response was not ok');
+      return response.text();
+    })
+    .then(html => {
+      document.getElementById('modalBody').innerHTML = html;
+      document.getElementById('modal').style.display = 'flex';
+    })
+    .catch(error => {
+      document.getElementById('modalBody').innerHTML = "<p>Error loading content.</p>";
+      document.getElementById('modal').style.display = 'flex';
+      console.error('Error fetching modal content:', error);
+    });
+}
+
+function hideModal() {
+  document.getElementById('modal').style.display = 'none';
+}
+
+window.onclick = function(event) {
+  const modal = document.getElementById('modal');
+  if (event.target === modal) {
+    hideModal();
+  }
+}
+
+
+
 
 
 

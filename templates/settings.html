@@ -84,29 +84,34 @@
         </div>
 
         <!-- Contact Us -->
-        <div class="settings-card">
+        <div class="settings-card" id="support-message-section">
             <div class="section-title">Support</div>
 
             <form method="POST" action="{{ url_for('settings') }}">
                 <input type="hidden" name="action" value="contact">
 
+                <!-- Subject Field -->
                 <div class="form-group">
-                    <label class="form-label" for="subject">Subject</label>
-                    <div class="input-group">
-                        <span class="input-icon">📋</span>
-                        <input type="text" class="form-input" id="subject" name="subject" placeholder="What's this about?" required>
+                    <div class="label-with-icon">
+                        <span class="label-icon">📋</span>
+                        <label class="form-label" for="subject">SUBJECT</label>
                     </div>
+                    <input type="text" class="form-input-solo" id="subject" name="subject" placeholder="What's this about?" required>
                 </div>
 
-                <div class="form-group textarea-group">
-                    <label class="form-label" for="message">Message</label>
-                    <span class="textarea-icon">💬</span>
-                    <textarea class="form-textarea" id="message" name="message" placeholder="Tell us what's on your mind..." required></textarea>
+                <!-- Message Field -->
+                <div class="form-group">
+                    <div class="label-with-icon">
+                        <span class="label-icon">💬</span>
+                        <label class="form-label" for="message">MESSAGE</label>
+                    </div>
+                    <textarea class="form-textarea-solo" id="message" name="message" placeholder="Tell us what's on your mind..." required></textarea>
                 </div>
 
                 <button class="auth-btn" type="submit">Send Message</button>
             </form>
         </div>
+
 
     </div>
 </div>

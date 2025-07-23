@@ -23,19 +23,9 @@
         <input type="password" id="loginPassword" name="password" placeholder="Enter your password" required />
       </div>
       
-      <div class="forgot-password">
-        <a href="#">Forgot your password?</a>
-      </div>
-      
+
       <button type="submit" class="login-btn">Sign in</button>
     </form>
-    
-    <div class="divider">or continue with</div>
-    
-    <button class="google-btn" onclick="handleGoogleLogin()">
-      <div class="google-icon">G</div>
-      Google
-    </button>
     
     <div class="signup-link">
       Don't have an account? <a href="{{ url_for('register') }}">Sign up</a>

@@ -65,6 +65,18 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // ------------------------------------
+  // Modal for terms of service and privacy policy
+  // ------------------------------------
+  document.querySelectorAll('.modal-link').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const url = link.getAttribute('data-url');
+      showModal(url);
+    });
+  });
+
 });
 
 
@@ -108,17 +120,6 @@ function toggleSidebar() {
 // ------------------------------------
 // Modal for terms of service and privacy policy
 // ------------------------------------
-// Attach event listeners to links with class modal-link
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.modal-link').forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      const url = link.getAttribute('data-url');
-      showModal(url);
-    });
-  });
-});
-
 function showModal(file) {
   fetch(file)
     .then(response => {
@@ -167,15 +168,6 @@ function exploreModule(type) {
 
 
 
-
-
-
-// ---------------------------
-// Placeholder for Google Signup
-// ---------------------------
-function handleGoogleSignup() {
-  alert('Google sign-up functionality would be implemented here');
-}
 
 
 

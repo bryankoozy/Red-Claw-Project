@@ -88,6 +88,10 @@ def admin_required(f):
 def home():
     return render_template("index.html")
 
+@app.route("/aboutus")
+def aboutus():
+    return render_template("aboutus.html")
+
 @app.route("/dashboard")
 @admin_required
 def dashboard():

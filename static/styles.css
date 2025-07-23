@@ -1,4 +1,6 @@
-/* Reset */
+/* -------------------------------
+   RESET & BASE STYLES
+---------------------------------*/
 * {
   margin: 0;
   padding: 0;
@@ -17,15 +19,17 @@ body {
   overflow-x: hidden;
 }
 
-/* Container Layout */
+/* -------------------------------
+   LAYOUT STRUCTURE
+---------------------------------*/
 .container {
   display: flex;
   position: relative;
 }
 
-
-
-/* Top Navigation Bar */
+/* -------------------------------
+   TOP NAVIGATION BAR
+---------------------------------*/
 .topnav {
   position: fixed;
   top: 0;
@@ -37,7 +41,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 0 30px;
-  z-index: 2000; /* Higher than sidebar */
+  z-index: 2000;
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
@@ -48,10 +52,9 @@ body {
 }
 
 .logo-container img {
-  height: 70px; /* Adjust size if needed */
+  height: 70px;
   width: 70px;
 }
-
 
 .topnav-right a {
   color: #fff;
@@ -67,10 +70,9 @@ body {
   color: #ffa502;
 }
 
-
-
-
-/* Welcome User Styling */
+/* -------------------------------
+   WELCOME USER DISPLAY
+---------------------------------*/
 .welcome-user {
   display: inline-flex;
   align-items: center;
@@ -81,19 +83,22 @@ body {
   transition: transform 0.3s ease;
 }
 
-/* .welcome-user::before {
+/* Unused welcome icon styling - currently commented
+.welcome-user::before {
   content: '\f007';
   font-family: 'Font Awesome 6 Free';
   font-weight: 900;
   margin-right: 8px;
   font-size: 17px;
-} */
-
-/* .welcome-user:hover {
+}
+.welcome-user:hover {
   color: #ffa733;
-} */
+}
+*/
 
-/* Sidebar */
+/* -------------------------------
+   SIDEBAR & TOGGLE
+---------------------------------*/
 .sidebar {
   width: 320px;
   background: linear-gradient(180deg, #2c5282 0%, #1a365d 100%);
@@ -109,17 +114,16 @@ body {
   box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
   overflow-y: auto;
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: none;
 }
 
 .sidebar::-webkit-scrollbar {
-  display: none; /* Chrome, Safari */
+  display: none;
 }
 
 .sidebar.closed {
   transform: translateX(-100%);
 }
-
 
 /* Sidebar Toggle Button */
 .toggle-sidebar-btn {
@@ -149,16 +153,17 @@ body {
   transform: scale(1.1);
 }
 
-/* Logo Section */
+/* -------------------------------
+   SIDEBAR CONTENT (LOGO + AUTH)
+---------------------------------*/
 .logo-section {
   text-align: center;
-  padding: 20px 20px 20px 20px;
+  padding: 20px;
   border-bottom: 2px solid rgba(255, 255, 255, 0.1);
 }
 
 .logo-section img {
-  margin-top: 40px;  /* adjust the value to your liking */
-
+  margin-top: 40px;
   width: 100%;
   max-width: 180px;
   border-radius: 15px;
@@ -223,7 +228,9 @@ body {
   font-size: 18px;
 }
 
-/* Main Content */
+/* -------------------------------
+   MAIN CONTENT AREA
+---------------------------------*/
 .main-content {
   flex: 1;
   display: flex;
@@ -237,7 +244,9 @@ body {
   margin-left: 0;
 }
 
-/* Header */
+/* -------------------------------
+   HEADER SECTION
+---------------------------------*/
 .header {
   background: black;
   position: relative;
@@ -270,9 +279,10 @@ body {
   padding: 0;
 }
 
+/* Floating Title Box */
 .title-box {
   background: rgba(0, 0, 0, 0.8);
-  margin-top: 100px;  
+  margin-top: 100px;
   padding: 40px 60px;
   border-radius: 20px;
   backdrop-filter: blur(10px);
@@ -280,11 +290,6 @@ body {
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
   margin-bottom: 30px;
   /* animation: titleFloat 3s ease-in-out infinite; */
-}
-
-@keyframes titleFloat {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
 }
 
 .main-title {
@@ -297,6 +302,7 @@ body {
   line-height: 1.2;
 }
 
+/* CTA Button */
 .find-out-more-container {
   background: rgba(255, 165, 2, 0.9);
   padding: 20px 40px;
@@ -335,7 +341,11 @@ body {
   50% { transform: translateY(-8px); }
 }
 
-/* Content */
+/* @keyframes titleFloat: Not used, commented */
+
+/* -------------------------------
+   CONTENT SECTIONS
+---------------------------------*/
 .content-section {
   background: linear-gradient(135deg, #f5f5dc 0%, #e8e8e8 100%);
   color: #333;
@@ -355,7 +365,9 @@ body {
   line-height: 1.8;
 }
 
-/* Modules */
+/* -------------------------------
+   MODULE CARDS
+---------------------------------*/
 .modules-container {
   display: flex;
   justify-content: space-around;
@@ -441,84 +453,11 @@ body {
 
 
 
-/* Small Screens (≤768px): Show sidebar and toggle button, hide topnav */
-@media (max-width: 850px) {
-  .sidebar {
-    display: flex;
-    flex-direction: column;
-  }
+/* =====================================
+   REGISTER PAGE STYLES
+===================================== */
 
-  .welcome-user {
-    justify-content: center;
-    margin: 10px auto;
-  }
-
-  .topnav {
-    display: none;
-  }
-
-  .main-content {
-    margin-left: 0;
-    padding-top: 0px;
-  }
-
-  .toggle-sidebar-btn {
-    display: block;
-  }
-
-  .main-title {
-    font-size: 2.5em;
-  }
-  
-  .title-box {
-    padding: 30px 40px;
-  }
-  
-  .modules-container {
-    flex-direction: column;
-    gap: 30px;
-  }
-  
-  .module-card {
-    min-width: auto;
-  }
-}
-
-/* Large Screens (≥769px): Show topnav, hide sidebar and toggle button */
-@media (min-width: 851px) {
-  
-  .topnav {
-    display: flex;
-  }
-
-  .sidebar {
-    display: none;
-  }
-
-  .welcome-user {
-  margin-left: 20px;
-  margin-bottom: 5px;
-  }
-
-  .toggle-sidebar-btn {
-    display: none;
-  }
-
-  .main-content {
-    margin-left: 0px; /* Adjust to sidebar width */
-  }
-}
-
-
-
-
-
-
-/* Register page */
-
-/* Override base template background for register page */
-
-
+/* Container setup */
 .register-container {
   max-width: 400px;
   margin: 60px auto;
@@ -527,6 +466,7 @@ body {
   background-color: transparent;
 }
 
+/* Logo and headings */
 .register-logo {
   font-size: 2.5rem;
   font-weight: bold;
@@ -548,6 +488,7 @@ body {
   margin-bottom: 1.5rem;
 }
 
+/* Form structure */
 .register-form {
   text-align: left;
 }
@@ -586,6 +527,7 @@ body {
   color: #999;
 }
 
+/* Buttons */
 .register-btn {
   width: 100%;
   padding: 12px 16px;
@@ -602,13 +544,6 @@ body {
 
 .register-btn:hover {
   background-color: #333;
-}
-
-.divider {
-  font-size: 0.9rem;
-  color: #999;
-  margin: 1.5rem 0 1rem 0;
-  text-align: center;
 }
 
 .google-btn {
@@ -647,6 +582,14 @@ body {
   font-size: 12px;
 }
 
+/* Divider & terms */
+.divider {
+  font-size: 0.9rem;
+  color: #999;
+  margin: 1.5rem 0 1rem 0;
+  text-align: center;
+}
+
 .terms {
   font-size: 0.85rem;
   color: #666;
@@ -664,26 +607,12 @@ body {
   color: #2c5f7a;
 }
 
-/* Ensure the page background matches your dark theme */
-
-@media (max-width: 480px) {
-  .register-logo {
-    font-size: 2rem;
-  }
-  
-  .register-container {
-    max-width: 320px;
-    margin: 40px auto;
-    padding: 15px;
-  }
-}
 
 
 
-
-
-
-/* Login page */
+/* =====================================
+   LOGIN PAGE STYLES
+===================================== */
 
 .login-container {
   max-width: 400px;
@@ -736,6 +665,7 @@ body {
   background-color: #333;
 }
 
+/* Forgot password & signup links */
 .forgot-password {
   text-align: right;
   margin-top: 0.5rem;
@@ -769,33 +699,14 @@ body {
   text-decoration: underline;
 }
 
-@media (max-width: 480px) {
-  .login-logo {
-    font-size: 2rem;
-  }
-  
-  .login-container {
-    max-width: 320px;
-    margin: 40px auto;
-    padding: 15px;
-  }
-}
 
+/* =====================================
+   INTEGRITYAI PAGE STYLES
+===================================== */
 
-
-
-
-
-
-
-
-
-
-
-/* integrityAI page  */
-
+/* File upload button */
 .file-input {
-  display: none; /* hide the default file input */
+  display: none;
 }
 
 .file-input-label {
@@ -821,10 +732,9 @@ body {
   box-shadow: 0 8px 25px rgba(255, 165, 2, 0.4);
 }
 
-
-
+/* Results section */
 .results-section {
-  max-width: 80% !important; /* remove max-width limits */
+  max-width: 80% !important;
   width: 80% !important;
   padding: 40px !important;
   box-sizing: border-box;
@@ -844,21 +754,21 @@ body {
   letter-spacing: 1px;
 }
 
-
 .results-content {
   background: white;
-  padding: 30px 40px;     /* slightly more padding */
+  padding: 30px 40px;
   border-radius: 12px;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
   min-height: 180px;
   color: #333;
-  max-width: 1400px;      /* wider box inside the section */
-  margin: 0 auto;         /* center the white box */
-  margin-bottom: 40px;
+  max-width: 1400px;
+  margin: 0 auto 40px auto;
 }
 
 
-
+/* =====================================
+   CHATBOT BUTTON
+===================================== */
 
 .chatbot-fab {
   position: fixed;
@@ -887,16 +797,17 @@ body {
 }
 
 
+/* =====================================
+   FLASH MESSAGES
+===================================== */
 
-
-/* Flash message styles */
 .flash-messages {
-  position: absolute; /* or fixed */
-  top: 4rem; /* Distance from top */
+  position: absolute;
+  top: 4rem;
   left: 50%;
-  transform: translateX(-50%); /* Center horizontally */
-  width: 90%; /* Adjust width as needed */
-  max-width: 500px; /* Maximum width */
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 500px;
   z-index: 2000;
 }
 
@@ -958,185 +869,185 @@ body {
 
 
 
+/* =====================================
+   SETTINGS PAGE STYLES
+===================================== */
 
-
-
-
-
-
-
+/* Header section */
 .settings-page .settings-header {
-    text-align: center;
-    padding: 40px 40px 10px 40px;
+  text-align: center;
+  padding: 40px 40px 10px 40px;
 }
 
 .settings-page .settings-header h1 {
-    margin-bottom: 8px;
-    font-size: 2.2em;
-    font-weight: 700;
-    color: #2c3e50;
+  margin-bottom: 8px;
+  font-size: 2.2em;
+  font-weight: 700;
+  color: #2c3e50;
 }
 
 .settings-page .settings-header p {
-    color: #7f8c8d;
-    font-size: 1.1em;
+  color: #7f8c8d;
+  font-size: 1.1em;
 }
 
+/* Card wrapper */
 .settings-page .settings-card-parent {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
+/* Card style */
 .settings-page .settings-card {
-    background: #ffffff;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    margin-bottom: 25px;
-    width: 100%;
-    max-width: 1200px;
-    border: 1px solid #f1f2f6;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin-bottom: 25px;
+  width: 100%;
+  max-width: 1200px;
+  border: 1px solid #f1f2f6;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .settings-page .settings-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
 }
 
+/* Form group layout */
 .settings-page .form-group {
-    margin-bottom: 18px;
+  margin-bottom: 18px;
 }
 
 .settings-page .form-label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: #2c3e50;
-    font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #2c3e50;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
+/* Input and textarea fields */
 .settings-page .input-group,
 .settings-page .textarea-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .settings-page .input-icon,
 .settings-page .textarea-icon {
-    font-size: 20px;
-    color: #95a5a6;
+  font-size: 20px;
+  color: #95a5a6;
 }
 
 .settings-page .form-input,
 .settings-page .form-textarea {
-    flex: 1;
-    width: 100%;
-    padding: 14px;
-    border: 2px solid #ecf0f1;
-    border-radius: 8px;
-    font-size: 16px;
-    background-color: #fafbfc;
-    transition: all 0.3s ease;
-    box-sizing: border-box;
+  flex: 1;
+  width: 100%;
+  padding: 14px;
+  border: 2px solid #ecf0f1;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: #fafbfc;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
 }
 
 .settings-page .form-input:focus,
 .settings-page .form-textarea:focus {
-    border-color: #ffa502;
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(255, 165, 2, 0.1);
-    background-color: #ffffff;
+  border-color: #ffa502;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 165, 2, 0.1);
+  background-color: #ffffff;
 }
 
-/* Optional: Override auth-btn only inside settings page */
+/* Submit button override */
 .settings-page .auth-btn {
-    background: linear-gradient(45deg, #ffa502, #ff8c00);
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    width: 100%;
-    box-shadow: 0 2px 10px rgba(255, 165, 2, 0.3);
+  background: linear-gradient(45deg, #ffa502, #ff8c00);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  box-shadow: 0 2px 10px rgba(255, 165, 2, 0.3);
 }
 
 .settings-page .auth-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 15px rgba(255, 165, 2, 0.4);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(255, 165, 2, 0.4);
 }
 
+/* Section title styling */
 .settings-page .section-title {
-    font-size: 18px;
-    font-weight: 600;
-    color: #2c3e50;
-    margin-bottom: 20px;
-    text-align: center;
-    position: relative;
+  font-size: 18px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  text-align: center;
+  position: relative;
 }
 
 .settings-page .section-title::after {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 40px;
-    height: 2px;
-    background: #ffa502;
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 2px;
+  background: #ffa502;
 }
 
+/* Success message */
 .settings-page .success-message {
-    background: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-    padding: 12px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    text-align: center;
-    font-weight: 500;
-    display: none;
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-weight: 500;
+  display: none;
 }
 
+/* Info block for current settings */
 .settings-page .current-info {
-    background: #fff8f0;
-    border: 1px solid #ffd7a3;
-    border-radius: 6px;
-    padding: 10px;
-    margin-bottom: 15px;
-    font-size: 14px;
-    color: #2c3e50;
+  background: #fff8f0;
+  border: 1px solid #ffd7a3;
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  color: #2c3e50;
 }
 
 .settings-page .current-label {
-    font-weight: 600;
-}
-
-@media (max-width: 768px) {
-    .settings-page .settings-card {
-        width: 90%;
-        max-width: none;
-    }
+  font-weight: 600;
 }
 
 
 
 
+/* =====================================
+   FOOTER STYLES
+===================================== */
 
-
-/* Footer Styles */
+/* Main footer section */
 .footer {
   background: linear-gradient(135deg, #2c3e50, #34495e);
   color: white;
@@ -1154,6 +1065,7 @@ body {
   padding: 0 20px 30px 20px;
 }
 
+/* Section heading and text */
 .footer-section h4 {
   color: #e74c3c;
   margin-bottom: 15px;
@@ -1169,6 +1081,7 @@ body {
   color: #ecf0f1;
 }
 
+/* Links inside footer */
 .footer-section ul {
   list-style: none;
   padding: 0;
@@ -1193,6 +1106,7 @@ body {
   color: #e74c3c;
 }
 
+/* Footer bottom bar */
 .footer-bottom {
   border-top: 1px solid #34495e;
   padding: 20px;
@@ -1206,22 +1120,252 @@ body {
   font-size: 0.9em;
 }
 
-/* For sticky footer (if using Option 2) */
+/* Sticky footer wrapper */
 .page-wrapper {
-  min-height: calc(100vh - 200px); /* Adjust based on footer height */
+  min-height: calc(100vh - 200px);
   display: flex;
   flex-direction: column;
 }
 
-/* Responsive footer */
-@media (max-width: 768px) {
+
+
+/* -------------------------------
+   ABOUT PAGE CONTENT
+---------------------------------*/
+.about-container {
+  max-width: 1100px;
+  margin: 2rem auto 0 auto; 
+  padding: 0 1rem;
+  color: #2c5282;
+}
+
+.about-intro {
+  margin-bottom: 2rem;
+}
+
+.about-intro h2 {
+  font-size: 2rem;
+  color: #2c5282;
+  margin-bottom: 0.5rem;
+}
+
+.about-section {
+  margin-bottom: 2rem;
+}
+
+.about-section h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  color: #2c5282;
+}
+
+
+/* -------------------------------
+   ABOUT PAGE - GROUP PHOTO (FIXED)
+---------------------------------*/
+.GroupPhoto-container {
+  position: relative;
+  width: 100%;
+  height: auto; /* Allow natural height */
+}
+
+.header-image {
+  width: 100%;
+  height: auto; /* Maintain natural aspect ratio */
+  object-fit: contain; /* Show full image without cropping */
+  display: block;
+  max-width: 100%;
+}
+
+/* -------------------------------
+   ABOUT PAGE - founder 
+---------------------------------*/
+.founders-section {
+    margin-bottom: 4rem;
+    padding: 1rem 0;
+}
+
+.founders-section h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #2c5282;
+}
+
+.founders-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.founder-card {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.founder-card:hover {
+    transform: translateY(-5px);
+}
+
+.founder-image {
+    margin-bottom: 1rem;
+}
+
+.founder-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #2c5282;; /* Red Claw theme color */
+}
+
+.founder-info h3 {
+    margin: 1rem 0 0.5rem 0;
+    color: #2c5282;
+    font-size: 1.3rem;
+}
+
+.founder-title {
+    color: #2c5282;;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.founder-description {
+    color: #2c5282;
+    line-height: 1.5;
+    font-size: 0.95rem;
+}
+
+
+
+
+/* =====================================
+   RESPONSIVE DESIGN
+===================================== */
+
+/* Devices ≤480px - Small screens (e.g., mobile) */
+@media (max-width: 480px) {
+  /* Register Page */
+  .register-logo {
+    font-size: 2rem;
+  }
+
+  .register-container {
+    max-width: 320px;
+    margin: 40px auto;
+    padding: 15px;
+  }
+
+  /* Login Page */
+  .login-logo {
+    font-size: 2rem;
+  }
+
+  .login-container {
+    max-width: 320px;
+    margin: 40px auto;
+    padding: 15px;
+  }
+
+  .founders-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+    
+  .founder-photo {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+
+
+
+
+/* Devices ≤850px - Tablets and small desktops */
+@media (max-width: 850px) {
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .welcome-user {
+    justify-content: center;
+    margin: 10px auto;
+  }
+
+  .topnav {
+    display: none;
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding-top: 0px;
+  }
+
+  .toggle-sidebar-btn {
+    display: block;
+  }
+
+  .main-title {
+    font-size: 2.5em;
+  }
+
+  .title-box {
+    padding: 30px 40px;
+  }
+
+  .modules-container {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .module-card {
+    min-width: auto;
+  }
+
+  .settings-page .settings-card {
+    width: 90%;
+    max-width: none;
+  }
+
   .footer-content {
     grid-template-columns: 1fr;
     text-align: center;
     gap: 20px;
   }
-  
+
   .footer-section {
     padding: 0 10px;
+  }
+}
+
+/* Devices ≥851px - Larger screens (e.g., desktops) */
+@media (min-width: 851px) {
+  .topnav {
+    display: flex;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .welcome-user {
+    margin-left: 20px;
+    margin-bottom: 5px;
+  }
+
+  .toggle-sidebar-btn {
+    display: none;
+  }
+
+  .main-content {
+    margin-left: 0px;
   }
 }

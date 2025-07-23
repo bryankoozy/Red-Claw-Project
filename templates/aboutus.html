@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}About Us - Red Claw{% endblock %}
+
+{% block content %}
+
+<div class="GroupPhoto-container">
+  <img src="{{ url_for('static', filename='img/GroupPhoto.jpg') }}" alt="Group-photo" class="header-image" />
+</div>
+
+<body>
+  <main class="about-container">
+    <section class="about-intro">
+      <h2>About Us</h2>
+      <p>The Red Claw Integrity Project is dedicated to promoting anti-corruption efforts by harnessing the power of technology and education. This initiative is proudly driven by three passionate students from the Singapore University of Social Sciences (SUSS), specializing in Information and Communication Technology (ICT) and Public Safety and Security (PSS).</p>
+    </section>
+
+    <section class="about-section">
+      <h3>Our Mission</h3>
+      <p>Empower communities and institutions with innovative tools and knowledge that foster transparency, accountability, and integrity.</p>
+    </section>
+
+    <section class="about-section">
+      <h3>Our Vision</h3>
+      <p>Create a future where corruption is minimized through informed action and cutting-edge solutions, ensuring a fair and just society for all.</p>
+    </section>
+  </main>
+
+  
+  <!-- Founders Section -->
+  <div class="founders-section">
+      <h2>Meet Our Founders</h2>
+      <div class="founders-grid">
+          <div class="founder-card">
+              <div class="founder-image">
+                  <img src="{{ url_for('static', filename='img/Clarissa.jpg') }}" alt="Clarissa" class="founder-photo">
+              </div>
+              <div class="founder-info">
+                  <h3>Clarissa</h3>
+                  <p class="founder-title">PSS Specialist</p>
+                  <p class="founder-description">Currently a Year 4 student at the Singapore University of Social Sciences specializing in Public Safety and Security.</p>
+              </div>
+          </div>
+          
+          <div class="founder-card">
+              <div class="founder-image">
+                  <img src="{{ url_for('static', filename='img/Bryan.jpg') }}" alt="Bryan" class="founder-photo">
+              </div>
+              <div class="founder-info">
+                  <h3>Bryan</h3>
+                  <p class="founder-title">ICT Specialist</p>
+                  <p class="founder-description">Currently a Year 3 student at the Singapore University of Social Sciences specializing in Information and Communication Technology.</p>
+              </div>
+          </div>
+          
+          <div class="founder-card">
+              <div class="founder-image">
+                  <img src="{{ url_for('static', filename='img/YiJing.jpg') }}" alt="Yi Jing" class="founder-photo">
+              </div>
+              <div class="founder-info">
+                  <h3>Yi Jing</h3>
+                  <p class="founder-title">ICT Specialist</p>
+                  <p class="founder-description">Currently a Year 3 student at the Singapore University of Social Sciences specializing in Information and Communication Technology.</p>
+              </div>
+          </div>
+      </div>
+  </div>
+
+</body>
+
+
+
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}DashboardDetails - Red Claw{% endblock %}
+
+{% block content %}
+<div class="dashboardDetail-container">
+  <div class="dashboard-header">
+    <h1 class="dashboard-title">Dashboard Details</h1>
+  </div>
+
+  <div class="table-responsive">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Score</th>
+          <th>Joined</th>
+          <th>Remarks</th>
+          <th>Support Messages</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+        <tr>
+          <td data-label="ID">{{ user.id }}</td>
+          <td data-label="Name">{{ user.name }}</td>
+          <td data-label="Email">{{ user.email }}</td>
+          <td data-label="Role">{{ user.role }}</td>
+          <td data-label="Score">
+            {% if user.score is not none %}
+              {{ user.score }}
+            {% else %}
+              <span class="text-muted">N/A</span>
+            {% endif %}
+          </td>
+          <td data-label="Joined">{{ user.created_at.strftime('%d %b %Y %H:%M') }}</td>
+          <td data-label="Remarks"></td>  {# Empty for now #}
+          <td data-label="Support Messages">
+            {% if user.support_messages %}
+              <ul style="padding-left: 18px; margin: 0;">
+                {% for msg in user.support_messages %}
+                  <li>
+                    <strong>{{ msg.subject }}:</strong> {{ msg.message }} <br>
+                    <small><em>{{ msg.created_at.strftime('%d %b %Y %H:%M') }}</em></small>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <span class="text-muted">No messages</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

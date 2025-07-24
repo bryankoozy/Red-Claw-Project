@@ -9,9 +9,11 @@ from models import db, User, SupportMessage
 from collections import OrderedDict
 from datetime import datetime, timedelta
 import json
+from sqlalchemy.orm import joinedload
+
 
 # only uncomment and use the below line during development mode. comment it when going to production
-# os.environ['FLASK_ENV'] = 'development'
+os.environ['FLASK_ENV'] = 'development'
 
 
 
@@ -173,10 +175,20 @@ def dashboard():
     )
 
 
-@app.route('/dashboardDetails')
+
+
+
+@app.route('/dashboardDetail')
 @admin_required
-def dashboardDetails():
-    return "Details page coming soon!"
+def dashboardDetail():
+    # Fetch all users ordered by creation date descending
+    users = User.query.options(joinedload(User.support_messages)).order_by(User.id.asc()).all()
+
+    return render_template('dashboardDetail.html', users=users)
+
+
+
+
 
 
 
@@ -277,7 +289,7 @@ def settings():
         return redirect(url_for('settings'))
     
     # Pass all users to the template if current user is admin
-    all_users = User.query.order_by(User.name).all() if user.role == 'admin' else []
+    all_users = User.query.order_by(User.id).all() if user.role == 'admin' else []
     return render_template("settings.html", user=user, all_users=all_users)
 
 

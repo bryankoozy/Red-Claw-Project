@@ -1571,6 +1571,8 @@ body {
   min-width: 120px;
   font-weight: 500;
   font-size: 0.95rem;
+  color: #2c3e50;
+
 }
 
 .dashboard-page .bar-container {
@@ -1598,6 +1600,8 @@ body {
 .dashboard-page .high-bar { background-color: #28a745; }
 .dashboard-page .medium-bar { background-color: #ffc107; color: #333 !important; }
 .dashboard-page .low-bar { background-color: #dc3545; }
+.dashboard-page .no-score-bar { background-color: #6c757d; }
+
 
 .dashboard-page .score-count {
   min-width: 40px;
@@ -1621,6 +1625,36 @@ body {
 }
 
 .dashboard-page .view-details-btn:hover {
+  background-color: #0056b3;
+}
+
+.dashboard-page .year-selector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  gap: 1rem;
+}
+
+.dashboard-page .year-selector .year-label {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.dashboard-page .year-selector .btn-year {
+  background-color: #007bff;
+  color: white;
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+}
+
+.dashboard-page .year-selector .btn-year:hover {
   background-color: #0056b3;
 }
 

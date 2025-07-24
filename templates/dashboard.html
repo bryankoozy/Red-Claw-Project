@@ -9,10 +9,17 @@
     <div class="dashboard-container">
         <h1>Dashboard</h1>
 
+        <!-- Year selector buttons -->
+        <div class="year-selector">
+            <a href="{{ url_for('dashboard', year=selected_year - 1) }}" class="btn-year">← Previous</a>
+            <span class="year-label">Year: {{ selected_year }}</span>
+            <a href="{{ url_for('dashboard', year=selected_year + 1) }}" class="btn-year">Next →</a>
+        </div>
+
         <div class="main-content">
             <!-- Left: Monthly Sign Ups Chart -->
             <div class="chart-section">
-                <h2 class="chart-title">Monthly Sign Ups</h2>
+                <h2 class="chart-title">Monthly Sign Ups ({{ selected_year }})</h2>
                 <div class="chart-canvas">
                     <canvas id="signupLineChart"></canvas>
                 </div>
@@ -20,7 +27,7 @@
 
             <!-- Right: Total Sign Ups -->
             <div class="chart-section">
-                <h2 class="chart-title">Total Sign Ups</h2>
+                <h2 class="chart-title">Total Sign Ups ({{ selected_year }})</h2>
                 <div style="display: flex; align-items: center; justify-content: center; height: 300px;">
                     <div style="text-align: center;">
                         <div id="totalSignups" style="font-size: 8rem; font-weight: 700; color: #007bff; margin-bottom: 10px;">-</div>
@@ -28,6 +35,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
 
         <!-- Score Bars Section -->
@@ -57,6 +65,15 @@
                     </div>
                     <div class="score-count" id="lowCount">0</div>
                 </div>
+
+                <div class="score-bar">
+                    <div class="score-label">No Score Yet</div>
+                    <div class="bar-container">
+                        <div class="bar-fill no-score-bar" id="noScoreBar">0</div>
+                    </div>
+                    <div class="score-count" id="noScoreCount">0</div>
+                </div>
+
             </div>
         </div>
 

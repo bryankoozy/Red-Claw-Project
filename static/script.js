@@ -155,6 +155,13 @@ window.addEventListener('DOMContentLoaded', () => {
           document.getElementById('lowBar').style.width = `${lowPercent}%`;
           document.getElementById('lowBar').textContent = scores[2];
           document.getElementById('lowCount').textContent = scores[2];
+          
+          // No Score Yet
+          const noScorePercent = (scores[3] / maxScore) * 100;
+          document.getElementById('noScoreBar').style.width = `${noScorePercent}%`;
+          document.getElementById('noScoreBar').textContent = scores[3];
+          document.getElementById('noScoreCount').textContent = scores[3];
+                
       }, 500);
   }
 

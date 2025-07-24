@@ -130,40 +130,46 @@ def logout():
 
 
 
-
 @app.route("/dashboard")
 @admin_required
 def dashboard():
-    # Step 1: Group user signups by month (e.g. Jan, Feb, etc.)
+    # Get year from query string, default to current year
+    year = request.args.get('year', type=int)
+    if not year:
+        year = datetime.utcnow().year
+
+    # Step 1: Group user signups by month for the selected year
     signups_by_month = db.session.query(
         extract('month', User.created_at).label('month'),
         func.count(User.id)
+    ).filter(
+        extract('year', User.created_at) == year
     ).group_by('month').order_by('month').all()
 
-    # Create a full list of months
     month_names = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     signup_dict = OrderedDict((month, 0) for month in month_names)
 
-    # Populate real values
     for month_num, count in signups_by_month:
         signup_dict[month_names[int(month_num) - 1]] = count
 
     months = list(signup_dict.keys())
     signups = list(signup_dict.values())
 
-    # Step 2: Score level categorization (example: high ≥ 80, medium ≥ 50, low < 50)
-    high = User.query.filter(User.score >= 80).count()
-    medium = User.query.filter((User.score >= 50) & (User.score < 80)).count()
-    low = User.query.filter((User.score < 50) & (User.score != None)).count()
+    # Step 2: Score level categorization (your existing logic)
+    high = User.query.filter(User.score >= 50).count()
+    medium = User.query.filter((User.score >= 30) & (User.score < 50)).count()
+    low = User.query.filter((User.score < 30) & (User.score != None)).count()
+    no_score = User.query.filter(User.score == None).count()
 
-    score_counts = [high, medium, low]
+    score_counts = [high, medium, low, no_score]
 
     return render_template(
         'dashboard.html',
         months=months,
         signups=signups,
-        score_counts=score_counts
+        score_counts=score_counts,
+        selected_year=year
     )
 
 

@@ -1,15 +1,17 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session, abort, send_file
+from flask import Flask, render_template, request, redirect, url_for, flash, session, abort, send_file, jsonify
 from functools import wraps
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import func, extract
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
 import os
 from models import db, User, SupportMessage
-
-
+from collections import OrderedDict
+from datetime import datetime, timedelta
+import json
 
 # only uncomment and use the below line during development mode. comment it when going to production
-os.environ['FLASK_ENV'] = 'development'
+# os.environ['FLASK_ENV'] = 'development'
 
 
 
@@ -92,13 +94,6 @@ def home():
 def aboutus():
     return render_template("aboutus.html")
 
-@app.route("/dashboard")
-@admin_required
-def dashboard():
-    user = User.query.get(session['user_id'])
-    return render_template("dashboard.html", user=user)
-
-
 @app.route("/integrityAI")
 @login_required
 def integrityAI():
@@ -111,7 +106,71 @@ def integrityEdu():
     user = User.query.get(session['user_id'])
     return render_template("integrityEdu.html", user=user)
 
+@app.route('/logout')
+def logout():
+    if 'user_id' in session:
+        session.pop('user_id')
+        flash('You have been logged out successfully.', 'success')
+    else:
+        flash('You are not logged in.', 'error')
+    return redirect(url_for('login'))
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@app.route("/dashboard")
+@admin_required
+def dashboard():
+    # Step 1: Group user signups by month (e.g. Jan, Feb, etc.)
+    signups_by_month = db.session.query(
+        extract('month', User.created_at).label('month'),
+        func.count(User.id)
+    ).group_by('month').order_by('month').all()
+
+    # Create a full list of months
+    month_names = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                   'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    signup_dict = OrderedDict((month, 0) for month in month_names)
+
+    # Populate real values
+    for month_num, count in signups_by_month:
+        signup_dict[month_names[int(month_num) - 1]] = count
+
+    months = list(signup_dict.keys())
+    signups = list(signup_dict.values())
+
+    # Step 2: Score level categorization (example: high ≥ 80, medium ≥ 50, low < 50)
+    high = User.query.filter(User.score >= 80).count()
+    medium = User.query.filter((User.score >= 50) & (User.score < 80)).count()
+    low = User.query.filter((User.score < 50) & (User.score != None)).count()
+
+    score_counts = [high, medium, low]
+
+    return render_template(
+        'dashboard.html',
+        months=months,
+        signups=signups,
+        score_counts=score_counts
+    )
+
+
+@app.route('/dashboardDetails')
+@admin_required
+def dashboardDetails():
+    return "Details page coming soon!"
 
 
 
@@ -305,15 +364,6 @@ def register():
 
 
 
-
-@app.route('/logout')
-def logout():
-    if 'user_id' in session:
-        session.pop('user_id')
-        flash('You have been logged out successfully.', 'success')
-    else:
-        flash('You are not logged in.', 'error')
-    return redirect(url_for('login'))
 
 
 

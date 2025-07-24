@@ -77,6 +77,87 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // --------------------------
+  // Chart.js Dashboard Charts
+  // --------------------------
+  const chartDataElement = document.getElementById('chart-data');
+  
+  if (chartDataElement) {
+      const chartData = JSON.parse(chartDataElement.textContent);
+      
+      // Calculate total signups
+      const totalSignups = chartData.signups.reduce((a, b) => a + b, 0);
+      document.getElementById('totalSignups').textContent = totalSignups;
+
+      // Monthly signups line chart
+      const ctxLine = document.getElementById('signupLineChart')?.getContext('2d');
+      if (ctxLine) {
+          new Chart(ctxLine, {
+              type: 'line',
+              data: {
+                  labels: chartData.months,
+                  datasets: [{
+                      label: 'Sign Ups',
+                      data: chartData.signups,
+                      borderColor: '#007bff',
+                      backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                      fill: true,
+                      tension: 0.3,
+                      borderWidth: 2,
+                      pointBackgroundColor: '#007bff',
+                      pointRadius: 4
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: {
+                      legend: {
+                          display: false
+                      }
+                  },
+                  scales: {
+                      y: {
+                          beginAtZero: true,
+                          grid: {
+                              color: '#e9ecef'
+                          }
+                      },
+                      x: {
+                          grid: {
+                              display: false
+                          }
+                      }
+                  }
+              }
+          });
+      }
+
+      // Score bars animation
+      const scores = chartData.score_counts;
+      const maxScore = Math.max(...scores);
+      
+      setTimeout(() => {
+          // High score bar
+          const highPercent = (scores[0] / maxScore) * 100;
+          document.getElementById('highBar').style.width = `${highPercent}%`;
+          document.getElementById('highBar').textContent = scores[0];
+          document.getElementById('highCount').textContent = scores[0];
+          
+          // Medium score bar
+          const mediumPercent = (scores[1] / maxScore) * 100;
+          document.getElementById('mediumBar').style.width = `${mediumPercent}%`;
+          document.getElementById('mediumBar').textContent = scores[1];
+          document.getElementById('mediumCount').textContent = scores[1];
+          
+          // Low score bar
+          const lowPercent = (scores[2] / maxScore) * 100;
+          document.getElementById('lowBar').style.width = `${lowPercent}%`;
+          document.getElementById('lowBar').textContent = scores[2];
+          document.getElementById('lowCount').textContent = scores[2];
+      }, 500);
+  }
+
 });
 
 
@@ -198,6 +279,27 @@ function downloadTemplate() {
     })
     .catch(() => alert('Download failed.'));
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

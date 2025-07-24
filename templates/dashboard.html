@@ -4,74 +4,77 @@
 
 {% block content %}
 
-<div class="dashboard-container">
-    <h1>Dashboard</h1>
+<div class="dashboard-page">
 
-    <div class="main-content">
-        <!-- Left: Monthly Sign Ups Chart -->
-        <div class="chart-section">
-            <h2 class="chart-title">Monthly Sign Ups</h2>
-            <div class="chart-canvas">
-                <canvas id="signupLineChart"></canvas>
+    <div class="dashboard-container">
+        <h1>Dashboard</h1>
+
+        <div class="main-content">
+            <!-- Left: Monthly Sign Ups Chart -->
+            <div class="chart-section">
+                <h2 class="chart-title">Monthly Sign Ups</h2>
+                <div class="chart-canvas">
+                    <canvas id="signupLineChart"></canvas>
+                </div>
             </div>
-        </div>
 
-        <!-- Right: Total Sign Ups -->
-        <div class="chart-section">
-            <h2 class="chart-title">Total Sign Ups</h2>
-            <div style="display: flex; align-items: center; justify-content: center; height: 300px;">
-                <div style="text-align: center;">
-                    <div id="totalSignups" style="font-size: 4rem; font-weight: 700; color: #007bff; margin-bottom: 10px;">-</div>
-                    <div style="font-size: 1.1rem; color: #6c757d;">Users Registered</div>
+            <!-- Right: Total Sign Ups -->
+            <div class="chart-section">
+                <h2 class="chart-title">Total Sign Ups</h2>
+                <div style="display: flex; align-items: center; justify-content: center; height: 300px;">
+                    <div style="text-align: center;">
+                        <div id="totalSignups" style="font-size: 8rem; font-weight: 700; color: #007bff; margin-bottom: 10px;">-</div>
+                        <div style="font-size: 2rem; color: #6c757d;">Users Registered</div>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <!-- Score Bars Section -->
+        <div class="scores-section">
+            <h2 class="chart-title">Company Score Levels</h2>
+            <div class="score-bars">
+                <div class="score-bar">
+                    <div class="score-label">High (50+)</div>
+                    <div class="bar-container">
+                        <div class="bar-fill high-bar" id="highBar">0</div>
+                    </div>
+                    <div class="score-count" id="highCount">0</div>
+                </div>
+                
+                <div class="score-bar">
+                    <div class="score-label">Medium (30-50)</div>
+                    <div class="bar-container">
+                        <div class="bar-fill medium-bar" id="mediumBar">0</div>
+                    </div>
+                    <div class="score-count" id="mediumCount">0</div>
+                </div>
+                
+                <div class="score-bar">
+                    <div class="score-label">Low (<30) </div>
+                    <div class="bar-container">
+                        <div class="bar-fill low-bar" id="lowBar">0</div>
+                    </div>
+                    <div class="score-count" id="lowCount">0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View Details Button -->
+        <a href="{{ url_for('dashboardDetails') }}" class="view-details-btn">View Details</a>
     </div>
 
-    <!-- Score Bars Section -->
-    <div class="scores-section">
-        <h2 class="chart-title">Company Score Levels</h2>
-        <div class="score-bars">
-            <div class="score-bar">
-                <div class="score-label">High (80+)</div>
-                <div class="bar-container">
-                    <div class="bar-fill high-bar" id="highBar">0</div>
-                </div>
-                <div class="score-count" id="highCount">0</div>
-            </div>
-            
-            <div class="score-bar">
-                <div class="score-label">Medium (50-79)</div>
-                <div class="bar-container">
-                    <div class="bar-fill medium-bar" id="mediumBar">0</div>
-                </div>
-                <div class="score-count" id="mediumCount">0</div>
-            </div>
-            
-            <div class="score-bar">
-                <div class="score-label">Low (<50) </div>
-                <div class="bar-container">
-                    <div class="bar-fill low-bar" id="lowBar">0</div>
-                </div>
-                <div class="score-count" id="lowCount">0</div>
-            </div>
-        </div>
+
+
+    <!-- Embed chart data as JSON for JS to read -->
+    <script id="chart-data" type="application/json">
+        {
+        "months": {{ months | tojson }},
+        "signups": {{ signups | tojson }},
+        "score_counts": {{ score_counts | tojson }}
+        }
+    </script>
+
     </div>
-
-    <!-- View Details Button -->
-    <a href="{{ url_for('dashboardDetails') }}" class="view-details-btn">View Details</a>
-</div>
-
-
-
-  <!-- Embed chart data as JSON for JS to read -->
-  <script id="chart-data" type="application/json">
-    {
-      "months": {{ months | tojson }},
-      "signups": {{ signups | tojson }},
-      "score_counts": {{ score_counts | tojson }}
-    }
-  </script>
-
 </div>
 {% endblock %}

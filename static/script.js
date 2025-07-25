@@ -119,6 +119,16 @@ window.addEventListener('DOMContentLoaded', () => {
                   scales: {
                       y: {
                           beginAtZero: true,
+                          ticks: {
+                            precision: 0,        // No decimal places
+                            stepSize: 1,         // Optional: controls the interval between ticks
+                            callback: function(value) {
+                              if (Number.isInteger(value)) {
+                                return value;
+                              }
+                              return null; // Hide non-integer values
+                            }
+                          },
                           grid: {
                               color: '#e9ecef'
                           }

@@ -12,7 +12,8 @@ class User(db.Model):
     password = db.Column(db.String(200), nullable=False)
     role = db.Column(db.String(20), default='user')
     score = db.Column(db.Integer, default=None)
-    created_at = db.Column(db.DateTime, default=datetime.now)  # Add this line
+    remark = db.Column(db.Text, default=None)  
+    created_at = db.Column(db.DateTime, default=datetime.now)  
     
     def __repr__(self):
         return f'<User {self.name}>'

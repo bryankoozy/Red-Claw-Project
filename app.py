@@ -13,7 +13,7 @@ from sqlalchemy.orm import joinedload
 
 
 # only uncomment and use the below line during development mode. comment it when going to production
-os.environ['FLASK_ENV'] = 'development'
+# os.environ['FLASK_ENV'] = 'development'
 
 
 
@@ -52,8 +52,19 @@ def inject_user():
 #  integrityAI page
 @app.route('/download-template')
 def download_template():
-    return send_file('static/img/PACT Compliance Assessment_v2.pdf', as_attachment=True)
+    # Use clean filename and path
+    filename = 'PACT_Compliance_Assessment_v2.pdf'
+    pdf_path = os.path.join(app.root_path, 'static', 'pdf', filename)
 
+    if not os.path.exists(pdf_path):
+        return abort(404, "PDF file not found.")
+
+    return send_file(
+        pdf_path,
+        as_attachment=True,
+        download_name='PACT_Compliance_Template.pdf',
+        mimetype='application/pdf'
+    )
 
 def login_required(f):
     @wraps(f)
@@ -400,7 +411,7 @@ if __name__ == "__main__":
 
         if not admin:
             hashed_password = generate_password_hash('your_admin_password')  # Change this
-            admin = User(name='Admin', email=admin_email, password=hashed_password, role='admin')
+            admin = User(name='Admin', email=admin_email, password=hashed_password, role='admin', remark=None)
             db.session.add(admin)
             db.session.commit()
             print("Admin account created.")

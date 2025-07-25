@@ -37,7 +37,13 @@
             {% endif %}
           </td>
           <td data-label="Joined">{{ user.created_at.strftime('%d %b %Y %H:%M') }}</td>
-          <td data-label="Remarks"></td>  {# Empty for now #}
+          <td data-label="Remarks">
+            {% if user.remarks %}
+              {{ user.remarks }}
+            {% else %}
+              <span class="text-muted">No remarks</span>
+            {% endif %}
+          </td>
           <td data-label="Support Messages">
             {% if user.support_messages %}
               <ul style="padding-left: 18px; margin: 0;">

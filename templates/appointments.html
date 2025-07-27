@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block title %}Appointments Dashboard - Red Claw{% endblock %}
+
+{% block content %}
+
+<div class="appointments">
+
+  <div class="userDetail-container">
+    <div class="dashboard-header">
+      <h1 class="dashboard-title">Appointments Dashboard</h1>
+      <p class="subtitle">Manage and monitor all CPIB appointment bookings</p>
+    </div>
+
+    <!-- Quick Stats Section -->
+    <div class="stats-section">
+      <div class="stat-card">
+        <div class="stat-value">{{ appointments|length }}</div>
+        <div class="stat-label">Total</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value text-warning">{{ appointments|selectattr('status', 'equalto', 'pending')|list|length }}</div>
+        <div class="stat-label">Pending</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value text-success">{{ appointments|selectattr('status', 'equalto', 'confirmed')|list|length }}</div>
+        <div class="stat-label">Confirmed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value text-info">{{ appointments|selectattr('status', 'equalto', 'completed')|list|length }}</div>
+        <div class="stat-label">Completed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value text-info">{{ appointments|selectattr('status', 'equalto', 'cancelled')|list|length }}</div>
+        <div class="stat-label">Cancelled</div>
+      </div>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="filters-section">
+      <form method="GET" class="filter-form">
+        <div class="filter-group">
+          <label>Status:</label>
+          <select name="status">
+            <option value="all" {% if current_status == 'all' %}selected{% endif %}>All</option>
+            <option value="pending" {% if current_status == 'pending' %}selected{% endif %}>Pending</option>
+            <option value="confirmed" {% if current_status == 'confirmed' %}selected{% endif %}>Confirmed</option>
+            <option value="completed" {% if current_status == 'completed' %}selected{% endif %}>Completed</option>
+            <option value="cancelled" {% if current_status == 'cancelled' %}selected{% endif %}>Cancelled</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Date:</label>
+          <select name="date">
+            <option value="all" {% if current_date == 'all' %}selected{% endif %}>All</option>
+            <option value="today" {% if current_date == 'today' %}selected{% endif %}>Today</option>
+            <option value="upcoming" {% if current_date == 'upcoming' %}selected{% endif %}>Upcoming</option>
+            <option value="past" {% if current_date == 'past' %}selected{% endif %}>Past</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-primary"><i class="fas fa-filter"></i> Filter</button>
+      </form>
+    </div>
+
+    <!-- Appointments Table -->
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>User Details</th>
+            <th>Date & Time</th>
+            <th>Subject</th>
+            <th>Contact</th>
+            <th>Status</th>
+            <th>Admin Remarks</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for appointment in appointments %}
+          <tr>
+            <td>{{ appointment.id }}</td>
+            <td>
+              <div class="user-info">
+                <div class="user-avatar">{{ appointment.user.name[:2].upper() }}</div>
+                <div>
+                  <div class="user-name">{{ appointment.user.name }}</div>
+                  <div class="user-email">{{ appointment.user.email }}</div>
+                  <div class="user-role">{{ appointment.user.role.title() }}</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="datetime">{{ appointment.appointment_date.strftime('%d %b %Y') }}</div>
+              <div class="time">{{ appointment.appointment_time.strftime('%I:%M %p') }}</div>
+            </td>
+            <td>
+              <div class="subject">{{ appointment.subject }}</div>
+              {% if appointment.description %}
+                <div class="description">{{ appointment.description[:100] }}{% if appointment.description|length > 100 %}...{% endif %}</div>
+              {% else %}
+                <span class="text-muted">No description provided</span>
+              {% endif %}
+            </td>
+            <td>{{ appointment.phone_number }}</td>
+            <td>
+              <span class="status-badge status-{{ appointment.status }}">{{ appointment.status.title() }}</span>
+            </td>
+            <td>
+              {% if current_user and current_user.role == 'admin' %}
+                <form method="POST" action="{{ url_for('update_admin_remarks', appointment_id=appointment.id) }}">
+                  <textarea name="admin_remarks" rows="2">{{ appointment.admin_remarks or '' }}</textarea>
+                  <button type="submit" class="btn-small">Save</button>
+                </form>
+              {% else %}
+                {{ appointment.admin_remarks or "No remarks" }}
+              {% endif %}
+            </td>
+            <td>
+              <form method="POST" action="{{ url_for('update_appointment', appointment_id=appointment.id) }}">
+                <select name="status">
+                  <option value="pending" {% if appointment.status == 'pending' %}selected{% endif %}>Pending</option>
+                  <option value="confirmed" {% if appointment.status == 'confirmed' %}selected{% endif %}>Confirmed</option>
+                  <option value="completed" {% if appointment.status == 'completed' %}selected{% endif %}>Completed</option>
+                  <option value="cancelled" {% if appointment.status == 'cancelled' %}selected{% endif %}>Cancelled</option>
+                </select>
+                <button type="submit" onclick="return confirm('Change status of this appointment?')" class="btn-small">Update</button>
+              </form>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="8" class="text-center no-data">
+              <i class="fas fa-calendar-times"></i><br>
+              No appointments found
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination Section -->
+    {% if pagination %}
+    <div class="pagination">
+      {% if pagination.has_prev %}
+        <a href="{{ url_for('appointments_dashboard', page=pagination.prev_num) }}">&laquo; Prev</a>
+      {% endif %}
+      <span>Page {{ pagination.page }} of {{ pagination.pages }}</span>
+      {% if pagination.has_next %}
+        <a href="{{ url_for('appointments_dashboard', page=pagination.next_num) }}">Next &raquo;</a>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+
+</div>
+
+
+{% endblock %}

@@ -79,7 +79,12 @@
         </div>
 
         <!-- View Details Button -->
-        <a href="{{ url_for('dashboardDetail') }}" class="view-details-btn">View Details</a>
+        <div style="display: flex; gap: 10px;">
+            <a href="{{ url_for('userDetail') }}" class="view-details-btn">View User Details</a>
+            <a href="{{ url_for('appointments') }}" class="view-details-btn">View Appointment Details</a>
+        </div>
+
+
     </div>
 
 

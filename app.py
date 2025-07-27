@@ -5,9 +5,9 @@ from sqlalchemy import func, extract
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
 import os
-from models import db, User, SupportMessage
+from models import db, User, SupportMessage, Appointment
 from collections import OrderedDict
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 import json
 from sqlalchemy.orm import joinedload
 
@@ -189,13 +189,13 @@ def dashboard():
 
 
 
-@app.route('/dashboardDetail')
+@app.route('/userDetail')
 @admin_required
-def dashboardDetail():
+def userDetail():
     # Fetch all users ordered by creation date descending
     users = User.query.options(joinedload(User.support_messages)).order_by(User.id.asc()).all()
 
-    return render_template('dashboardDetail.html', users=users)
+    return render_template('userDetail.html', users=users)
 
 
 
@@ -297,11 +297,46 @@ def settings():
                 db.session.commit()
 
 
+
+        elif action == "book_appointment":
+            subject = request.form.get('appointment_subject', '').strip()
+            description = request.form.get('appointment_description', '').strip()
+            date_str = request.form.get('appointment_date', '').strip()
+            time_str = request.form.get('appointment_time', '').strip()
+            phone_number = request.form.get('phone_number', '').strip()
+
+            if not (subject and date_str and time_str and phone_number):
+                flash("Please fill in all required appointment fields.", "error")
+                return redirect(url_for('settings'))
+
+            try:
+                appointment_date = datetime.strptime(date_str, "%Y-%m-%d").date()
+                appointment_time = datetime.strptime(time_str, "%H:%M").time()
+            except ValueError:
+                flash("Invalid date or time format.", "error")
+                return redirect(url_for('settings'))
+
+            new_appointment = Appointment(
+                user_id=user.id,
+                subject=subject,
+                description=description,
+                appointment_date=appointment_date,
+                appointment_time=appointment_time,
+                phone_number=phone_number,
+                status='pending',
+                created_at=datetime.utcnow()
+            )
+
+            db.session.add(new_appointment)
+            db.session.commit()
+            flash("Appointment booked successfully! We will get back to you soon.", "success")
+
+
         return redirect(url_for('settings'))
     
     # Pass all users to the template if current user is admin
     all_users = User.query.order_by(User.id).all() if user.role == 'admin' else []
-    return render_template("settings.html", user=user, all_users=all_users)
+    return render_template("settings.html", user=user, all_users=all_users, date=date)
 
 
 
@@ -388,6 +423,77 @@ def register():
 
 
 
+
+
+
+
+
+
+
+
+
+@app.route('/appointments')
+@admin_required
+def appointments():
+    # Get filter parameters
+    status_filter = request.args.get('status', 'all')
+    date_filter = request.args.get('date', 'all')
+
+    query = Appointment.query
+
+    # Filter by status
+    if status_filter != 'all':
+        query = query.filter_by(status=status_filter)
+
+    # Filter by date
+    from datetime import datetime, date
+    today = date.today()
+
+    if date_filter == 'today':
+        query = query.filter(Appointment.appointment_date == today)
+    elif date_filter == 'upcoming':
+        query = query.filter(Appointment.appointment_date > today)
+    elif date_filter == 'past':
+        query = query.filter(Appointment.appointment_date < today)
+
+    appointments_list = query.order_by(Appointment.appointment_date.desc(), Appointment.appointment_time.desc()).all()
+
+    return render_template('appointments.html',
+                           appointments=appointments_list,
+                           current_status=status_filter,
+                           current_date=date_filter)
+
+
+
+@app.route('/update_admin_remarks/<int:appointment_id>', methods=['POST'])
+@admin_required
+def update_admin_remarks(appointment_id):
+    appointment = Appointment.query.get_or_404(appointment_id)
+    new_remarks = request.form.get('admin_remarks', '').strip()
+    
+    appointment.admin_remarks = new_remarks
+    db.session.commit()
+    flash("Admin remarks updated successfully.", "success")
+    return redirect(request.referrer or url_for('appointments'))
+
+
+@app.route('/update_appointment/<int:appointment_id>', methods=['POST'])
+@admin_required
+def update_appointment(appointment_id):
+    appointment = Appointment.query.get_or_404(appointment_id)
+    new_status = request.form.get('status')
+
+    valid_statuses = ['pending', 'confirmed', 'completed', 'cancelled']
+
+    if new_status not in valid_statuses:
+        flash('Invalid status selected.', 'error')
+        return redirect(url_for('appointments'))
+
+    appointment.status = new_status
+    db.session.commit()
+    flash(f'Appointment status updated to {new_status.title()}.', 'success')
+
+    return redirect(url_for('appointments'))
 
 
 

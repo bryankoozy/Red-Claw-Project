@@ -141,6 +141,42 @@
         </div>
 
 
+        <div class="settings-card" id="appointment-booking-section">
+            <div class="section-title">Book an Appointment</div>
+            <form method="POST" action="{{ url_for('settings') }}">
+                <input type="hidden" name="action" value="book_appointment">
+
+                <div class="form-group">
+                <label class="form-label" for="appointment_subject">Subject</label>
+                <input type="text" class="form-input-solo" id="appointment_subject" name="appointment_subject" placeholder="Appointment subject" required>
+                </div>
+
+                <div class="form-group">
+                <label class="form-label" for="appointment_description">Description</label>
+                <textarea class="form-textarea-solo" id="appointment_description" name="appointment_description" placeholder="Additional details (optional)"></textarea>
+                </div>
+
+                <div class="form-group">
+                <label class="form-label" for="appointment_date">Date</label>
+                <input type="date" class="form-input-solo" id="appointment_date" name="appointment_date" required min="{{ date.today().isoformat() }}">
+                </div>
+
+                <div class="form-group">
+                <label class="form-label" for="appointment_time">Time</label>
+                <input type="time" class="form-input-solo" id="appointment_time" name="appointment_time" required>
+                </div>
+
+                <div class="form-group">
+                <label class="form-label" for="phone_number">Phone Number</label>
+                <input type="tel" class="form-input-solo" id="phone_number" name="phone_number" placeholder="Your contact number" required>
+                </div>
+
+                <button class="auth-btn" type="submit">Book Appointment</button>
+            </form>
+        </div>
+
+
+
     </div>
 </div>
 {% endblock %}

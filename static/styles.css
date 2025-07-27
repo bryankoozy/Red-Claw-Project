@@ -1652,7 +1652,7 @@ body {
 /* ================================
    Dashboard Details
 ================================= */
-.dashboardDetail-container {
+.userDetail-container {
   width: 90%;
   max-width: none; /* remove max-width restriction */
   margin: 2rem auto;
@@ -1664,7 +1664,7 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.dashboardDetail-container table {
+.userDetail-container table {
   margin: 1rem auto;
 
   width: 100%;
@@ -1675,12 +1675,12 @@ body {
   background-color: white;
 }
 
-.dashboardDetail-container thead {
+.userDetail-container thead {
   background: linear-gradient(90deg, #2c5282, #1a365d);
   color: white;
 }
 
-.dashboardDetail-container thead th {
+.userDetail-container thead th {
   padding: 14px 20px;
   font-weight: 700;
   text-transform: uppercase;
@@ -1688,16 +1688,16 @@ body {
   text-align: left;
 }
 
-.dashboardDetail-container tbody tr {
+.userDetail-container tbody tr {
   transition: background-color 0.3s ease;
   cursor: default;
 }
 
-.dashboardDetail-container tbody tr:hover {
+.userDetail-container tbody tr:hover {
   background-color: #e6f0ff;
 }
 
-.dashboardDetail-container tbody td {
+.userDetail-container tbody td {
   padding: 14px 20px;
   border-bottom: 1px solid #ddd;
   color: #333;
@@ -1705,10 +1705,186 @@ body {
 }
 
 
-.dashboardDetail-container tbody td .text-muted {
+.userDetail-container tbody td .text-muted {
   color: #999 !important;
   font-style: italic;
 }
+
+
+
+
+
+
+
+/* ================================
+   appointments Details
+================================= */
+
+/* ================================
+   Appointments Details
+================================= */
+
+.appointments .dashboard-header { margin-bottom: 20px; }
+.appointments .subtitle { color: #666; margin-top: 10px; font-size: 1.1em; }
+
+.appointments .stats-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+.appointments .stat-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+.appointments .stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+.appointments .stat-value { font-size: 2em; font-weight: bold; }
+.appointments .stat-label {
+  color: #666;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.9em;
+}
+
+.appointments .filters-section {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+.appointments .filter-form {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+.appointments .filter-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #555;
+}
+.appointments .filter-group select,
+.appointments .filter-group input {
+  padding: 8px 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 5px;
+  background: white;
+  width: 100%;
+}
+
+.appointments .btn-primary {
+  padding: 8px 20px;
+  background: linear-gradient(45deg, #2c5282, #1a365d);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.appointments .btn-primary:hover {
+  background: linear-gradient(45deg, #1a365d, #2c5282);
+}
+
+.appointments .user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.appointments .user-avatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #2c5282, #1a365d);
+  color: white;
+  font-weight: 600;
+  font-size: 0.9em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.appointments .user-name { font-weight: 600; }
+.appointments .user-email,
+.appointments .user-role {
+  font-size: 0.85em;
+  color: #666;
+}
+
+.appointments .status-badge {
+  padding: 4px 12px;
+  border-radius: 15px;
+  font-size: 0.8em;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: inline-block;
+}
+.appointments .status-pending {
+  background: #fff3cd;
+  color: #856404;
+}
+.appointments .status-confirmed {
+  background: #d4edda;
+  color: #155724;
+}
+.appointments .status-completed {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+.appointments .status-cancelled {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.appointments .btn-small {
+  padding: 6px 12px;
+  background: #2c5282;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9em;
+  cursor: pointer;
+}
+.appointments .btn-small:hover {
+  transform: translateY(-1px);
+}
+
+.appointments .no-data {
+  padding: 40px;
+  color: #666;
+}
+.appointments .no-data i {
+  font-size: 3em;
+  margin-bottom: 15px;
+  opacity: 0.3;
+}
+
+.appointments .pagination {
+  margin-top: 30px;
+  text-align: center;
+}
+.appointments .pagination a {
+  margin: 0 10px;
+  color: #2c5282;
+  font-weight: 600;
+  text-decoration: none;
+}
+.appointments .pagination span {
+  margin: 0 10px;
+  color: #555;
+}
+
+
+
+
+
 
 
 
@@ -1863,34 +2039,34 @@ body {
 
 
 
-  .dashboardDetail-container {
+  .userDetail-container {
     margin: 80px 15px 30px;
     padding: 15px;
   }
 
-  .dashboardDetail-container table,
-  .dashboardDetail-container thead,
-  .dashboardDetail-container tbody,
-  .dashboardDetail-container th,
-  .dashboardDetail-container td,
-  .dashboardDetail-container tr {
+  .userDetail-container table,
+  .userDetail-container thead,
+  .userDetail-container tbody,
+  .userDetail-container th,
+  .userDetail-container td,
+  .userDetail-container tr {
     display: block;
   }
 
-  .dashboardDetail-container thead tr {
+  .userDetail-container thead tr {
     position: absolute;
     top: -9999px;
     left: -9999px;
   }
 
-  .dashboardDetail-container tbody tr {
+  .userDetail-container tbody tr {
     margin-bottom: 18px;
     border: 1px solid #ccc;
     border-radius: 10px;
     padding: 12px 15px;
   }
 
-  .dashboardDetail-container tbody td {
+  .userDetail-container tbody td {
     border: none;
     padding-left: 50%;
     text-align: right;
@@ -1898,7 +2074,7 @@ body {
     font-size: 14px;
   }
 
-  .dashboardDetail-container tbody td::before {
+  .userDetail-container tbody td::before {
     content: attr(data-label);
     position: absolute;
     left: 15px;
@@ -1969,6 +2145,14 @@ body {
   .find-out-more {
     font-size: 1em; /* Smaller font */
   }
+
+
+  .appointments .filter-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  
 }
 
 

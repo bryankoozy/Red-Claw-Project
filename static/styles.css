@@ -247,26 +247,31 @@ body {
 /* -------------------------------
    HEADER SECTION
 ---------------------------------*/
+
 .header {
   background: black;
   position: relative;
-  height: 60vh;
+  min-height: 60vh; /* Minimum height */
+  height: auto; /* Allow it to grow/shrink */
   overflow: hidden;
 }
 
 .hand-container {
   position: relative;
   width: 100%;
-  height: 100%;
+  min-height: 60vh; /* Match the header */
+  height: auto;
 }
 
 .header-image {
   width: 100%;
   height: 100%;
+  min-height: 60vh; /* Ensure minimum height */
   object-fit: cover;
   display: block;
   filter: brightness(0.7);
 }
+
 
 .header-text-overlay {
   position: absolute;
@@ -1152,39 +1157,6 @@ body {
   opacity: 1;
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
-  .settings-page .settings-header {
-    padding: 20px 20px 10px 20px;
-  }
-  
-  .settings-page .settings-header h1 {
-    font-size: 1.8em;
-  }
-  
-  .settings-page .settings-card-parent {
-    padding: 10px;
-  }
-  
-  .settings-page .settings-card {
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-  
-  .settings-page .input-group,
-  .settings-page .textarea-group {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
-  }
-  
-  .settings-page .input-icon,
-  .settings-page .textarea-icon {
-    margin-top: 0;
-    align-self: flex-start;
-  }
-}
-
 /* Focus management for accessibility */
 .settings-page .form-input:focus-visible,
 .settings-page .form-textarea:focus-visible,
@@ -1936,7 +1908,67 @@ body {
     text-align: left;
     color: #555;
   }
+
+
+
+
+  .settings-page .settings-header {
+    padding: 20px 20px 10px 20px;
+  }
   
+  .settings-page .settings-header h1 {
+    font-size: 1.8em;
+  }
+  
+  .settings-page .settings-card-parent {
+    padding: 10px;
+  }
+  
+  .settings-page .settings-card {
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .settings-page .input-group,
+  .settings-page .textarea-group {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  
+  .settings-page .input-icon,
+  .settings-page .textarea-icon {
+    margin-top: 0;
+    align-self: flex-start;
+  }
+
+
+
+
+  /* base.html */
+  .header,
+  .hand-container,
+  .header-image {
+    min-height: 30vh;
+  }
+   
+  .title-box {
+    margin-top: 30px;
+    padding: 20px;
+  }
+  
+  .main-title {
+    font-size: 2em; /* Shrink title */
+  }
+  
+  /* Make the button container smaller */
+  .find-out-more-container {
+    padding: 15px 20px; /* Reduce padding */
+  }
+  
+  .find-out-more {
+    font-size: 1em; /* Smaller font */
+  }
 }
 
 

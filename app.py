@@ -13,7 +13,7 @@ from sqlalchemy.orm import joinedload
 
 
 # only uncomment and use the below line during development mode. comment it when going to production
-# os.environ['FLASK_ENV'] = 'development'
+os.environ['FLASK_ENV'] = 'development'
 
 
 

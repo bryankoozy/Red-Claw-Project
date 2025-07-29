@@ -831,7 +831,7 @@
             if (result.success) {
                 alert(`Assessment submitted successfully!\nTotal Score: ${result.total_score}/68 (${result.percentage}%)`);
                 // Optionally redirect to results page
-                window.location.href = `/pact-assessment/${result.assessment_id}`;
+                window.location.href = '/integrityAI';
             } else {
                 alert('Error: ' + (result.error || 'Failed to submit assessment'));
             }

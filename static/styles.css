@@ -1893,6 +1893,285 @@ body {
 
 
 
+/* ================================
+   Integrity EDU
+================================= */
+.integrity-edu {
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.integrity-edu * {
+  box-sizing: border-box;
+}
+
+.integrity-edu .game-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.integrity-edu .slide {
+  position: absolute;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  padding: 30px;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.6s ease;
+  cursor: pointer;
+  border: 3px solid transparent;
+}
+
+.integrity-edu .slide.active {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 10;
+}
+
+.integrity-edu .slide:hover {
+  border-color: #667eea;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+  transform: scale(1.02);
+}
+
+.integrity-edu .home-slide {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  transform: scale(0.8);
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  color: white;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: none !important;
+  border-radius: 0 !important;
+}
+
+.integrity-edu .home-slide.active {
+  transform: scale(1);
+}
+
+.integrity-edu .home-slide:hover {
+  border: none !important;
+  border-radius: 0 !important;
+  transform: scale(1) !important;
+  box-shadow: none !important;
+}
+
+.integrity-edu .home-title {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  color: white;
+}
+
+.integrity-edu .home-subtitle {
+  font-size: 1.3rem;
+  margin-bottom: 40px;
+  opacity: 0.9;
+  z-index: 10;
+  color: white;
+}
+
+.integrity-edu .circles-container {
+  position: relative;
+  width: 100%;
+  height: 75%;
+  max-width: 1400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.integrity-edu .floating-circle {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1rem;
+  z-index: 5;
+  animation: framework-float 4s ease-in-out infinite;
+}
+
+.integrity-edu .floating-circle:hover {
+  transform: scale(1.1);
+  background: linear-gradient(135deg, #764ba2, #667eea);
+  border-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  z-index: 15;
+}
+
+.integrity-edu .floating-circle h3 {
+  font-size: 1rem;
+  margin-bottom: 8px;
+  line-height: 1.1;
+  color: white;
+}
+
+.integrity-edu .floating-circle p {
+  font-size: 0.8rem;
+  opacity: 0.9;
+  line-height: 1.2;
+  color: white;
+}
+
+.integrity-edu .circle-number {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  width: 40px;
+  height: 40px;
+  background: #FF6B6B;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Position circles */
+.integrity-edu .circle-1 { top: 8%; left: 18%; animation-delay: 0s; }
+.integrity-edu .circle-2 { top: 5%; left: 45%; animation-delay: -0.5s; }
+.integrity-edu .circle-3 { top: 8%; right: 22%; animation-delay: -1s; }
+.integrity-edu .circle-4 { top: 35%; left: 3%; animation-delay: -1.5s; }
+.integrity-edu .circle-5 { top: 35%; right: 3%; animation-delay: -2s; }
+.integrity-edu .circle-6 { top: 65%; left: 20%; animation-delay: -2.5s; }
+.integrity-edu .circle-7 { top: 65%; right: 20%; animation-delay: -3s; }
+.integrity-edu .circle-8 { top: 60%; left: 42%; animation-delay: -3.5s; }
+
+@keyframes framework-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+
+.integrity-edu .measure-slide {
+  width: 95vw;
+  height: 90vh;
+  max-width: 1200px;
+  max-height: 800px;
+  background: white;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.integrity-edu .measure-slide.active {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.integrity-edu .measure-title {
+  font-size: 2rem;
+  color: #667eea;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #667eea;
+  padding-bottom: 8px;
+  flex-shrink: 0;
+}
+
+.integrity-edu .measure-content {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.integrity-edu .section {
+  margin-bottom: 20px;
+}
+
+.integrity-edu .section h3 {
+  color: #764ba2;
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.integrity-edu .section p, 
+.integrity-edu .section ul {
+  color: #333;
+  line-height: 1.4;
+  font-size: 0.9rem;
+}
+
+.integrity-edu .section ul {
+  margin-left: 20px;
+}
+
+.integrity-edu .section li {
+  margin-bottom: 8px;
+}
+
+.integrity-edu .case-example {
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+  color: white;
+  padding: 20px;
+  border-radius: 15px;
+  margin-top: 20px;
+}
+
+.integrity-edu .case-example h4 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.integrity-edu .back-button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: #007a1b;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  z-index: 30;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.integrity-edu .back-button:hover {
+  background: #764ba2;
+  transform: translateY(-2px);
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2245,7 +2524,52 @@ body {
     gap: 0.5rem;
     text-align: center;
   }
+
+
+
+
+
+  /* integrityEDU */
+  .integrity-edu .floating-circle {
+    width: 100px;
+    height: 100px;
+    font-size: 0.8rem;
+  }
+  
+  .integrity-edu .floating-circle h3 {
+    font-size: 0.8rem;
+    margin-bottom: 4px;
+  }
+  
+  .integrity-edu .floating-circle p {
+    font-size: 0.6rem;
+  }
+  
+  .integrity-edu .circle-number {
+    width: 30px;
+    height: 30px;
+    font-size: 0.9rem;
+    top: -10px;
+    right: -10px;
+  }
+  
+  .integrity-edu .home-title {
+    font-size: 2rem;
+  }
+  
+  .integrity-edu .home-subtitle {
+    font-size: 1rem;
+  }
 }
+
+
+
+
+
+
+
+
+
 
 
 

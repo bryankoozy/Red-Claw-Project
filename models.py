@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, date, time
+import json
 
 
 db = SQLAlchemy()
@@ -64,3 +65,84 @@ class Appointment(db.Model):
     
     def __repr__(self):
         return f'<Appointment {self.id} - {self.user.name} on {self.appointment_date}>'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class PactAssessment(db.Model):
+    __tablename__ = 'pact_assessments'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    organization_name = db.Column(db.String(255), nullable=False)
+    assessor_name = db.Column(db.String(255), nullable=False)
+    review_date = db.Column(db.Date, nullable=False)
+    assessment_data = db.Column(db.Text, nullable=False)  # Stored as JSON string
+    total_score = db.Column(db.Integer, default=0)
+    percentage_score = db.Column(db.Float, default=0.0)
+    status = db.Column(db.String(50), default='draft')
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    def set_assessment_data(self, data):
+        self.assessment_data = json.dumps(data)
+        self._calculate_scores(data)
+
+    def _calculate_scores(self, data):
+        total = 0
+        count = 0
+
+        for section_key, items in data.get('assessments', {}).items():
+            for item_key, item_data in items.items():
+                try:
+                    score = int(item_data.get('score'))
+                    total += score
+                    count += 1
+                except (ValueError, TypeError):
+                    # Skip invalid or missing scores
+                    continue
+
+        self.total_score = total
+        self.percentage_score = (total / (count * 4)) * 100 if count > 0 else 0
+
+    def get_section_scores(self):
+        try:
+            data = json.loads(self.assessment_data or "{}")
+        except json.JSONDecodeError:
+            return {}
+
+        section_scores = {}
+        for section_key, items in data.get('assessments', {}).items():
+            section_total = 0
+            item_count = 0
+
+            for item_key, item_data in items.items():
+                try:
+                    score = int(item_data.get('score'))
+                    section_total += score
+                    item_count += 1
+                except (ValueError, TypeError):
+                    continue
+
+            section_scores[section_key] = {
+                'score': section_total,
+                'percentage': round((section_total / (item_count * 4)) * 100, 1) if item_count > 0 else 0
+            }
+
+        return section_scores
+
+    def __repr__(self):
+        return f'<PactAssessment {self.id} - {self.organization_name}>'

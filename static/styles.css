@@ -1898,7 +1898,9 @@ body {
 ================================= */
 .integrity-edu {
   font-family: 'Arial', sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+  background: linear-gradient(135deg, #f5f5dc 0%, #e8e8e8 100%);
+
   min-height: 100vh;
   position: relative;
   overflow: hidden;
@@ -1945,7 +1947,9 @@ body {
   top: 0;
   left: 0;
   transform: scale(0.8);
-  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  /* background: linear-gradient(135deg, #1e3c72, #2a5298); */
+  background: linear-gradient(135deg, #f5f5dc 0%, #e8e8e8 100%);
+
   color: white;
   text-align: center;
   display: flex;
@@ -1973,7 +1977,7 @@ body {
   margin-bottom: 20px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   z-index: 10;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 
 .integrity-edu .home-subtitle {
@@ -1981,7 +1985,7 @@ body {
   margin-bottom: 40px;
   opacity: 0.9;
   z-index: 10;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 
 .integrity-edu .circles-container {
@@ -2161,6 +2165,388 @@ body {
 .integrity-edu .back-button:hover {
   background: #764ba2;
   transform: translateY(-2px);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ================================
+   Integrity AI manager
+================================= */
+
+.integrityAImanager .container {
+    max-width: 100%;
+    background: white;
+    border-radius: 0px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.integrityAImanager .header {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+    padding: 50px 30px 30px 30px;
+    text-align: center;
+    margin-bottom: -180px ;
+}
+
+.integrityAImanager .header h1 {
+    font-size: 2.5em;
+    margin: 0 0 10px 0; /* remove top margin, keep bottom */
+    font-weight: 300;
+}
+
+.integrityAImanager .header p {
+    font-size: 1.1em;
+    opacity: 0.9;
+    margin: 0; /* remove all margins */
+}
+
+.integrityAImanager .form-container {
+    padding: 40px;
+}
+
+.integrityAImanager .disclaimer {
+    background: #f8f9fa;
+    border-left: 4px solid #007bff;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 5px;
+}
+
+.integrityAImanager .disclaimer h3 {
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.integrityAImanager .disclaimer p {
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.integrityAImanager .disclaimer ul {
+    color: #007bff;
+    padding-left: 20px;
+}
+
+.integrityAImanager .disclaimer li {
+    color: #007bff;
+    margin-bottom: 5px;
+}
+
+.integrityAImanager .basic-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+    padding: 25px;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+.integrityAImanager .form-group {
+    margin-bottom: 15px;
+}
+
+.integrityAImanager .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.integrityAImanager .form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.integrityAImanager .form-group input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+}
+
+.integrityAImanager .section {
+    margin-bottom: 20px;
+    border: 1px solid #e9ecef;
+    border-radius: 15px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.integrityAImanager .section-header {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: white;
+    padding: 20px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    user-select: none;
+}
+
+.integrityAImanager .section-header:hover {
+    background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
+}
+
+.integrityAImanager .section-header h2 {
+    font-size: 1.5em;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.integrityAImanager .toggle-icon {
+    transition: transform 0.3s ease;
+    font-size: 0.8em;
+}
+
+.integrityAImanager .section.active .toggle-icon {
+    transform: rotate(180deg);
+}
+
+.integrityAImanager .section-content {
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+    max-height: 0;
+}
+
+.integrityAImanager .section.active .section-content {
+    max-height: none;
+}
+
+.integrityAImanager .section-content-inner {
+    padding: 30px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
+}
+
+.integrityAImanager .section.active .section-content-inner {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.integrityAImanager .section-description {
+    background: #f8f9fa;
+    padding: 20px;
+    margin: -30px -30px 30px -30px;
+    border-bottom: 1px solid #e9ecef;
+    font-style: italic;
+    color: #6c757d;
+}
+
+.integrityAImanager .assessment-item {
+    background: #fff;
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 20px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.integrityAImanager .assessment-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.integrityAImanager .item-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.integrityAImanager .item-id {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9em;
+    min-width: 50px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.integrityAImanager .item-description {
+    flex: 1;
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+.integrityAImanager .item-description ul {
+    margin-top: 10px;
+    padding-left: 20px;
+    color: #6c757d;
+}
+
+.integrityAImanager .item-description li {
+    margin-bottom: 5px;
+}
+
+.integrityAImanager .scoring-container {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 20px;
+    align-items: start;
+}
+
+.integrityAImanager .score-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.integrityAImanager .score-option {
+    display: flex;
+    color: #2c3e50;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.integrityAImanager .score-option:hover {
+    border-color: #007bff;
+    background: rgba(0,123,255,0.05);
+}
+
+.integrityAImanager .score-option.selected {
+    border-color: #007bff;
+    background: #007bff;
+    color: white;
+}
+
+.integrityAImanager .score-option input[type="radio"] {
+    margin: 0;
+}
+
+.integrityAImanager .evidence-area {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.integrityAImanager .evidence-area label {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.integrityAImanager .evidence-area textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 15px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    resize: vertical;
+    transition: border-color 0.3s ease;
+}
+
+.integrityAImanager .evidence-area textarea:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+}
+
+.integrityAImanager .score-guide {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.integrityAImanager .score-guide h3 {
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+.integrityAImanager .score-guide-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.integrityAImanager .score-guide-item {
+    background: rgba(255,255,255,0.1);
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.integrityAImanager .submit-section {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    padding: 30px;
+    text-align: center;
+    margin: 40px -40px -40px -40px;
+}
+
+.integrityAImanager .submit-btn {
+    background: white;
+    color: #34495e;
+    border: none;
+    padding: 15px 40px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.integrityAImanager .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+@media (max-width: 768px) {
+
+    .integrityAImanager .header {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+    padding: 0px;
+    text-align: center;
+    margin: auto;
+    }
+
+    .integrityAImanager .basic-info {
+        grid-template-columns: 1fr;
+    }
+
+    .integrityAImanager .scoring-container {
+        grid-template-columns: 1fr;
+    }
+
+    .integrityAImanager .score-guide-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .integrityAImanager .form-container {
+        padding: 20px;
+    }
 }
 
 

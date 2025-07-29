@@ -5,7 +5,7 @@ from sqlalchemy import func, extract
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
 import os
-from models import db, User, SupportMessage, Appointment
+from models import db, User, SupportMessage, Appointment, PactAssessment
 from collections import OrderedDict
 from datetime import datetime, timedelta, date
 import json
@@ -107,11 +107,12 @@ def home():
 def aboutus():
     return render_template("aboutus.html")
 
-@app.route("/integrityAI")
-@login_required
-def integrityAI():
-    user = User.query.get(session['user_id'])
-    return render_template("integrityAI.html", user=user)
+
+# @app.route("/integrityAI")
+# @login_required
+# def integrityAI():
+#     user = User.query.get(session['user_id'])
+#     return render_template("integrityAI.html", user=user)
 
 @app.route("/integrityEdu")
 @login_required
@@ -127,6 +128,143 @@ def logout():
     else:
         flash('You are not logged in.', 'error')
     return redirect(url_for('login'))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@app.route("/integrityAI")
+@login_required
+def integrityAI():
+    user = User.query.get(session['user_id'])
+    return render_template("integrityAImanager.html", user=user)
+
+
+@app.route('/submit-pact-assessment', methods=['POST'])
+def submit_pact_assessment():
+
+    try:
+        # Get form data
+        data = request.get_json() if request.is_json else request.form.to_dict()
+        
+        # If form data, convert to proper structure
+        if not request.is_json:
+            # Convert form data to the expected structure
+            data = convert_form_data_to_structure(request.form)
+        
+        # Create new assessment
+        assessment = PactAssessment(
+            user_id=session['user_id'],
+            organization_name=data.get('organizationName', ''),
+            assessor_name=data.get('assessorName', ''),
+            review_date=datetime.strptime(data.get('reviewDate'), '%Y-%m-%d').date(),
+            status='submitted'
+        )
+        
+        # Store the assessment data as JSON
+        assessment.set_assessment_data(data)
+        
+        # Save to database
+        db.session.add(assessment)
+        db.session.commit()
+        
+        return jsonify({
+            'success': True, 
+            'message': 'Assessment submitted successfully!', 
+            'assessment_id': assessment.id,
+            'total_score': assessment.total_score,
+            'percentage': round(assessment.percentage_score, 1)
+        })
+        
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': f'Failed to submit assessment: {str(e)}'}), 500
+
+
+
+def convert_form_data_to_structure(form_data):
+    """Convert form data to the expected JSON structure"""
+    data = {
+        'organizationName': form_data.get('organizationName', ''),
+        'assessorName': form_data.get('assessorName', ''),
+        'reviewDate': form_data.get('reviewDate', ''),
+        'assessments': {}
+    }
+    
+    # Initialize sections
+    for section in range(1, 5):
+        data['assessments'][f'section{section}'] = {}
+    
+    # Process form fields
+    for key, value in form_data.items():
+        if key.startswith('score_'):
+            # Extract section and item numbers from key like 'score_1_2'
+            parts = key.split('_')
+            if len(parts) == 3:
+                section_num = parts[1]
+                item_num = parts[2]
+                section_key = f'section{section_num}'
+                item_key = f'item{item_num}'
+                
+                if section_key not in data['assessments']:
+                    data['assessments'][section_key] = {}
+                if item_key not in data['assessments'][section_key]:
+                    data['assessments'][section_key][item_key] = {}
+                
+                data['assessments'][section_key][item_key]['score'] = value
+        
+        elif key.startswith('evidence_'):
+            # Extract section and item numbers from key like 'evidence_1_2'
+            parts = key.split('_')
+            if len(parts) == 3:
+                section_num = parts[1]
+                item_num = parts[2]
+                section_key = f'section{section_num}'
+                item_key = f'item{item_num}'
+                
+                if section_key not in data['assessments']:
+                    data['assessments'][section_key] = {}
+                if item_key not in data['assessments'][section_key]:
+                    data['assessments'][section_key][item_key] = {}
+                
+                data['assessments'][section_key][item_key]['evidence'] = value
+    
+    return data
+
+
+
+
+
+
+
+
+
 
 
 

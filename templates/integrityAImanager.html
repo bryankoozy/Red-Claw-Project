@@ -1,0 +1,853 @@
+{% extends "base.html" %}
+
+{% block title %}IntegrityAI - Red Claw{% endblock %}
+
+{% block content %}
+
+<div class="integrityAImanager">
+  <div class="header">
+      <h1>PACT Compliance Assessment</h1>
+      <p>Evaluate your organization's anti-corruption policies and practices</p>
+  </div>
+
+  <div class="container">
+
+
+      <div class="form-container">
+          <div class="disclaimer">
+              <h3>Important Notice</h3>
+              <p>By uploading and submitting the completed assessment form, you acknowledge and consent that:</p>
+              <ul>
+                  <li>The information provided is accurate to the best of your knowledge</li>
+                  <li>Assessment outcomes may be used for internal benchmarking or advisory purposes</li>
+                  <li>All data shared will be treated in accordance with applicable data protection and confidentiality policies</li>
+                  <li>Submission does not constitute or imply any form of certification, endorsement, or official clearance by CPIB or related authorities</li>
+              </ul>
+          </div>
+
+          <form id="pactAssessmentForm" method="POST" action="/submit-pact-assessment">
+              <div class="basic-info">
+                  <div class="form-group">
+                      <label for="organizationName">Organization Name *</label>
+                      <input type="text" id="organizationName" name="organizationName" required>
+                  </div>
+                  <div class="form-group">
+                      <label for="assessorName">Reviewed by *</label>
+                      <input type="text" id="assessorName" name="assessorName" required>
+                  </div>
+                  <div class="form-group">
+                      <label for="reviewDate">Date *</label>
+                      <input type="date" id="reviewDate" name="reviewDate" required>
+                  </div>
+              </div>
+
+              <div class="score-guide">
+                  <h3>Scoring Guide</h3>
+                  <div class="score-guide-grid">
+                      <div class="score-guide-item">
+                          <strong>0</strong><br>Not Implemented
+                      </div>
+                      <div class="score-guide-item">
+                          <strong>1</strong><br>Minimally Implemented
+                      </div>
+                      <div class="score-guide-item">
+                          <strong>2</strong><br>Partially Implemented
+                      </div>
+                      <div class="score-guide-item">
+                          <strong>3</strong><br>Mostly Implemented
+                      </div>
+                      <div class="score-guide-item">
+                          <strong>4</strong><br>Fully Implemented
+                      </div>
+                  </div>
+              </div>
+
+              <!-- Section 1: Organisational Commitment -->
+              <div class="section active" id="section1">
+                  <div class="section-header" onclick="toggleSection('section1')">
+                      <h2>Section 1: Organisational Commitment <span class="toggle-icon">▼</span></h2>
+                  </div>
+                  <div class="section-content">
+                      <div class="section-content-inner">
+                          <div class="section-description">
+                              Enduring commitment to ethical leadership and governance cultivates corporate integrity. The following items assess your organisation's implementation of processes that support this commitment.
+                          </div>
+
+                          <!-- Item 1.1 -->
+                          <div class="assessment-item">
+                              <div class="item-header">
+                                  <div class="item-id">1.1</div>
+                                  <div class="item-description">
+                                      Formal declaration of zero-tolerance stance towards corruption by senior management.
+                                  </div>
+                              </div>
+                              <div class="scoring-container">
+                                  <div class="score-selector">
+                                      <div class="score-option" onclick="selectScore('1.1', 0)">
+                                          <input type="radio" name="score_1_1" value="0"> <span>0 - Not Implemented</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('1.1', 1)">
+                                          <input type="radio" name="score_1_1" value="1"> <span>1 - Minimally</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('1.1', 2)">
+                                          <input type="radio" name="score_1_1" value="2"> <span>2 - Partially</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('1.1', 3)">
+                                          <input type="radio" name="score_1_1" value="3"> <span>3 - Mostly</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('1.1', 4)">
+                                          <input type="radio" name="score_1_1" value="4"> <span>4 - Fully</span>
+                                      </div>
+                                  </div>
+                                  <div class="evidence-area">
+                                      <label for="evidence_1_1">Evidence/Remarks</label>
+                                      <textarea id="evidence_1_1" name="evidence_1_1" placeholder="Provide supporting evidence or remarks for your assessment..."></textarea>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <!-- Item 1.2 -->
+                          <div class="assessment-item">
+                              <div class="item-header">
+                                  <div class="item-id">1.2</div>
+                                  <div class="item-description">
+                                      Promotion of core values such as integrity, meritocracy, and transparency by senior management.
+                                  </div>
+                              </div>
+                              <div class="scoring-container">
+                                  <div class="score-selector">
+                                      <div class="score-option" onclick="selectScore('1.2', 0)">
+                                          <input type="radio" name="score_1_2" value="0"> <span>0 - Not Implemented</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('1.2', 1)">
+                                          <input type="radio" name="score_1_2" value="1"> <span>1 - Minimally</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('1.2', 2)">
+                                          <input type="radio" name="score_1_2" value="2"> <span>2 - Partially</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('1.2', 3)">
+                                          <input type="radio" name="score_1_2" value="3"> <span>3 - Mostly</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('1.2', 4)">
+                                          <input type="radio" name="score_1_2" value="4"> <span>4 - Fully</span>
+                                      </div>
+                                  </div>
+                                  <div class="evidence-area">
+                                      <label for="evidence_1_2">Evidence/Remarks</label>
+                                      <textarea id="evidence_1_2" name="evidence_1_2" placeholder="Provide supporting evidence or remarks for your assessment..."></textarea>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <!-- Item 1.3 -->
+                          <div class="assessment-item">
+                              <div class="item-header">
+                                  <div class="item-id">1.3</div>
+                                  <div class="item-description">
+                                      A code of conduct that addresses the following:
+                                      <ul>
+                                          <li>Corrupt behaviour</li>
+                                          <li>Conflict of interest</li>
+                                          <li>Gifts and entertainment</li>
+                                          <li>Obtaining personal loans from clients/customers</li>
+                                      </ul>
+                                  </div>
+                              </div>
+                              <div class="scoring-container">
+                                  <div class="score-selector">
+                                      <div class="score-option" onclick="selectScore('1.3', 0)">
+                                          <input type="radio" name="score_1_3" value="0"> <span>0 - Not Implemented</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('1.3', 1)">
+                                          <input type="radio" name="score_1_3" value="1"> <span>1 - Minimally</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('1.3', 2)">
+                                          <input type="radio" name="score_1_3" value="2"> <span>2 - Partially</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('1.3', 3)">
+                                          <input type="radio" name="score_1_3" value="3"> <span>3 - Mostly</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('1.3', 4)">
+                                          <input type="radio" name="score_1_3" value="4"> <span>4 - Fully</span>
+                                      </div>
+                                  </div>
+                                  <div class="evidence-area">
+                                      <label for="evidence_1_3">Evidence/Remarks</label>
+                                      <textarea id="evidence_1_3" name="evidence_1_3" placeholder="Provide supporting evidence or remarks for your assessment..."></textarea>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <!-- Item 1.4 -->
+                          <div class="assessment-item">
+                              <div class="item-header">
+                                  <div class="item-id">1.4</div>
+                                  <div class="item-description">
+                                      An anti-corruption policy that features the following:
+                                      <ul>
+                                          <li>Declaration to abide by Singapore's anti-corruption laws</li>
+                                          <li>Denouncement of any form of corruption and bribery</li>
+                                          <li>Undertaking to set-up, maintain and regularly review corruption susceptible operational processes</li>
+                                          <li>Supporting and protecting whistle-blowers</li>
+                                          <li>Compliance to regular monitoring and auditing</li>
+                                      </ul>
+                                  </div>
+                              </div>
+                              <div class="scoring-container">
+                                  <div class="score-selector">
+                                      <div class="score-option" onclick="selectScore('1.4', 0)">
+                                          <input type="radio" name="score_1_4" value="0"> <span>0 - Not Implemented</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('1.4', 1)">
+                                          <input type="radio" name="score_1_4" value="1"> <span>1 - Minimally</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('1.4', 2)">
+                                          <input type="radio" name="score_1_4" value="2"> <span>2 - Partially</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('1.4', 3)">
+                                          <input type="radio" name="score_1_4" value="3"> <span>3 - Mostly</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('1.4', 4)">
+                                          <input type="radio" name="score_1_4" value="4"> <span>4 - Fully</span>
+                                      </div>
+                                  </div>
+                                  <div class="evidence-area">
+                                      <label for="evidence_1_4">Evidence/Remarks</label>
+                                      <textarea id="evidence_1_4" name="evidence_1_4" placeholder="Provide supporting evidence or remarks for your assessment..."></textarea>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <!-- Item 1.5 -->
+                          <div class="assessment-item">
+                              <div class="item-header">
+                                  <div class="item-id">1.5</div>
+                                  <div class="item-description">
+                                      Documentation and communication of the anti-corruption policy and code of conduct to all employees and relevant stakeholders (e.g., business partners).
+                                  </div>
+                              </div>
+                              <div class="scoring-container">
+                                  <div class="score-selector">
+                                      <div class="score-option" onclick="selectScore('1.5', 0)">
+                                          <input type="radio" name="score_1_5" value="0"> <span>0 - Not Implemented</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('1.5', 1)">
+                                          <input type="radio" name="score_1_5" value="1"> <span>1 - Minimally</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('1.5', 2)">
+                                          <input type="radio" name="score_1_5" value="2"> <span>2 - Partially</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('1.5', 3)">
+                                          <input type="radio" name="score_1_5" value="3"> <span>3 - Mostly</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('1.5', 4)">
+                                          <input type="radio" name="score_1_5" value="4"> <span>4 - Fully</span>
+                                      </div>
+                                  </div>
+                                  <div class="evidence-area">
+                                      <label for="evidence_1_5">Evidence/Remarks</label>
+                                      <textarea id="evidence_1_5" name="evidence_1_5" placeholder="Provide supporting evidence or remarks for your assessment..."></textarea>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <!-- Section 2: Risk identification and Management -->
+              <div class="section" id="section2">
+                  <div class="section-header" onclick="toggleSection('section2')">
+                      <h2>Section 2: Risk identification and Management <span class="toggle-icon">▼</span></h2>
+                  </div>
+                  <div class="section-content">
+                      <div class="section-content-inner">
+                          <div class="section-description">
+                              Effective identification and management of corruption risks is critical to safeguard a corruption-free organisation. The following items assess your organisation's implementation of risk identification and management mechanisms.
+                          </div>
+
+                          <!-- Item 2.1 -->
+                          <div class="assessment-item">
+                              <div class="item-header">
+                                  <div class="item-id">2.1</div>
+                                  <div class="item-description">
+                                      Periodic risk assessments that identify and address vulnerable work processes and job functions.
+                                  </div>
+                              </div>
+                              <div class="scoring-container">
+                                  <div class="score-selector">
+                                      <div class="score-option" onclick="selectScore('2.1', 0)">
+                                          <input type="radio" name="score_2_1" value="0"> <span>0 - Not Implemented</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('2.1', 1)">
+                                          <input type="radio" name="score_2_1" value="1"> <span>1 - Minimally</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('2.1', 2)">
+                                          <input type="radio" name="score_2_1" value="2"> <span>2 - Partially</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('2.1', 3)">
+                                          <input type="radio" name="score_2_1" value="3"> <span>3 - Mostly</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('2.1', 4)">
+                                          <input type="radio" name="score_2_1" value="4"> <span>4 - Fully</span>
+                                      </div>
+                                  </div>
+                                  <div class="evidence-area">
+                                      <label for="evidence_2_1">Evidence/Remarks</label>
+                                      <textarea id="evidence_2_1" name="evidence_2_1" placeholder="Provide supporting evidence or remarks for your assessment..."></textarea>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <!-- Item 2.2 -->
+                          <div class="assessment-item">
+                              <div class="item-header">
+                                  <div class="item-id">2.2</div>
+                                  <div class="item-description">
+                                      Communication and enforcement of gift and entertainment policies.
+                                  </div>
+                              </div>
+                              <div class="scoring-container">
+                                  <div class="score-selector">
+                                      <div class="score-option" onclick="selectScore('2.2', 0)">
+                                          <input type="radio" name="score_2_2" value="0"> <span>0 - Not Implemented</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('2.2', 1)">
+                                          <input type="radio" name="score_2_2" value="1"> <span>1 - Minimally</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('2.2', 2)">
+                                          <input type="radio" name="score_2_2" value="2"> <span>2 - Partially</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('2.2', 3)">
+                                          <input type="radio" name="score_2_2" value="3"> <span>3 - Mostly</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('2.2', 4)">
+                                          <input type="radio" name="score_2_2" value="4"> <span>4 - Fully</span>
+                                      </div>
+                                  </div>
+                                  <div class="evidence-area">
+                                      <label for="evidence_2_2">Evidence/Remarks</label>
+                                      <textarea id="evidence_2_2" name="evidence_2_2" placeholder="Provide supporting evidence or remarks for your assessment..."></textarea>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <!-- Item 2.3 -->
+                          <div class="assessment-item">
+                              <div class="item-header">
+                                  <div class="item-id">2.3</div>
+                                  <div class="item-description">
+                                      Processes for employees to declare any actual or perceived conflict of interest.
+                                  </div>
+                              </div>
+                              <div class="scoring-container">
+                                  <div class="score-selector">
+                                      <div class="score-option" onclick="selectScore('2.3', 0)">
+                                          <input type="radio" name="score_2_3" value="0"> <span>0 - Not Implemented</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('2.3', 1)">
+                                          <input type="radio" name="score_2_3" value="1"> <span>1 - Minimally</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('2.3', 2)">
+                                          <input type="radio" name="score_2_3" value="2"> <span>2 - Partially</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('2.3', 3)">
+                                          <input type="radio" name="score_2_3" value="3"> <span>3 - Mostly</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('2.3', 4)">
+                                          <input type="radio" name="score_2_3" value="4"> <span>4 - Fully</span>
+                                      </div>
+                                  </div>
+                                  <div class="evidence-area">
+                                      <label for="evidence_2_3">Evidence/Remarks</label>
+                                      <textarea id="evidence_2_3" name="evidence_2_3" placeholder="Provide supporting evidence or remarks for your assessment..."></textarea>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <!-- Item 2.4 -->
+                          <div class="assessment-item">
+                              <div class="item-header">
+                                  <div class="item-id">2.4</div>
+                                  <div class="item-description">
+                                      Record and track the linkage of contributions and sponsorships to measurable business benefits.
+                                  </div>
+                              </div>
+                              <div class="scoring-container">
+                                  <div class="score-selector">
+                                      <div class="score-option" onclick="selectScore('2.4', 0)">
+                                          <input type="radio" name="score_2_4" value="0"> <span>0 - Not Implemented</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('2.4', 1)">
+                                          <input type="radio" name="score_2_4" value="1"> <span>1 - Minimally</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('2.4', 2)">
+                                          <input type="radio" name="score_2_4" value="2"> <span>2 - Partially</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('2.4', 3)">
+                                          <input type="radio" name="score_2_4" value="3"> <span>3 - Mostly</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('2.4', 4)">
+                                          <input type="radio" name="score_2_4" value="4"> <span>4 - Fully</span>
+                                      </div>
+                                  </div>
+                                  <div class="evidence-area">
+                                      <label for="evidence_2_4">Evidence/Remarks</label>
+                                      <textarea id="evidence_2_4" name="evidence_2_4" placeholder="Provide supporting evidence or remarks for your assessment..."></textarea>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <!-- Item 2.5 -->
+                          <div class="assessment-item">
+                              <div class="item-header">
+                                  <div class="item-id">2.5</div>
+                                  <div class="item-description">
+                                      Conduct of due diligence on high-risk third parties and vendors.
+                                  </div>
+                              </div>
+                              <div class="scoring-container">
+                                  <div class="score-selector">
+                                      <div class="score-option" onclick="selectScore('2.5', 0)">
+                                          <input type="radio" name="score_2_5" value="0"> <span>0 - Not Implemented</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('2.5', 1)">
+                                          <input type="radio" name="score_2_5" value="1"> <span>1 - Minimally</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('2.5', 2)">
+                                          <input type="radio" name="score_2_5" value="2"> <span>2 - Partially</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('2.5', 3)">
+                                          <input type="radio" name="score_2_5" value="3"> <span>3 - Mostly</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('2.5', 4)">
+                                          <input type="radio" name="score_2_5" value="4"> <span>4 - Fully</span>
+                                      </div>
+                                  </div>
+                                  <div class="evidence-area">
+                                      <label for="evidence_2_5">Evidence/Remarks</label>
+                                      <textarea id="evidence_2_5" name="evidence_2_5" placeholder="Provide supporting evidence or remarks for your assessment..."></textarea>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <!-- Section 3: Controls & Communication -->
+              <div class="section" id="section3">
+                  <div class="section-header" onclick="toggleSection('section3')">
+                      <h2>Section 3: Controls & Communication <span class="toggle-icon">▼</span></h2>
+                  </div>
+                  <div class="section-content">
+                      <div class="section-content-inner">
+                          <div class="section-description">
+                              The implementation and communication of internal controls strengthen corruption prevention and compliance to the organisation's anti-corruption framework. The following items assess your organisation's implementation of anti-corruption controls and communication processes.
+                          </div>
+
+                          <!-- Item 3.1 -->
+                          <div class="assessment-item">
+                              <div class="item-header">
+                                  <div class="item-id">3.1</div>
+                                  <div class="item-description">
+                                      Internal controls including the following:
+                                      <ul>
+                                          <li>Accurate records of transactions</li>
+                                          <li>Clear operating procedures</li>
+                                          <li>Audit checks</li>
+                                      </ul>
+                                  </div>
+                              </div>
+                              <div class="scoring-container">
+                                  <div class="score-selector">
+                                      <div class="score-option" onclick="selectScore('3.1', 0)">
+                                          <input type="radio" name="score_3_1" value="0"> <span>0 - Not Implemented</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('3.1', 1)">
+                                          <input type="radio" name="score_3_1" value="1"> <span>1 - Minimally</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('3.1', 2)">
+                                          <input type="radio" name="score_3_1" value="2"> <span>2 - Partially</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('3.1', 3)">
+                                          <input type="radio" name="score_3_1" value="3"> <span>3 - Mostly</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('3.1', 4)">
+                                          <input type="radio" name="score_3_1" value="4"> <span>4 - Fully</span>
+                                      </div>
+                                  </div>
+                                  <div class="evidence-area">
+                                      <label for="evidence_3_1">Evidence/Remarks</label>
+                                      <textarea id="evidence_3_1" name="evidence_3_1" placeholder="Provide supporting evidence or remarks for your assessment..."></textarea>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <!-- Item 3.2 -->
+                          <div class="assessment-item">
+                              <div class="item-header">
+                                  <div class="item-id">3.2</div>
+                                  <div class="item-description">
+                                      A whistle blowing/reporting system that features the following:
+                                      <ul>
+                                          <li>Clear reporting chain such as a suitably appointed person/team to follow-up on suspected corruption</li>
+                                          <li>Conveniently accessible reporting mechanism (such as a designated phone number/email address)</li>
+                                          <li>Diligent follow-up with the complainant (if known) on the outcome of the investigation</li>
+                                      </ul>
+                                  </div>
+                              </div>
+                              <div class="scoring-container">
+                                  <div class="score-selector">
+                                      <div class="score-option" onclick="selectScore('3.2', 0)">
+                                          <input type="radio" name="score_3_2" value="0"> <span>0 - Not Implemented</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('3.2', 1)">
+                                          <input type="radio" name="score_3_2" value="1"> <span>1 - Minimally</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('3.2', 2)">
+                                          <input type="radio" name="score_3_2" value="2"> <span>2 - Partially</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('3.2', 3)">
+                                          <input type="radio" name="score_3_2" value="3"> <span>3 - Mostly</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('3.2', 4)">
+                                          <input type="radio" name="score_3_2" value="4"> <span>4 - Fully</span>
+                                      </div>
+                                  </div>
+                                  <div class="evidence-area">
+                                      <label for="evidence_3_2">Evidence/Remarks</label>
+                                      <textarea id="evidence_3_2" name="evidence_3_2" placeholder="Provide supporting evidence or remarks for your assessment..."></textarea>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <!-- Item 3.3 -->
+                          <div class="assessment-item">
+                              <div class="item-header">
+                                  <div class="item-id">3.3</div>
+                                  <div class="item-description">
+                                      Communication of the organisation's anti-corruption framework to employees during onboarding and regular anti-corruption training/awareness programs.
+                                  </div>
+                              </div>
+                              <div class="scoring-container">
+                                  <div class="score-selector">
+                                      <div class="score-option" onclick="selectScore('3.3', 0)">
+                                          <input type="radio" name="score_3_3" value="0"> <span>0 - Not Implemented</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('3.3', 1)">
+                                          <input type="radio" name="score_3_3" value="1"> <span>1 - Minimally</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('3.3', 2)">
+                                          <input type="radio" name="score_3_3" value="2"> <span>2 - Partially</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('3.3', 3)">
+                                          <input type="radio" name="score_3_3" value="3"> <span>3 - Mostly</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('3.3', 4)">
+                                          <input type="radio" name="score_3_3" value="4"> <span>4 - Fully</span>
+                                      </div>
+                                  </div>
+                                  <div class="evidence-area">
+                                      <label for="evidence_3_3">Evidence/Remarks</label>
+                                      <textarea id="evidence_3_3" name="evidence_3_3" placeholder="Provide supporting evidence or remarks for your assessment..."></textarea>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <!-- Item 3.4 -->
+                          <div class="assessment-item">
+                              <div class="item-header">
+                                  <div class="item-id">3.4</div>
+                                  <div class="item-description">
+                                      Communication of the organisation's anti-corruption framework to business partners, suppliers, and other stakeholders.
+                                  </div>
+                              </div>
+                              <div class="scoring-container">
+                                  <div class="score-selector">
+                                      <div class="score-option" onclick="selectScore('3.4', 0)">
+                                          <input type="radio" name="score_3_4" value="0"> <span>0 - Not Implemented</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('3.4', 1)">
+                                          <input type="radio" name="score_3_4" value="1"> <span>1 - Minimally</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('3.4', 2)">
+                                          <input type="radio" name="score_3_4" value="2"> <span>2 - Partially</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('3.4', 3)">
+                                          <input type="radio" name="score_3_4" value="3"> <span>3 - Mostly</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('3.4', 4)">
+                                          <input type="radio" name="score_3_4" value="4"> <span>4 - Fully</span>
+                                      </div>
+                                  </div>
+                                  <div class="evidence-area">
+                                      <label for="evidence_3_4">Evidence/Remarks</label>
+                                      <textarea id="evidence_3_4" name="evidence_3_4" placeholder="Provide supporting evidence or remarks for your assessment..."></textarea>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <!-- Section 4: Monitoring & Improvement -->
+              <div class="section" id="section4">
+                  <div class="section-header" onclick="toggleSection('section4')">
+                      <h2>Section 4: Monitoring & Improvement <span class="toggle-icon">▼</span></h2>
+                  </div>
+                  <div class="section-content">
+                      <div class="section-content-inner">
+                          <div class="section-description">
+                              Ongoing monitoring and continuous improvement are essential to maintaining a corruption-free organisation. They ensure that anti-corruption measures remain effective and responsive to evolving threats. The following items evaluate your organisation's implementation of efforts to monitor, review, and improve anti-corruption measures.
+                          </div>
+
+                          <!-- Item 4.1 -->
+                          <div class="assessment-item">
+                              <div class="item-header">
+                                  <div class="item-id">4.1</div>
+                                  <div class="item-description">
+                                      Periodic evaluation of anti-corruption controls and policies based on the following criteria:
+                                      <ul>
+                                          <li>Efficacy of existing system to prevent corruption</li>
+                                          <li>Efficiency in keeping operation costs low</li>
+                                          <li>Sustainability of the system to combat corruption in the long run</li>
+                                      </ul>
+                                  </div>
+                              </div>
+                              <div class="scoring-container">
+                                  <div class="score-selector">
+                                      <div class="score-option" onclick="selectScore('4.1', 0)">
+                                          <input type="radio" name="score_4_1" value="0"> <span>0 - Not Implemented</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('4.1', 1)">
+                                          <input type="radio" name="score_4_1" value="1"> <span>1 - Minimally</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('4.1', 2)">
+                                          <input type="radio" name="score_4_1" value="2"> <span>2 - Partially</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('4.1', 3)">
+                                          <input type="radio" name="score_4_1" value="3"> <span>3 - Mostly</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('4.1', 4)">
+                                          <input type="radio" name="score_4_1" value="4"> <span>4 - Fully</span>
+                                      </div>
+                                  </div>
+                                  <div class="evidence-area">
+                                      <label for="evidence_4_1">Evidence/Remarks</label>
+                                      <textarea id="evidence_4_1" name="evidence_4_1" placeholder="Provide supporting evidence or remarks for your assessment..."></textarea>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <!-- Item 4.2 -->
+                          <div class="assessment-item">
+                              <div class="item-header">
+                                  <div class="item-id">4.2</div>
+                                  <div class="item-description">
+                                      Improvements made in response to internal/external feedback or audit findings.
+                                  </div>
+                              </div>
+                              <div class="scoring-container">
+                                  <div class="score-selector">
+                                      <div class="score-option" onclick="selectScore('4.2', 0)">
+                                          <input type="radio" name="score_4_2" value="0"> <span>0 - Not Implemented</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('4.2', 1)">
+                                          <input type="radio" name="score_4_2" value="1"> <span>1 - Minimally</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('4.2', 2)">
+                                          <input type="radio" name="score_4_2" value="2"> <span>2 - Partially</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('4.2', 3)">
+                                          <input type="radio" name="score_4_2" value="3"> <span>3 - Mostly</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('4.2', 4)">
+                                          <input type="radio" name="score_4_2" value="4"> <span>4 - Fully</span>
+                                      </div>
+                                  </div>
+                                  <div class="evidence-area">
+                                      <label for="evidence_4_2">Evidence/Remarks</label>
+                                      <textarea id="evidence_4_2" name="evidence_4_2" placeholder="Provide supporting evidence or remarks for your assessment..."></textarea>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <!-- Item 4.3 -->
+                          <div class="assessment-item">
+                              <div class="item-header">
+                                  <div class="item-id">4.3</div>
+                                  <div class="item-description">
+                                      Communication of evaluation results and policy updates to all employees and relevant stakeholders.
+                                  </div>
+                              </div>
+                              <div class="scoring-container">
+                                  <div class="score-selector">
+                                      <div class="score-option" onclick="selectScore('4.3', 0)">
+                                          <input type="radio" name="score_4_3" value="0"> <span>0 - Not Implemented</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('4.3', 1)">
+                                          <input type="radio" name="score_4_3" value="1"> <span>1 - Minimally</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('4.3', 2)">
+                                          <input type="radio" name="score_4_3" value="2"> <span>2 - Partially</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('4.3', 3)">
+                                          <input type="radio" name="score_4_3" value="3"> <span>3 - Mostly</span>
+                                      </div>
+                                      <div class="score-option" onclick="selectScore('4.3', 4)">
+                                          <input type="radio" name="score_4_3" value="4"> <span>4 - Fully</span>
+                                      </div>
+                                  </div>
+                                  <div class="evidence-area">
+                                      <label for="evidence_4_3">Evidence/Remarks</label>
+                                      <textarea id="evidence_4_3" name="evidence_4_3" placeholder="Provide supporting evidence or remarks for your assessment..."></textarea>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="submit-section">
+                  <button type="submit" class="submit-btn">Submit Assessment</button>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
+
+
+
+
+
+
+<script>
+    function toggleSection(sectionId) {
+        const section = document.getElementById(sectionId);
+        const content = section.querySelector('.section-content');
+        const isActive = section.classList.contains('active');
+        
+        if (isActive) {
+            // Collapse
+            section.classList.remove('active');
+            content.style.maxHeight = '0';
+        } else {
+            // Expand
+            section.classList.add('active');
+            // Calculate actual height needed
+            const inner = content.querySelector('.section-content-inner');
+            const height = inner.scrollHeight + 60; // Add padding
+            content.style.maxHeight = height + 'px';
+            
+            // Reset to auto after animation completes
+            setTimeout(() => {
+                if (section.classList.contains('active')) {
+                    content.style.maxHeight = 'none';
+                }
+            }, 400);
+        }
+    }
+
+    function selectScore(itemId, score) {
+        // Remove selected class from all options in this item
+        const container = event.target.closest('.assessment-item');
+        container.querySelectorAll('.score-option').forEach(option => {
+            option.classList.remove('selected');
+        });
+        
+        // Add selected class to clicked option
+        event.target.closest('.score-option').classList.add('selected');
+        
+        // Check the radio button
+        const radio = event.target.closest('.score-option').querySelector('input[type="radio"]');
+        radio.checked = true;
+    }
+
+    // Initialize first section as open with proper height
+    document.addEventListener('DOMContentLoaded', function() {
+        const firstSection = document.getElementById('section1');
+        const content = firstSection.querySelector('.section-content');
+        const inner = content.querySelector('.section-content-inner');
+        content.style.maxHeight = (inner.scrollHeight + 60) + 'px';
+        
+        setTimeout(() => {
+            content.style.maxHeight = 'none';
+        }, 400);
+    });
+
+    // Update the form submission handler in your HTML template
+    document.getElementById('pactAssessmentForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Show loading state
+        const submitButton = this.querySelector('.submit-btn');
+        const originalText = submitButton.textContent;
+        submitButton.textContent = 'Submitting...';
+        submitButton.disabled = true;
+        
+        // Collect form data
+        const formData = new FormData(this);
+        const data = {};
+        
+        // Basic info
+        data.organizationName = formData.get('organizationName');
+        data.assessorName = formData.get('assessorName');
+        data.reviewDate = formData.get('reviewDate');
+        
+        // Assessment scores and evidence
+        data.assessments = {};
+        
+        // Collect all scores and evidence
+        for (let section = 1; section <= 4; section++) {
+            data.assessments[`section${section}`] = {};
+            
+            const sectionItems = {
+                1: 5, // Section 1 has 5 items
+                2: 5, // Section 2 has 5 items  
+                3: 4, // Section 3 has 4 items
+                4: 3  // Section 4 has 3 items
+            };
+            
+            for (let item = 1; item <= sectionItems[section]; item++) {
+                const scoreKey = `score_${section}_${item}`;
+                const evidenceKey = `evidence_${section}_${item}`;
+                
+                data.assessments[`section${section}`][`item${item}`] = {
+                    score: formData.get(scoreKey),
+                    evidence: formData.get(evidenceKey) || ''
+                };
+            }
+        }
+        
+        // Submit to server
+        fetch('/submit-pact-assessment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                alert(`Assessment submitted successfully!\nTotal Score: ${result.total_score}/68 (${result.percentage}%)`);
+                // Optionally redirect to results page
+                window.location.href = `/pact-assessment/${result.assessment_id}`;
+            } else {
+                alert('Error: ' + (result.error || 'Failed to submit assessment'));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to submit assessment. Please try again.');
+        })
+        .finally(() => {
+            // Reset button
+            submitButton.textContent = originalText;
+            submitButton.disabled = false;
+        });
+    });
+</script>
+
+
+
+{% endblock %}

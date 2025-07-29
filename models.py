@@ -146,3 +146,39 @@ class PactAssessment(db.Model):
 
     def __repr__(self):
         return f'<PactAssessment {self.id} - {self.organization_name}>'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class QuizResult(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    score = db.Column(db.Integer, nullable=False)
+    max_score = db.Column(db.Integer, nullable=False)
+    taken_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    user = db.relationship('User', backref='quiz_results')
+    
+    def __repr__(self):
+        return f'<QuizResult User:{self.user_id} Score:{self.score}/{self.max_score}>'  

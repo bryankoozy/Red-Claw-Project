@@ -10,6 +10,7 @@
         <div class="slide home-slide active" id="homeSlide">
             <h1 class="home-title">IntegrityEDU</h1>
             <p class="home-subtitle">Interactive Learning Journey</p>
+
             
             <div class="circles-container">
                 <!-- Floating Circles for Each Module -->
@@ -92,6 +93,10 @@
                     <p>Following a global corruption probe, Keppel strengthened its ethics governance by issuing CEO-led anti-corruption pledges and embedding them into board responsibilities.</p>
                 </div>
             </div>
+            <div class="button-group">
+                <button class="complete-button" onclick="markModuleComplete(1)">Complete Module 1</button>
+                <button class="back-button" onclick="goHome()">← Back to Home</button>
+            </div>
         </div>
 
         <!-- Measure 2: Anti-Corruption Policy -->
@@ -127,6 +132,10 @@
                     <h4>Case Example: DBS Bank</h4>
                     <p>Maintains a published anti-corruption and bribery policy, requiring mandatory online certification for employees and vendors every 12 months.</p>
                 </div>
+            </div>
+            <div class="button-group">
+                <button class="complete-button" onclick="markModuleComplete(2)">Complete Module 2</button>
+                <button class="back-button" onclick="goHome()">← Back to Home</button>
             </div>
         </div>
 
@@ -165,6 +174,10 @@
                     <p>Developed a comprehensive Code of Conduct using interactive tools and simulations. Staff must undergo scenario-based training on bribery risks and compliance behavior.</p>
                 </div>
             </div>
+            <div class="button-group">
+                <button class="complete-button" onclick="markModuleComplete(3)">Complete Module 3</button>
+                <button class="back-button" onclick="goHome()">← Back to Home</button>
+            </div>
         </div>
 
         <!-- Measure 4: Risk Assessments -->
@@ -199,6 +212,10 @@
                     </ul>
                 </div>
             </div>
+            <div class="button-group">
+                <button class="complete-button" onclick="markModuleComplete(4)">Complete Module 4</button>
+                <button class="back-button" onclick="goHome()">← Back to Home</button>
+            </div>
         </div>
 
         <!-- Measure 5: Risk Mitigation Policies -->
@@ -230,6 +247,10 @@
                         <li>Assign compliance officer for oversight</li>
                     </ul>
                 </div>
+            </div>
+            <div class="button-group">
+                <button class="complete-button" onclick="markModuleComplete(5)">Complete Module 5</button>
+                <button class="back-button" onclick="goHome()">← Back to Home</button>
             </div>
         </div>
 
@@ -263,6 +284,10 @@
                     </ul>
                 </div>
             </div>
+            <div class="button-group">
+                <button class="complete-button" onclick="markModuleComplete(6)">Complete Module 6</button>
+                <button class="back-button" onclick="goHome()">← Back to Home</button>
+            </div>
         </div>
 
         <!-- Measure 7: Whistleblowing System -->
@@ -294,6 +319,10 @@
                         <li>Assign independent ethics team to manage reports</li>
                     </ul>
                 </div>
+            </div>
+            <div class="button-group">
+                <button class="complete-button" onclick="markModuleComplete(7)">Complete Module 7</button>
+                <button class="back-button" onclick="goHome()">← Back to Home</button>
             </div>
         </div>
 
@@ -327,11 +356,17 @@
                     </ul>
                 </div>
             </div>
+            <div class="button-group">
+                <button class="complete-button" onclick="markModuleComplete(8)">Complete Module 8</button>
+                <button class="back-button" onclick="goHome()">← Back to Home</button>
+            </div>
         </div>
-    </div>
 
-    <!-- Navigation Elements -->
-    <button class="back-button" id="backButton" onclick="goHome()" style="display: none;">← Back to Home</button>
+        <button id="proceedQuizButton" class="proceed-button" onclick="proceedToQuiz()" style="display: none;">
+        Proceed to Quiz →
+        </button>
+
+    </div>
 </div>
 
 {% endblock %}

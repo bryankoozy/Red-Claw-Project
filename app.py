@@ -5,7 +5,7 @@ from sqlalchemy import func, extract
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
 import os
-from models import db, User, SupportMessage, Appointment, PactAssessment
+from models import db, User, SupportMessage, Appointment, PactAssessment, QuizResult
 from collections import OrderedDict
 from datetime import datetime, timedelta, date
 import json
@@ -13,7 +13,7 @@ from sqlalchemy.orm import joinedload
 
 
 # only uncomment and use the below line during development mode. comment it when going to production
-# os.environ['FLASK_ENV'] = 'development'
+os.environ['FLASK_ENV'] = 'development'
 
 
 
@@ -36,6 +36,13 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
+
+
+
+
+
+
+
 
 
 
@@ -99,6 +106,13 @@ def admin_required(f):
 
 
 
+
+
+
+
+
+
+
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -129,15 +143,13 @@ def logout():
         flash('You are not logged in.', 'error')
     return redirect(url_for('login'))
 
+@app.route('/userDetail')
+@admin_required
+def userDetail():
+    # Fetch all users ordered by creation date descending
+    users = User.query.options(joinedload(User.support_messages)).order_by(User.id.asc()).all()
 
-
-
-
-
-
-
-
-
+    return render_template('userDetail.html', users=users)
 
 
 
@@ -281,6 +293,75 @@ def convert_form_data_to_structure(form_data):
 
 
 
+@app.route("/quizManager")
+@login_required
+def quizManager():
+    user = User.query.get(session['user_id'])
+    return render_template("quizManager.html", user=user)
+
+
+@app.route('/submit-quiz-score', methods=['POST'])
+@login_required
+def submit_quiz_score():
+    data = request.get_json()
+    score = data.get('score')
+    max_score = data.get('max_score')
+
+    if score is None or max_score is None:
+        return jsonify({'error': 'Score and max_score are required'}), 400
+    
+    try:
+        score = int(score)
+        max_score = int(max_score)
+    except ValueError:
+        return jsonify({'error': 'Score and max_score must be integers'}), 400
+
+    # Fetch user from session
+    user = User.query.get(session['user_id'])
+    if not user:
+        return jsonify({'error': 'User not found or not logged in'}), 401
+
+    # Save new quiz attempt
+    new_result = QuizResult(user_id=user.id, score=score, max_score=max_score)
+    db.session.add(new_result)
+
+    # Update highest score on User if higher
+    if user.score is None or score > user.score:
+        user.score = score
+
+    db.session.commit()
+
+    return jsonify({
+        'message': 'Score saved successfully',
+        'highest_score': user.score
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @app.route("/dashboard")
 @admin_required
 def dashboard():
@@ -323,17 +404,6 @@ def dashboard():
         selected_year=year
     )
 
-
-
-
-
-@app.route('/userDetail')
-@admin_required
-def userDetail():
-    # Fetch all users ordered by creation date descending
-    users = User.query.options(joinedload(User.support_messages)).order_by(User.id.asc()).all()
-
-    return render_template('userDetail.html', users=users)
 
 
 

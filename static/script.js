@@ -204,15 +204,21 @@ window.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.integrity-edu .floating-circle').forEach(circle => {
     circle.addEventListener('mouseenter', () => {
       circle.style.boxShadow = '0 20px 50px rgba(102, 126, 234, 0.4)';
+      circle.style.transform = 'translateY(-5px) scale(1.05)';
+      circle.style.transition = 'all 0.3s ease';
     });
     
     circle.addEventListener('mouseleave', () => {
       circle.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.2)';
+      circle.style.transform = 'translateY(0) scale(1)';
     });
   });
 
   // Initialize IntegrityEdu
   currentMeasure = 0;
+  updateProgressIndicator();
+  updateProceedButtonVisibility(); // ← ADD THIS LINE
+
 });
 
 
@@ -233,17 +239,56 @@ window.addEventListener('DOMContentLoaded', () => {
 
 let currentMeasure = 0;
 
+// Track module completion status: false initially
+const completedModules = Array(8).fill(false);
+
+// Progress tracking
+function updateProgressIndicator() {
+  const completedCount = completedModules.filter(Boolean).length;
+  const progressElement = document.getElementById('progressIndicator');
+  
+  if (progressElement) {
+    progressElement.textContent = `Progress: ${completedCount}/8 modules completed`;
+    progressElement.style.color = completedCount === 8 ? '#28a745' : '#6c757d';
+  }
+  
+  // Update circles to show completion status
+  completedModules.forEach((completed, index) => {
+    const circle = document.querySelector(`.circle-${index + 1}`);
+    if (circle) {
+      if (completed) {
+        circle.classList.add('completed');
+        circle.style.backgroundColor = '#28a745';
+        circle.style.borderColor = '#28a745';
+      } else {
+        circle.classList.remove('completed');
+        circle.style.backgroundColor = '';
+        circle.style.borderColor = '';
+      }
+    }
+  });
+}
+
 function showMeasure(measureNum) {
-    // Hide all slides
+    if (measureNum < 1 || measureNum > 8) return;
+    
+    // Hide all slides with fade effect
     document.querySelectorAll('.integrity-edu .slide').forEach(slide => {
-        slide.classList.remove('active');
+        slide.style.opacity = '0';
+        slide.style.transition = 'opacity 0.3s ease';
+        setTimeout(() => {
+            slide.classList.remove('active');
+        }, 150);
     });
 
-    // Show the selected measure
-    const measureSlide = document.getElementById(`measure${measureNum}`);
-    if (measureSlide) {
-        measureSlide.classList.add('active');
-    }
+    // Show the selected measure with fade effect
+    setTimeout(() => {
+        const measureSlide = document.getElementById(`measure${measureNum}`);
+        if (measureSlide) {
+            measureSlide.classList.add('active');
+            measureSlide.style.opacity = '1';
+        }
+    }, 150);
     
     // Show back button
     const backButton = document.getElementById('backButton');
@@ -251,20 +296,30 @@ function showMeasure(measureNum) {
         backButton.style.display = 'block';
     }
     
+    // Update proceed button visibility
+    updateProceedButtonVisibility();
+    
     currentMeasure = measureNum;
 }
 
 function goHome() {
-    // Hide all slides
+    // Hide all slides with fade effect
     document.querySelectorAll('.integrity-edu .slide').forEach(slide => {
-        slide.classList.remove('active');
+        slide.style.opacity = '0';
+        slide.style.transition = 'opacity 0.3s ease';
+        setTimeout(() => {
+            slide.classList.remove('active');
+        }, 150);
     });
 
-    // Show home slide
-    const homeSlide = document.getElementById('homeSlide');
-    if (homeSlide) {
-        homeSlide.classList.add('active');
-    }
+    // Show home slide with fade effect
+    setTimeout(() => {
+        const homeSlide = document.getElementById('homeSlide');
+        if (homeSlide) {
+            homeSlide.classList.add('active');
+            homeSlide.style.opacity = '1';
+        }
+    }, 150);
     
     // Hide back button
     const backButton = document.getElementById('backButton');
@@ -272,11 +327,142 @@ function goHome() {
         backButton.style.display = 'none';
     }
     
+    // Hide proceed button on home
+    updateProceedButtonVisibility();
+
     currentMeasure = 0;
 }
 
-// Keyboard navigation for IntegrityEdu
+// Mark a module complete when user clicks button
+function markModuleComplete(moduleNumber) {
+  if (moduleNumber < 1 || moduleNumber > 8) return;
+  
+  // Prevent double completion
+  if (completedModules[moduleNumber - 1]) return;
+  
+  completedModules[moduleNumber - 1] = true;
+
+  // Update the "Complete Module" button
+  const btn = document.querySelector(`#measure${moduleNumber} .complete-button`);
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = `Module ${moduleNumber} Completed ✓`;
+    btn.style.opacity = '0.6';
+    btn.style.cursor = 'default';
+    btn.style.backgroundColor = '#28a745';
+    btn.style.borderColor = '#28a745';
+  }
+
+  // Update progress indicator
+  updateProgressIndicator();
+  
+  // Update proceed button visibility
+  updateProceedButtonVisibility();
+  
+  // Show completion animation/feedback
+  showCompletionFeedback(moduleNumber);
+}
+
+// Show visual feedback when module is completed
+function showCompletionFeedback(moduleNumber) {
+  const measureSlide = document.getElementById(`measure${moduleNumber}`);
+  if (measureSlide) {
+    // Create temporary success message
+    const successMsg = document.createElement('div');
+    successMsg.innerHTML = '✅ Module Completed!';
+    successMsg.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #28a745;
+      color: white;
+      padding: 15px 20px;
+      border-radius: 5px;
+      font-weight: bold;
+      z-index: 1000;
+      opacity: 0;
+      transform: translateX(100px);
+      transition: all 0.3s ease;
+    `;
+    
+    document.body.appendChild(successMsg);
+    
+    // Animate in
+    setTimeout(() => {
+      successMsg.style.opacity = '1';
+      successMsg.style.transform = 'translateX(0)';
+    }, 100);
+    
+    // Animate out and remove
+    setTimeout(() => {
+      successMsg.style.opacity = '0';
+      successMsg.style.transform = 'translateX(100px)';
+      setTimeout(() => {
+        document.body.removeChild(successMsg);
+      }, 300);
+    }, 2500);
+  }
+}
+
+function updateProceedButtonVisibility() {
+  const proceedBtn = document.getElementById('proceedQuizButton');
+  if (!proceedBtn) return;
+
+  const allCompleted = completedModules.every(c => c);
+
+  if (allCompleted) {
+    proceedBtn.style.display = 'inline-block';
+    proceedBtn.style.animation = 'pulse 2s infinite';
+
+    // Ensure it's positioned on the home screen if we're on home
+    if (currentMeasure === 0) {
+      proceedBtn.style.position = 'absolute';
+      proceedBtn.style.bottom = '2rem';
+      proceedBtn.style.left = '50%';
+      proceedBtn.style.transform = 'translateX(-50%)';
+
+      // Extra: move it to front and make sure it's not accidentally covered
+      proceedBtn.style.zIndex = '1000';
+    } else {
+      proceedBtn.style.position = '';
+      proceedBtn.style.bottom = '';
+      proceedBtn.style.left = '';
+      proceedBtn.style.transform = '';
+      proceedBtn.style.zIndex = '';
+    }
+  } else {
+    proceedBtn.style.display = 'none';
+    proceedBtn.style.animation = '';
+  }
+}
+
+
+
+// Navigate to quiz page
+function proceedToQuiz() {
+  // Add confirmation dialog
+  if (confirm('You have completed all modules! Ready to take the quiz?')) {
+    // Add loading state
+    const proceedBtn = document.getElementById('proceedQuizButton');
+    if (proceedBtn) {
+      proceedBtn.textContent = 'Loading Quiz...';
+      proceedBtn.disabled = true;
+    }
+    
+    // Navigate to quiz
+    setTimeout(() => {
+      window.location.href = '/quizManager';
+    }, 500);
+  }
+}
+
+// Enhanced keyboard navigation for IntegrityEdu
 document.addEventListener('keydown', (e) => {
+    // Prevent keyboard shortcuts if user is typing in an input field
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+        return;
+    }
+    
     switch(e.key) {
         case 'Escape':
         case 'h':
@@ -295,8 +481,37 @@ document.addEventListener('keydown', (e) => {
                 showMeasure(parseInt(e.key));
             }
             break;
+        case 'ArrowLeft':
+            if (currentMeasure > 1) {
+                showMeasure(currentMeasure - 1);
+            } else if (currentMeasure === 1) {
+                goHome();
+            }
+            break;
+        case 'ArrowRight':
+            if (currentMeasure > 0 && currentMeasure < 8) {
+                showMeasure(currentMeasure + 1);
+            }
+            break;
+        case ' ': // Spacebar to complete current module
+            if (currentMeasure > 0) {
+                e.preventDefault();
+                markModuleComplete(currentMeasure);
+            }
+            break;
+        case 'Enter':
+            if (currentMeasure > 0 && completedModules.every(c => c)) {
+                proceedToQuiz();
+            }
+            break;
     }
 });
+
+
+
+
+
+
 
 
 

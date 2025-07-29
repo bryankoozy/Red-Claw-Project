@@ -1,0 +1,239 @@
+{% extends "base.html" %}
+
+{% block title %}Quiz - Red Claw{% endblock %}
+
+{% block content %}
+<style>
+  #quiz-page {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 30px 20px 20px 20px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  #quiz-page h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+  }
+
+  #quiz-page .question {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.05);
+  }
+
+  #quiz-page .question h4 {
+    margin: 0 0 10px;
+    color: #34495e;
+  }
+
+  #quiz-page label {
+    display: block;
+    margin: 5px 0;
+    font-size: 0.95rem;
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+    color: #2c3e50;
+  }
+
+  #quiz-page label:hover {
+    background-color: #ecf0f1;
+  }
+
+  #quiz-page button {
+    margin-top: 20px;
+    padding: 12px 24px;
+    font-size: 16px;
+    background-color: #2980b9;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #quiz-page button:hover {
+    background-color: #1c5980;
+  }
+
+  #quiz-page .result {
+    font-weight: bold;
+    margin-top: 30px;
+    font-size: 1.2rem;
+    color: #27ae60;
+    text-align: center;
+    white-space: pre-line; /* preserve line breaks */
+  }
+</style>
+
+<div id="quiz-page">
+  <h2>Anti-Corruption Awareness Quiz</h2>
+
+  <form id="quizForm"></form>
+
+  <button type="button" onclick="submitQuiz()">Submit Quiz</button>
+  <div class="result" id="resultBox"></div>
+</div>
+
+<script>
+  const quizData = [
+    {
+      q: "1. What is the primary role of leadership in anti-corruption efforts?",
+      options: ["A) Delegating ethical issues to junior staff", "B) Avoiding public statements on corruption", "C) Setting an ethical tone and modeling behaviour", "D) Outsourcing decision-making"],
+      answer: 2
+    },
+    {
+      q: "2. Why is leadership commitment important for anti-corruption?",
+      options: ["A) It increases profit margins", "B) It helps avoid legal documentation", "C) It builds investor and stakeholder confidence", "D) It reduces taxes"],
+      answer: 2
+    },
+    {
+      q: "3. Which of the following demonstrates leadership commitment?",
+      options: ["A) Keeping policies confidential", "B) CEO signs and publishes an anti-corruption policy", "C) Delegating all ethics training to HR", "D) Avoiding discussions about corruption"],
+      answer: 1
+    },
+    {
+      q: "4. What are the 3 Ds of implementing an anti-corruption policy?",
+      options: ["A) Define, Dedicate, Document", "B) Discover, Deliver, Declare", "C) Deny, Demand, Describe", "D) Draft, Direct, Determine"],
+      answer: 0
+    },
+    {
+      q: "5. Which of the following should be defined in an anti-corruption policy?",
+      options: ["A) Pay structure", "B) Employee benefits", "C) Bribery and facilitation payments", "D) Holiday allowances"],
+      answer: 2
+    },
+    {
+      q: "6. Why should the anti-corruption policy be translated into multiple languages?",
+      options: ["A) For legal loopholes", "B) To support international recruitment", "C) To ensure understanding across regions", "D) To simplify tax filing"],
+      answer: 2
+    },
+    {
+      q: "7. What reinforces the “tone from the top” in policy rollout?",
+      options: ["A) Avoiding internal communication", "B) CEO-endorsed memos and townhalls", "C) Posting on social media only", "D) Relying only on e-learning"],
+      answer: 1
+    },
+    {
+      q: "8. What is the main function of a Code of Conduct?",
+      options: ["A) Set dress code standards", "B) Outline accounting rules", "C) Guide ethical behaviour in daily scenarios", "D) Detail company mission"],
+      answer: 2
+    },
+    {
+      q: "9. Which of these is a key topic in a Code of Conduct?",
+      options: ["A) Leave application processes", "B) Budget planning", "C) Conflict of interest", "D) Customer feedback"],
+      answer: 2
+    },
+    {
+      q: "10. How should companies help employees understand grey ethical areas?",
+      options: ["A) Ignore them", "B) Use scenario-based training", "C) Fire employees immediately", "D) Leave it to employee discretion"],
+      answer: 1
+    },
+    {
+      q: "11. What is the purpose of conducting regular risk assessments?",
+      options: ["A) Cut administrative workload", "B) Detect and prioritise corruption risks", "C) Increase marketing reach", "D) Manage customer feedback"],
+      answer: 1
+    },
+    {
+      q: "12. When should a corruption risk assessment be updated?",
+      options: ["A) Every 10 years", "B) Only when a law is passed", "C) Annually or during major changes", "D) Never"],
+      answer: 2
+    },
+    {
+      q: "13. What tool can be used to visualise risk exposure?",
+      options: ["A) Org charts", "B) Heat maps", "C) Flow diagrams", "D) Expense reports"],
+      answer: 1
+    },
+    {
+      q: "14. What is the purpose of a Gifts and Entertainment Policy?",
+      options: ["A) Allow all gifts freely", "B) Define unacceptable gifts and approval workflows", "C) Collect vendor rewards", "D) Encourage socialisation"],
+      answer: 1
+    },
+    {
+      q: "15. What should be included in a Conflict of Interest Declaration?",
+      options: ["A) Emergency contacts", "B) Past employment history", "C) Personal relationships that affect objectivity", "D) Favourite vendors"],
+      answer: 2
+    },
+    {
+      q: "16. What is the main goal of internal controls?",
+      options: ["A) Simplify reporting", "B) Eliminate approvals", "C) Prevent and detect corruption risks", "D) Reduce IT infrastructure"],
+      answer: 2
+    },
+    {
+      q: "17. What is a key principle of strong internal controls?",
+      options: ["A) One person handles all processes", "B) Approvals are verbal", "C) Duties are segregated", "D) Budgeting is centralised"],
+      answer: 2
+    },
+    {
+      q: "18. Why is a whistle-blowing system important?",
+      options: ["A) To reward gossip", "B) To avoid transparency", "C) To detect early signs of misconduct", "D) To replace compliance training"],
+      answer: 2
+    },
+    {
+      q: "19. How should a company protect whistleblowers?",
+      options: ["A) Make their names public", "B) Limit their promotion opportunities", "C) Ensure anonymity and non-retaliation", "D) Involve vendors in reporting"],
+      answer: 2
+    },
+    {
+      q: "20. What is a key benefit of periodic monitoring?",
+      options: ["A) It makes reporting optional", "B) It helps outdated policies remain in use", "C) It ensures anti-corruption controls stay effective", "D) It reduces HR involvement"],
+      answer: 2
+    }
+  ];
+
+  const quizForm = document.getElementById("quizForm");
+
+  quizData.forEach((q, index) => {
+    const qBlock = document.createElement("div");
+    qBlock.className = "question";
+    qBlock.innerHTML = `<h4>${q.q}</h4>` + q.options.map((opt, i) => `
+      <label>
+        <input type="radio" name="q${index}" value="${i}" required />
+        ${opt}
+      </label>
+    `).join('');
+    quizForm.appendChild(qBlock);
+  });
+
+  async function submitQuiz() {
+    let score = 0;
+    quizData.forEach((q, i) => {
+      const selected = document.querySelector(`input[name="q${i}"]:checked`);
+      if (selected && parseInt(selected.value) === q.answer) {
+        score++;
+      }
+    });
+    const percent = Math.round((score / quizData.length) * 100);
+
+    // Send score to server
+    try {
+      const response = await fetch('/submit-quiz-score', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ score: score, max_score: quizData.length })
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        document.getElementById("resultBox").innerText =
+          `You scored ${score} out of ${quizData.length} (${percent}%).\n` +
+          `Highest score recorded: ${result.highest_score}`;
+      } else {
+        document.getElementById("resultBox").innerText = `Error saving score: ${result.error || 'Unknown error'}`;
+      }
+    } catch (error) {
+      document.getElementById("resultBox").innerText = `Failed to submit score: ${error.message}`;
+    }
+  }
+</script>
+{% endblock %}

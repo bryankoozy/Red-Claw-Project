@@ -9,9 +9,14 @@
         <!-- Home Slide -->
         <div class="slide home-slide active" id="homeSlide">
             <h1 class="home-title">IntegrityEDU</h1>
-            <p class="home-subtitle">Interactive Learning Journey</p>
+            <p class="home-subtitle">
+                Interactive Learning Journey
+                <br>
+                <span id="progressIndicator" style="font-size: 20px; font-weight: bold; color: #6c757d;">
+                    Progress: 0/8 modules completed
+                </span>
+            </p>
 
-            
             <div class="circles-container">
                 <!-- Floating Circles for Each Module -->
                 <div class="floating-circle circle-1" onclick="showMeasure(1)">
@@ -362,8 +367,14 @@
             </div>
         </div>
 
+        <!-- Back Button (initially hidden) -->
+        <button id="backButton" class="back-button-global" onclick="goHome()" style="display: none; position: fixed; top: 2rem; left: 2rem; z-index: 1000;">
+            ← Back to Home
+        </button>
+
+        <!-- Proceed to Quiz Button (initially hidden) -->
         <button id="proceedQuizButton" class="proceed-button" onclick="proceedToQuiz()" style="display: none;">
-        Proceed to Quiz →
+            Proceed to Quiz →
         </button>
 
     </div>

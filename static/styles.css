@@ -1974,7 +1974,7 @@ body {
 }
 
 .integrity-edu .home-title {
-  font-size: 3rem;
+  font-size: 4rem;
   margin-bottom: 20px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   z-index: 10;
@@ -1982,7 +1982,7 @@ body {
 }
 
 .integrity-edu .home-subtitle {
-  font-size: 1.3rem;
+  font-size: 2rem;
   margin-bottom: 40px;
   opacity: 0.9;
   z-index: 10;
@@ -1997,6 +1997,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 2rem;
 }
 
 .integrity-edu .floating-circle {
@@ -2140,6 +2141,7 @@ body {
   padding: 20px;
   border-radius: 15px;
   margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 .integrity-edu .case-example h4 {

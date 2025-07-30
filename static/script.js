@@ -217,8 +217,11 @@ window.addEventListener('DOMContentLoaded', () => {
   // Initialize IntegrityEdu
   currentMeasure = 0;
   updateProgressIndicator();
-  updateProceedButtonVisibility(); // ← ADD THIS LINE
-
+  
+  // Small delay to ensure all elements are rendered before checking button visibility
+  setTimeout(() => {
+    updateProceedButtonVisibility();
+  }, 100);
 });
 
 
@@ -233,34 +236,54 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 
+
+
 // ================================================
-// INTEGRITY EDU VARIABLES & FUNCTIONS
+// INTEGRITY EDU - EDUCATIONAL MODULE SYSTEM
 // ================================================
+// This system creates an interactive learning experience with 8 modules
+// Users can navigate between modules, complete them, and track progress
+
+// MAIN VARIABLES - Think of these as the "memory" of the system
+// ================================================================
 
 let currentMeasure = 0;
+// This keeps track of which screen we're on:
+// 0 = home screen (showing all 8 circles)
+// 1-8 = individual module screens
 
-// Track module completion status: false initially
 const completedModules = Array(8).fill(false);
+// This is like a checklist - it remembers which modules are done
+// [false, false, false, false, false, false, false, false] = none completed
+// [true, false, true, false, false, false, false, false] = modules 1 and 3 completed
 
-// Progress tracking
+// PROGRESS TRACKING FUNCTION
+// ==========================
 function updateProgressIndicator() {
+  // Count how many modules are completed (count the "true" values)
   const completedCount = completedModules.filter(Boolean).length;
-  const progressElement = document.getElementById('progressIndicator');
   
+  // Find the progress text on the webpage and update it
+  const progressElement = document.getElementById('progressIndicator');
   if (progressElement) {
+    // Show something like "Progress: 3/8 modules completed"
     progressElement.textContent = `Progress: ${completedCount}/8 modules completed`;
+    // Change color to green if all 8 are done, gray if not
     progressElement.style.color = completedCount === 8 ? '#28a745' : '#6c757d';
   }
   
-  // Update circles to show completion status
+  // Update the visual circles on the home screen
   completedModules.forEach((completed, index) => {
+    // Find each circle (circle-1, circle-2, etc.)
     const circle = document.querySelector(`.circle-${index + 1}`);
     if (circle) {
       if (completed) {
+        // Make completed circles green
         circle.classList.add('completed');
         circle.style.backgroundColor = '#28a745';
         circle.style.borderColor = '#28a745';
       } else {
+        // Keep incomplete circles their original color
         circle.classList.remove('completed');
         circle.style.backgroundColor = '';
         circle.style.borderColor = '';
@@ -269,10 +292,136 @@ function updateProgressIndicator() {
   });
 }
 
-function showMeasure(measureNum) {
-    if (measureNum < 1 || measureNum > 8) return;
+
+
+
+
+
+// QUIZ BUTTON VISIBILITY FUNCTION
+// ===============================
+// This controls when the "Proceed to Quiz" button appears and where it's positioned
+function updateProceedButtonVisibility() {
+  const proceedBtn = document.getElementById('proceedQuizButton');
+  if (!proceedBtn) return; // Exit if button doesn't exist
+  
+  // Check if ALL 8 modules are completed
+  const allCompleted = completedModules.every(c => c);
+  
+  if (allCompleted) {
+    // STEP 1: Hide button completely to avoid visual jumping
+    proceedBtn.style.display = 'none';
+    proceedBtn.style.animation = '';
     
-    // Hide all slides with fade effect
+    // STEP 2: Wait a bit, then reposition and show the button
+    setTimeout(() => {
+      // Set button styling (green, rounded, etc.)
+      proceedBtn.style.position = 'fixed';
+      proceedBtn.style.zIndex = '1000';
+      proceedBtn.style.padding = '12px 24px';
+      proceedBtn.style.fontSize = '16px';
+      proceedBtn.style.fontWeight = 'bold';
+      proceedBtn.style.backgroundColor = '#28a745';
+      proceedBtn.style.color = 'white';
+      proceedBtn.style.border = 'none';
+      proceedBtn.style.borderRadius = '8px';
+      proceedBtn.style.cursor = 'pointer';
+      proceedBtn.style.boxShadow = '0 4px 12px rgba(40, 167, 69, 0.3)';
+      proceedBtn.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+      proceedBtn.style.opacity = '0'; // Start invisible
+      
+      // ALWAYS position at bottom right - no more conditional logic!
+      proceedBtn.style.bottom = '2rem';
+      proceedBtn.style.right = '2rem';
+      proceedBtn.style.left = 'auto';
+      proceedBtn.style.top = 'auto';
+      proceedBtn.style.transform = 'none';
+
+      
+      // STEP 3: Make button visible
+      proceedBtn.style.display = 'block';
+      
+      // STEP 4: Fade in the button with pulsing animation
+      setTimeout(() => {
+        proceedBtn.style.opacity = '1';
+        proceedBtn.style.animation = 'pulse 2s infinite'; // Makes it glow/pulse
+      }, 50);
+    }, 300); // Wait 300ms for slide transitions to finish
+    
+  } else {
+    // If not all modules are completed, hide the button completely
+    proceedBtn.style.display = 'none';
+    proceedBtn.style.animation = '';
+  }
+}
+
+
+
+
+
+
+
+// NAVIGATION FUNCTIONS
+// ===================
+
+// Go back to the home screen (showing all 8 circles)
+function goHome() {
+    // STEP 1: Hide the quiz button immediately
+    const proceedBtn = document.getElementById('proceedQuizButton');
+    if (proceedBtn) {
+        proceedBtn.style.display = 'none';
+        proceedBtn.style.animation = '';
+    }
+    
+    // STEP 2: Fade out all current slides
+    document.querySelectorAll('.integrity-edu .slide').forEach(slide => {
+        slide.style.opacity = '0'; // Make transparent
+        slide.style.transition = 'opacity 0.3s ease'; // Smooth fade
+        setTimeout(() => {
+            slide.classList.remove('active'); // Remove from view
+        }, 150);
+    });
+
+    // STEP 3: After fade out, show the home slide
+    setTimeout(() => {
+        const homeSlide = document.getElementById('homeSlide');
+        if (homeSlide) {
+            homeSlide.classList.add('active'); // Make it the active slide
+            homeSlide.style.opacity = '1'; // Make it visible
+        }
+    }, 150);
+    
+    // STEP 4: Hide the back button (not needed on home screen)
+    const backButton = document.getElementById('backButton');
+    if (backButton) {
+        backButton.style.display = 'none';
+    }
+    
+    // STEP 5: Update our memory of where we are
+    currentMeasure = 0; // 0 means home screen
+    
+    // STEP 6: Check if quiz button should appear (after transition finishes)
+    setTimeout(() => {
+        updateProceedButtonVisibility();
+    }, 400);
+}
+
+
+
+
+
+
+// Show a specific module (1-8)
+function showMeasure(measureNum) {
+    if (measureNum < 1 || measureNum > 8) return; // Invalid module number
+    
+    // STEP 1: Hide the quiz button immediately
+    const proceedBtn = document.getElementById('proceedQuizButton');
+    if (proceedBtn) {
+        proceedBtn.style.display = 'none';
+        proceedBtn.style.animation = '';
+    }
+    
+    // STEP 2: Fade out all current slides
     document.querySelectorAll('.integrity-edu .slide').forEach(slide => {
         slide.style.opacity = '0';
         slide.style.transition = 'opacity 0.3s ease';
@@ -281,7 +430,7 @@ function showMeasure(measureNum) {
         }, 150);
     });
 
-    // Show the selected measure with fade effect
+    // STEP 3: After fade out, show the requested module slide
     setTimeout(() => {
         const measureSlide = document.getElementById(`measure${measureNum}`);
         if (measureSlide) {
@@ -290,221 +439,226 @@ function showMeasure(measureNum) {
         }
     }, 150);
     
-    // Show back button
+    // STEP 4: Show the back button (needed on module screens)
     const backButton = document.getElementById('backButton');
     if (backButton) {
         backButton.style.display = 'block';
     }
     
-    // Update proceed button visibility
-    updateProceedButtonVisibility();
+    // STEP 5: Update our memory of where we are
+    currentMeasure = measureNum; // Remember which module we're viewing
     
-    currentMeasure = measureNum;
-}
-
-function goHome() {
-    // Hide all slides with fade effect
-    document.querySelectorAll('.integrity-edu .slide').forEach(slide => {
-        slide.style.opacity = '0';
-        slide.style.transition = 'opacity 0.3s ease';
-        setTimeout(() => {
-            slide.classList.remove('active');
-        }, 150);
-    });
-
-    // Show home slide with fade effect
+    // STEP 6: Check if quiz button should appear (after transition finishes)
     setTimeout(() => {
-        const homeSlide = document.getElementById('homeSlide');
-        if (homeSlide) {
-            homeSlide.classList.add('active');
-            homeSlide.style.opacity = '1';
-        }
-    }, 150);
-    
-    // Hide back button
-    const backButton = document.getElementById('backButton');
-    if (backButton) {
-        backButton.style.display = 'none';
-    }
-    
-    // Hide proceed button on home
-    updateProceedButtonVisibility();
-
-    currentMeasure = 0;
+        updateProceedButtonVisibility();
+    }, 400);
 }
 
-// Mark a module complete when user clicks button
-function markModuleComplete(moduleNumber) {
-  if (moduleNumber < 1 || moduleNumber > 8) return;
-  
-  // Prevent double completion
-  if (completedModules[moduleNumber - 1]) return;
-  
-  completedModules[moduleNumber - 1] = true;
 
-  // Update the "Complete Module" button
+
+
+
+// MODULE COMPLETION SYSTEM
+// =======================
+
+// Mark a module as completed when user clicks "Complete Module" button
+function markModuleComplete(moduleNumber) {
+  if (moduleNumber < 1 || moduleNumber > 8) return; // Invalid module
+  
+  // Prevent completing the same module twice
+  if (completedModules[moduleNumber - 1]) return; // Already completed
+  
+  // STEP 1: Mark this module as completed in our memory
+  completedModules[moduleNumber - 1] = true;
+  // Example: completedModules becomes [true, false, false, false, false, false, false, false]
+
+  // STEP 2: Update the "Complete Module" button to show it's done
   const btn = document.querySelector(`#measure${moduleNumber} .complete-button`);
   if (btn) {
-    btn.disabled = true;
-    btn.textContent = `Module ${moduleNumber} Completed ✓`;
-    btn.style.opacity = '0.6';
-    btn.style.cursor = 'default';
-    btn.style.backgroundColor = '#28a745';
+    btn.disabled = true; // Can't click it anymore
+    btn.textContent = `Module ${moduleNumber} Completed ✓`; // Change text
+    btn.style.opacity = '0.6'; // Make it look grayed out
+    btn.style.cursor = 'default'; // Change cursor (no more hand pointer)
+    btn.style.backgroundColor = '#28a745'; // Green color
     btn.style.borderColor = '#28a745';
   }
 
-  // Update progress indicator
+  // STEP 3: Update the progress indicator and circles
   updateProgressIndicator();
   
-  // Update proceed button visibility
+  // STEP 4: Check if quiz button should now appear (if all modules done)
   updateProceedButtonVisibility();
   
-  // Show completion animation/feedback
+  // STEP 5: Show a celebration message
   showCompletionFeedback(moduleNumber);
 }
 
-// Show visual feedback when module is completed
+
+
+
+
+
+
+// Show a success message when module is completed
 function showCompletionFeedback(moduleNumber) {
   const measureSlide = document.getElementById(`measure${moduleNumber}`);
   if (measureSlide) {
-    // Create temporary success message
+    // Create a temporary success notification
     const successMsg = document.createElement('div');
     successMsg.innerHTML = '✅ Module Completed!';
     successMsg.style.cssText = `
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: #28a745;
-      color: white;
-      padding: 15px 20px;
-      border-radius: 5px;
-      font-weight: bold;
-      z-index: 1000;
-      opacity: 0;
-      transform: translateX(100px);
-      transition: all 0.3s ease;
+      position: fixed;          /* Float over everything */
+      top: 20px;               /* 20px from top */
+      right: 20px;             /* 20px from right */
+      background: #28a745;     /* Green background */
+      color: white;            /* White text */
+      padding: 15px 20px;      /* Spacing inside */
+      border-radius: 5px;      /* Rounded corners */
+      font-weight: bold;       /* Bold text */
+      z-index: 1000;          /* Above everything else */
+      opacity: 0;             /* Start invisible */
+      transform: translateX(100px); /* Start off-screen to the right */
+      transition: all 0.3s ease;    /* Smooth animation */
     `;
     
+    // Add the message to the webpage
     document.body.appendChild(successMsg);
     
-    // Animate in
+    // ANIMATE IN: Slide in from right and fade in
     setTimeout(() => {
-      successMsg.style.opacity = '1';
-      successMsg.style.transform = 'translateX(0)';
+      successMsg.style.opacity = '1';        // Make visible
+      successMsg.style.transform = 'translateX(0)'; // Slide to final position
     }, 100);
     
-    // Animate out and remove
+    // ANIMATE OUT: After 2.5 seconds, slide out and remove
     setTimeout(() => {
-      successMsg.style.opacity = '0';
-      successMsg.style.transform = 'translateX(100px)';
+      successMsg.style.opacity = '0';        // Fade out
+      successMsg.style.transform = 'translateX(100px)'; // Slide back out
       setTimeout(() => {
-        document.body.removeChild(successMsg);
+        document.body.removeChild(successMsg); // Remove from webpage
       }, 300);
     }, 2500);
   }
 }
 
-function updateProceedButtonVisibility() {
-  const proceedBtn = document.getElementById('proceedQuizButton');
-  if (!proceedBtn) return;
-
-  const allCompleted = completedModules.every(c => c);
-
-  if (allCompleted) {
-    proceedBtn.style.display = 'inline-block';
-    proceedBtn.style.animation = 'pulse 2s infinite';
-
-    // Ensure it's positioned on the home screen if we're on home
-    if (currentMeasure === 0) {
-      proceedBtn.style.position = 'absolute';
-      proceedBtn.style.bottom = '2rem';
-      proceedBtn.style.left = '50%';
-      proceedBtn.style.transform = 'translateX(-50%)';
-
-      // Extra: move it to front and make sure it's not accidentally covered
-      proceedBtn.style.zIndex = '1000';
-    } else {
-      proceedBtn.style.position = '';
-      proceedBtn.style.bottom = '';
-      proceedBtn.style.left = '';
-      proceedBtn.style.transform = '';
-      proceedBtn.style.zIndex = '';
-    }
-  } else {
-    proceedBtn.style.display = 'none';
-    proceedBtn.style.animation = '';
-  }
-}
 
 
 
-// Navigate to quiz page
+
+
+
+
+
+// QUIZ NAVIGATION
+// ==============
+
+// Take user to the quiz page when all modules are completed
 function proceedToQuiz() {
-  // Add confirmation dialog
+  // Ask user to confirm they're ready
   if (confirm('You have completed all modules! Ready to take the quiz?')) {
-    // Add loading state
+    // Show loading state on button
     const proceedBtn = document.getElementById('proceedQuizButton');
     if (proceedBtn) {
       proceedBtn.textContent = 'Loading Quiz...';
-      proceedBtn.disabled = true;
+      proceedBtn.disabled = true; // Can't click while loading
     }
     
-    // Navigate to quiz
+    // Navigate to quiz page after short delay
     setTimeout(() => {
-      window.location.href = '/quizManager';
+      window.location.href = '/quizManager'; // Go to quiz page
     }, 500);
   }
 }
 
-// Enhanced keyboard navigation for IntegrityEdu
+
+
+
+
+
+// KEYBOARD SHORTCUTS
+// ==================
+// Allow users to navigate using keyboard keys
+
 document.addEventListener('keydown', (e) => {
-    // Prevent keyboard shortcuts if user is typing in an input field
+    // Don't interfere if user is typing in a text box
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
         return;
     }
     
     switch(e.key) {
-        case 'Escape':
-        case 'h':
-        case 'H':
-            goHome();
+        case 'Escape': // ESC key
+        case 'h':      // H key
+        case 'H':      // Shift+H key
+            goHome();  // Go back to home screen
             break;
-        case '1':
-        case '2':
-        case '3':
-        case '4':
-        case '5':
-        case '6':
-        case '7':
-        case '8':
-            if (currentMeasure === 0) { // Only on home screen
-                showMeasure(parseInt(e.key));
+            
+        case '1': case '2': case '3': case '4': // Number keys 1-8
+        case '5': case '6': case '7': case '8':
+            if (currentMeasure === 0) { // Only work on home screen
+                showMeasure(parseInt(e.key)); // Go to that module
             }
             break;
-        case 'ArrowLeft':
+            
+        case 'ArrowLeft': // Left arrow key
             if (currentMeasure > 1) {
-                showMeasure(currentMeasure - 1);
+                showMeasure(currentMeasure - 1); // Go to previous module
             } else if (currentMeasure === 1) {
-                goHome();
+                goHome(); // If on first module, go home
             }
             break;
-        case 'ArrowRight':
+            
+        case 'ArrowRight': // Right arrow key
             if (currentMeasure > 0 && currentMeasure < 8) {
-                showMeasure(currentMeasure + 1);
+                showMeasure(currentMeasure + 1); // Go to next module
             }
             break;
-        case ' ': // Spacebar to complete current module
+            
+        case ' ': // Spacebar
             if (currentMeasure > 0) {
-                e.preventDefault();
-                markModuleComplete(currentMeasure);
+                e.preventDefault(); // Don't scroll the page
+                markModuleComplete(currentMeasure); // Complete current module
             }
             break;
-        case 'Enter':
+            
+        case 'Enter': // Enter key
+            // If all modules done and quiz button is visible, go to quiz
             if (currentMeasure > 0 && completedModules.every(c => c)) {
                 proceedToQuiz();
             }
             break;
     }
+});
+
+
+
+
+// INITIALIZATION (runs when page loads)
+// ====================================
+window.addEventListener('DOMContentLoaded', () => {
+  // Add hover effects to make circles interactive
+  document.querySelectorAll('.integrity-edu .floating-circle').forEach(circle => {
+    circle.addEventListener('mouseenter', () => {
+      // When mouse hovers over circle: add glow and lift effect
+      circle.style.boxShadow = '0 20px 50px rgba(102, 126, 234, 0.4)';
+      circle.style.transform = 'translateY(-5px) scale(1.05)'; // Lift up and grow slightly
+      circle.style.transition = 'all 0.3s ease';
+    });
+    
+    circle.addEventListener('mouseleave', () => {
+      // When mouse leaves circle: return to normal
+      circle.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.2)';
+      circle.style.transform = 'translateY(0) scale(1)'; // Back to original position/size
+    });
+  });
+
+  // Set up initial state
+  currentMeasure = 0; // Start on home screen
+  updateProgressIndicator(); // Show initial progress (0/8 completed)
+  
+  // Check if quiz button should be visible (after page finishes loading)
+  setTimeout(() => {
+    updateProceedButtonVisibility();
+  }, 100);
 });
 
 
@@ -559,7 +713,6 @@ function toggleSidebar() {
     }
   }
 }
-
 
 
 
@@ -651,21 +804,6 @@ window.onclick = function(event) {
 function exploreModule(type) {
   alert("You clicked: " + type);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // -----------------------------------
 // Download template for integrityAI page

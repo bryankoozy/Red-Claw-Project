@@ -4,6 +4,13 @@
 
 {% block content %}
 
+<!-- Background Music Audio Element -->
+<audio id="backgroundMusic" autoplay loop preload="auto" style="display: none;">
+    <source src="{{ url_for('static', filename='tell-me-what-379638.mp3') }}" type="audio/mpeg">
+</audio>
+
+
+
 <div class="integrity-edu">
     <div class="game-container" id="gameContainer">
         <!-- Home Slide -->

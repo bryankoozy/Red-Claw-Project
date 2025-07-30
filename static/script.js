@@ -222,6 +222,24 @@ window.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => {
     updateProceedButtonVisibility();
   }, 100);
+
+
+
+
+
+
+
+  // ------------------------------------
+  // Background music enable on first click
+  // ------------------------------------
+  document.body.addEventListener('click', function () {
+    const music = document.getElementById('backgroundMusic');
+    if (music) {
+      music.muted = false;
+      music.play().catch(err => console.warn('Music playback failed:', err));
+    }
+  }, { once: true });
+
 });
 
 

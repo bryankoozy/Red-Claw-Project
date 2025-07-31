@@ -13,7 +13,7 @@ from sqlalchemy.orm import joinedload
 
 
 # only uncomment and use the below line during development mode. comment it when going to production
-# os.environ['FLASK_ENV'] = 'development'
+os.environ['FLASK_ENV'] = 'development'
 
 
 
@@ -49,12 +49,27 @@ db.init_app(app)
 
 
 
+
+
+
+
+
+
+
+
 @app.context_processor
 def inject_user():
     if 'user_id' in session:
         user = User.query.get(session['user_id'])
         return dict(current_user=user)
     return dict(current_user=None)
+
+
+# @app.route("/integrityAI")
+# @login_required
+# def integrityAI():
+#     user = User.query.get(session['user_id'])
+#     return render_template("integrityAI.html", user=user)
 
 #  integrityAI page
 @app.route('/download-template')
@@ -121,19 +136,6 @@ def home():
 def aboutus():
     return render_template("aboutus.html")
 
-
-# @app.route("/integrityAI")
-# @login_required
-# def integrityAI():
-#     user = User.query.get(session['user_id'])
-#     return render_template("integrityAI.html", user=user)
-
-@app.route("/integrityEdu")
-@login_required
-def integrityEdu():
-    user = User.query.get(session['user_id'])
-    return render_template("integrityEdu.html", user=user)
-
 @app.route('/logout')
 def logout():
     if 'user_id' in session:
@@ -171,14 +173,36 @@ def userDetail():
 
 
 
-@app.route("/integrityAI")
+
+
+@app.route('/integrityAI/employee')
+@login_required
+def integrityAI_employee():
+    user = User.query.get(session['user_id'])
+    return render_template('integrityAI_employee.html', user=user)
+
+@app.route('/integrityAI/manager')
+@login_required
+def integrityAI_manager():
+    user = User.query.get(session['user_id'])
+    return render_template('integrityAI_manager.html', user=user)
+
+@app.route('/integrityAI')
 @login_required
 def integrityAI():
     user = User.query.get(session['user_id'])
-    return render_template("integrityAImanager.html", user=user)
+    # Redirect based on role
+    if user.is_admin():
+        return redirect(url_for('integrityAI_manager'))  # Admin sees manager view
+    elif user.is_manager():
+        return redirect(url_for('integrityAI_manager'))
+    else:
+        return redirect(url_for('integrityAI_employee'))
+
 
 
 @app.route('/submit-pact-assessment', methods=['POST'])
+@login_required
 def submit_pact_assessment():
 
     try:
@@ -293,11 +317,45 @@ def convert_form_data_to_structure(form_data):
 
 
 
-@app.route("/quizManager")
+
+
+
+
+
+
+
+
+@app.route('/integrityEdu/employee')
 @login_required
-def quizManager():
+def integrityEdu_employee():
     user = User.query.get(session['user_id'])
-    return render_template("quizManager.html", user=user)
+    return render_template('integrityEdu_employee.html', user=user)
+
+@app.route('/integrityEdu/manager')
+@login_required
+def integrityEdu_manager():
+    user = User.query.get(session['user_id'])
+    return render_template('integrityEdu_manager.html', user=user)
+
+@app.route('/integrityEdu')
+@login_required
+def integrityEdu():
+    user = User.query.get(session['user_id'])
+    # Redirect based on role
+    if user.is_admin():
+        return redirect(url_for('integrityEdu_manager'))  # Admin sees manager view
+    elif user.is_manager():
+        return redirect(url_for('integrityEdu_manager'))
+    else:
+        return redirect(url_for('integrityEdu_employee'))
+
+
+
+@app.route("/quiz_manager")
+@login_required
+def quiz_manager():
+    user = User.query.get(session['user_id'])
+    return render_template("quiz_manager.html", user=user)
 
 
 @app.route('/submit-quiz-score', methods=['POST'])
@@ -335,7 +393,6 @@ def submit_quiz_score():
         'message': 'Score saved successfully',
         'highest_score': user.score
     })
-
 
 
 
@@ -496,12 +553,14 @@ def settings():
             elif target_user.id == user.id:
                 flash("You cannot change your own admin status.", "warning")
             else:
-                if target_user.role == 'admin':
-                    target_user.role = 'user'
-                    flash(f"{target_user.name} has been demoted to user.", "success")
+                if target_user.role == 'manager':
+                    target_user.role = 'employee'
+                    flash(f"{target_user.name} has been demoted to employee.", "success")
+                elif target_user.role == 'employee':
+                    target_user.role = 'manager'
+                    flash(f"{target_user.name} has been promoted to manager.", "success")
                 else:
-                    target_user.role = 'admin'
-                    flash(f"{target_user.name} has been promoted to admin.", "success")
+                    flash(f"{target_user.name} is an admin.", "warning")
                 db.session.commit()
 
 
@@ -599,10 +658,16 @@ def register():
         email = request.form['email']
         password = request.form['password']
         confirm = request.form['confirmPassword']
+        role = request.form['role']
         
         # Validate passwords match
         if password != confirm:
             flash('Passwords do not match.', 'error')
+            return render_template('register.html')
+        
+        # Validate role selection
+        if role not in ['employee', 'manager']:
+            flash('Please select a valid role.', 'error')
             return render_template('register.html')
         
         # Check if user already exists
@@ -611,9 +676,9 @@ def register():
             flash('Email already registered. Please use a different email.', 'error')
             return render_template('register.html')
         
-        # Create new user
+        # Create new user with the selected role
         hashed_password = generate_password_hash(password)
-        new_user = User(name=name, email=email, password=hashed_password)
+        new_user = User(name=name, email=email, password=hashed_password, role=role)  # ADD role=role
         
         try:
             db.session.add(new_user)
@@ -673,6 +738,12 @@ def appointments():
 
 
 
+
+
+
+
+
+
 @app.route('/update_admin_remarks/<int:appointment_id>', methods=['POST'])
 @admin_required
 def update_admin_remarks(appointment_id):
@@ -683,6 +754,10 @@ def update_admin_remarks(appointment_id):
     db.session.commit()
     flash("Admin remarks updated successfully.", "success")
     return redirect(request.referrer or url_for('appointments'))
+
+
+
+
 
 
 @app.route('/update_appointment/<int:appointment_id>', methods=['POST'])

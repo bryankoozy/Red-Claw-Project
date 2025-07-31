@@ -583,7 +583,7 @@ function proceedToQuiz() {
     
     // Navigate to quiz page after short delay
     setTimeout(() => {
-      window.location.href = '/quizManager'; // Go to quiz page
+      window.location.href = '/quiz_manager'; // Go to quiz page
     }, 500);
   }
 }

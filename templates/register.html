@@ -15,12 +15,12 @@
       <form id="registerForm" method="POST" action="{{ url_for('register') }}" class="register-form">
         <div class="form-group">
           <label for="registerName">Full Name</label>
-          <input type="text" id="registerName" name="name" placeholder="John Doe" required />
+          <input type="text" id="registerName" name="name" placeholder="Enter your name" required />
         </div>
         
         <div class="form-group">
           <label for="registerEmail">Email</label>
-          <input type="email" id="registerEmail" name="email" placeholder="email@domain.com" required />
+          <input type="email" id="registerEmail" name="email" placeholder="Enter your email" required />
         </div>
         
         <div class="form-group">
@@ -31,6 +31,20 @@
         <div class="form-group">
           <label for="registerConfirmPassword">Confirm Password</label>
           <input type="password" id="registerConfirmPassword" name="confirmPassword" placeholder="Confirm your password" required />
+        </div>
+
+        <div class="form-group">
+          <label>Role</label>
+          <div class="radio-group">
+            <div class="radio-option">
+              <input type="radio" id="employee" name="role" value="employee" required>
+              <label for="employee">Employee</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="manager" name="role" value="manager" required>
+              <label for="manager">Manager</label>
+            </div>
+          </div>
         </div>
         
         <button type="submit" class="register-btn">Sign up with email</button>

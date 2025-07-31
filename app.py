@@ -229,7 +229,13 @@ def submit_pact_assessment():
         # Save to database
         db.session.add(assessment)
         db.session.commit()
-        
+
+        # Update user's PACT score
+        user = User.query.get(session['user_id'])
+        if user.pact_score is None or assessment.total_score > user.pact_score:
+            user.pact_score = assessment.total_score
+            db.session.commit()
+                
         return jsonify({
             'success': True, 
             'message': 'Assessment submitted successfully!', 
@@ -384,14 +390,14 @@ def submit_quiz_score():
     db.session.add(new_result)
 
     # Update highest score on User if higher
-    if user.score is None or score > user.score:
-        user.score = score
+    if user.quiz_score is None or score > user.quiz_score:
+        user.quiz_score = score
 
     db.session.commit()
 
     return jsonify({
         'message': 'Score saved successfully',
-        'highest_score': user.score
+        'highest_score': user.quiz_score
     })
 
 
@@ -445,19 +451,27 @@ def dashboard():
     months = list(signup_dict.keys())
     signups = list(signup_dict.values())
 
-    # Step 2: Score level categorization (your existing logic)
-    high = User.query.filter(User.score >= 50).count()
-    medium = User.query.filter((User.score >= 30) & (User.score < 50)).count()
-    low = User.query.filter((User.score < 30) & (User.score != None)).count()
-    no_score = User.query.filter(User.score == None).count()
+    # PACT Score categorization (max 68)
+    pact_high = User.query.filter(User.pact_score >= 50).count()
+    pact_medium = User.query.filter((User.pact_score >= 30) & (User.pact_score < 50)).count()
+    pact_low = User.query.filter((User.pact_score < 30) & (User.pact_score != None)).count()
+    pact_no_score = User.query.filter(User.pact_score == None).count()
 
-    score_counts = [high, medium, low, no_score]
+    # Quiz Score categorization (max 20)
+    quiz_high = User.query.filter(User.quiz_score >= 15).count()
+    quiz_medium = User.query.filter((User.quiz_score >= 10) & (User.quiz_score < 15)).count()
+    quiz_low = User.query.filter((User.quiz_score < 10) & (User.quiz_score != None)).count()
+    quiz_no_score = User.query.filter(User.quiz_score == None).count()
+
+    pact_score_counts = [pact_high, pact_medium, pact_low, pact_no_score]
+    quiz_score_counts = [quiz_high, quiz_medium, quiz_low, quiz_no_score]
 
     return render_template(
         'dashboard.html',
         months=months,
         signups=signups,
-        score_counts=score_counts,
+        pact_score_counts=pact_score_counts,
+        quiz_score_counts=quiz_score_counts,
         selected_year=year
     )
 
@@ -795,11 +809,11 @@ if __name__ == "__main__":
     with app.app_context():
         db.create_all()
 
-        admin_email = 'admin@example.com'
+        admin_email = 'admin@abc.com'
         admin = User.query.filter_by(email=admin_email).first()
 
         if not admin:
-            hashed_password = generate_password_hash('your_admin_password')  # Change this
+            hashed_password = generate_password_hash('123')  # Change this
             admin = User(name='Admin', email=admin_email, password=hashed_password, role='admin', remark=None)
             db.session.add(admin)
             db.session.commit()

@@ -38,43 +38,90 @@
             </div>
 
         </div>
+        
 
-        <!-- Score Bars Section -->
+
+
+        <!-- PACT Score Bars Section -->
         <div class="scores-section">
-            <h2 class="chart-title">Company Score Levels</h2>
+            <h2 class="chart-title">PACT Score Levels (Max: 68)</h2>
             <div class="score-bars">
                 <div class="score-bar">
                     <div class="score-label">High (50+)</div>
                     <div class="bar-container">
-                        <div class="bar-fill high-bar" id="highBar">0</div>
+                        <div class="bar-fill high-bar" id="pactHighBar">0</div>
                     </div>
-                    <div class="score-count" id="highCount">0</div>
+                    <div class="score-count" id="pactHighCount">0</div>
                 </div>
                 
                 <div class="score-bar">
-                    <div class="score-label">Medium (30-50)</div>
+                    <div class="score-label">Medium (30-49)</div>
                     <div class="bar-container">
-                        <div class="bar-fill medium-bar" id="mediumBar">0</div>
+                        <div class="bar-fill medium-bar" id="pactMediumBar">0</div>
                     </div>
-                    <div class="score-count" id="mediumCount">0</div>
+                    <div class="score-count" id="pactMediumCount">0</div>
                 </div>
                 
                 <div class="score-bar">
-                    <div class="score-label">Low (<30) </div>
+                    <div class="score-label">Low (<30)</div>
                     <div class="bar-container">
-                        <div class="bar-fill low-bar" id="lowBar">0</div>
+                        <div class="bar-fill low-bar" id="pactLowBar">0</div>
                     </div>
-                    <div class="score-count" id="lowCount">0</div>
+                    <div class="score-count" id="pactLowCount">0</div>
                 </div>
 
                 <div class="score-bar">
                     <div class="score-label">No Score Yet</div>
                     <div class="bar-container">
-                        <div class="bar-fill no-score-bar" id="noScoreBar">0</div>
+                        <div class="bar-fill no-score-bar" id="pactNoScoreBar">0</div>
                     </div>
-                    <div class="score-count" id="noScoreCount">0</div>
+                    <div class="score-count" id="pactNoScoreCount">0</div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div style="height: 2rem;"></div>
+
+
+
+        <!-- Quiz Score Bars Section -->
+        <div class="scores-section">
+            <h2 class="chart-title">Quiz Score Levels (Max: 20)</h2>
+            <div class="score-bars">
+                <div class="score-bar">
+                    <div class="score-label">High (15+)</div>
+                    <div class="bar-container">
+                        <div class="bar-fill high-bar" id="quizHighBar">0</div>
+                    </div>
+                    <div class="score-count" id="quizHighCount">0</div>
+                </div>
+                
+                <div class="score-bar">
+                    <div class="score-label">Medium (10-14)</div>
+                    <div class="bar-container">
+                        <div class="bar-fill medium-bar" id="quizMediumBar">0</div>
+                    </div>
+                    <div class="score-count" id="quizMediumCount">0</div>
+                </div>
+                
+                <div class="score-bar">
+                    <div class="score-label">Low (<10)</div>
+                    <div class="bar-container">
+                        <div class="bar-fill low-bar" id="quizLowBar">0</div>
+                    </div>
+                    <div class="score-count" id="quizLowCount">0</div>
                 </div>
 
+                <div class="score-bar">
+                    <div class="score-label">No Score Yet</div>
+                    <div class="bar-container">
+                        <div class="bar-fill no-score-bar" id="quizNoScoreBar">0</div>
+                    </div>
+                    <div class="score-count" id="quizNoScoreCount">0</div>
+                </div>
             </div>
         </div>
 
@@ -94,10 +141,10 @@
         {
         "months": {{ months | tojson }},
         "signups": {{ signups | tojson }},
-        "score_counts": {{ score_counts | tojson }}
+        "pact_score_counts": {{ pact_score_counts | tojson }},
+        "quiz_score_counts": {{ quiz_score_counts | tojson }}
         }
     </script>
 
-    </div>
 </div>
 {% endblock %}

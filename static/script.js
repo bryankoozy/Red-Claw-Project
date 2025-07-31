@@ -149,49 +149,87 @@ window.addEventListener('DOMContentLoaded', () => {
           });
       }
 
-      // Score bars animation
-      const scores = chartData.score_counts;
-      const maxScore = Math.max(...scores);
-      
+      // PACT Score bars animation
+      const pactScores = chartData.pact_score_counts;
+      const maxPactScore = Math.max(...pactScores);
+
+      // Quiz Score bars animation  
+      const quizScores = chartData.quiz_score_counts;
+      const maxQuizScore = Math.max(...quizScores);
+
       setTimeout(() => {
-          // High score bar
-          const highBar = document.getElementById('highBar');
-          const highCount = document.getElementById('highCount');
-          if (highBar && highCount) {
-            const highPercent = (scores[0] / maxScore) * 100;
-            highBar.style.width = `${highPercent}%`;
-            highBar.textContent = scores[0];
-            highCount.textContent = scores[0];
+          // PACT Score Bars
+          const pactHighBar = document.getElementById('pactHighBar');
+          const pactHighCount = document.getElementById('pactHighCount');
+          if (pactHighBar && pactHighCount) {
+            const pactHighPercent = maxPactScore > 0 ? (pactScores[0] / maxPactScore) * 100 : 0;
+            pactHighBar.style.width = `${pactHighPercent}%`;
+            pactHighBar.textContent = pactScores[0];
+            pactHighCount.textContent = pactScores[0];
           }
           
-          // Medium score bar
-          const mediumBar = document.getElementById('mediumBar');
-          const mediumCount = document.getElementById('mediumCount');
-          if (mediumBar && mediumCount) {
-            const mediumPercent = (scores[1] / maxScore) * 100;
-            mediumBar.style.width = `${mediumPercent}%`;
-            mediumBar.textContent = scores[1];
-            mediumCount.textContent = scores[1];
+          const pactMediumBar = document.getElementById('pactMediumBar');
+          const pactMediumCount = document.getElementById('pactMediumCount');
+          if (pactMediumBar && pactMediumCount) {
+            const pactMediumPercent = maxPactScore > 0 ? (pactScores[1] / maxPactScore) * 100 : 0;
+            pactMediumBar.style.width = `${pactMediumPercent}%`;
+            pactMediumBar.textContent = pactScores[1];
+            pactMediumCount.textContent = pactScores[1];
           }
           
-          // Low score bar
-          const lowBar = document.getElementById('lowBar');
-          const lowCount = document.getElementById('lowCount');
-          if (lowBar && lowCount) {
-            const lowPercent = (scores[2] / maxScore) * 100;
-            lowBar.style.width = `${lowPercent}%`;
-            lowBar.textContent = scores[2];
-            lowCount.textContent = scores[2];
+          const pactLowBar = document.getElementById('pactLowBar');
+          const pactLowCount = document.getElementById('pactLowCount');
+          if (pactLowBar && pactLowCount) {
+            const pactLowPercent = maxPactScore > 0 ? (pactScores[2] / maxPactScore) * 100 : 0;
+            pactLowBar.style.width = `${pactLowPercent}%`;
+            pactLowBar.textContent = pactScores[2];
+            pactLowCount.textContent = pactScores[2];
           }
           
-          // No Score Yet
-          const noScoreBar = document.getElementById('noScoreBar');
-          const noScoreCount = document.getElementById('noScoreCount');
-          if (noScoreBar && noScoreCount) {
-            const noScorePercent = (scores[3] / maxScore) * 100;
-            noScoreBar.style.width = `${noScorePercent}%`;
-            noScoreBar.textContent = scores[3];
-            noScoreCount.textContent = scores[3];
+          const pactNoScoreBar = document.getElementById('pactNoScoreBar');
+          const pactNoScoreCount = document.getElementById('pactNoScoreCount');
+          if (pactNoScoreBar && pactNoScoreCount) {
+            const pactNoScorePercent = maxPactScore > 0 ? (pactScores[3] / maxPactScore) * 100 : 0;
+            pactNoScoreBar.style.width = `${pactNoScorePercent}%`;
+            pactNoScoreBar.textContent = pactScores[3];
+            pactNoScoreCount.textContent = pactScores[3];
+          }
+
+          // Quiz Score Bars
+          const quizHighBar = document.getElementById('quizHighBar');
+          const quizHighCount = document.getElementById('quizHighCount');
+          if (quizHighBar && quizHighCount) {
+            const quizHighPercent = maxQuizScore > 0 ? (quizScores[0] / maxQuizScore) * 100 : 0;
+            quizHighBar.style.width = `${quizHighPercent}%`;
+            quizHighBar.textContent = quizScores[0];
+            quizHighCount.textContent = quizScores[0];
+          }
+          
+          const quizMediumBar = document.getElementById('quizMediumBar');
+          const quizMediumCount = document.getElementById('quizMediumCount');
+          if (quizMediumBar && quizMediumCount) {
+            const quizMediumPercent = maxQuizScore > 0 ? (quizScores[1] / maxQuizScore) * 100 : 0;
+            quizMediumBar.style.width = `${quizMediumPercent}%`;
+            quizMediumBar.textContent = quizScores[1];
+            quizMediumCount.textContent = quizScores[1];
+          }
+          
+          const quizLowBar = document.getElementById('quizLowBar');
+          const quizLowCount = document.getElementById('quizLowCount');
+          if (quizLowBar && quizLowCount) {
+            const quizLowPercent = maxQuizScore > 0 ? (quizScores[2] / maxQuizScore) * 100 : 0;
+            quizLowBar.style.width = `${quizLowPercent}%`;
+            quizLowBar.textContent = quizScores[2];
+            quizLowCount.textContent = quizScores[2];
+          }
+          
+          const quizNoScoreBar = document.getElementById('quizNoScoreBar');
+          const quizNoScoreCount = document.getElementById('quizNoScoreCount');
+          if (quizNoScoreBar && quizNoScoreCount) {
+            const quizNoScorePercent = maxQuizScore > 0 ? (quizScores[3] / maxQuizScore) * 100 : 0;
+            quizNoScoreBar.style.width = `${quizNoScorePercent}%`;
+            quizNoScoreBar.textContent = quizScores[3];
+            quizNoScoreCount.textContent = quizScores[3];
           }
       }, 500);
   }

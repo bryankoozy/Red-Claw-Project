@@ -16,7 +16,8 @@
           <th>Name</th>
           <th>Email</th>
           <th>Role</th>
-          <th>Score</th>
+          <th>PACT Score</th>
+          <th>Quiz Score</th>
           <th>Joined</th>
           <th>Remarks</th>
           <th>Support Messages</th>
@@ -29,13 +30,22 @@
           <td data-label="Name">{{ user.name }}</td>
           <td data-label="Email">{{ user.email }}</td>
           <td data-label="Role">{{ user.role }}</td>
-          <td data-label="Score">
-            {% if user.score is not none %}
-              {{ user.score }}
+
+          <td data-label="PACT Score">
+            {% if user.pact_score is not none %}
+              {{ user.pact_score }}/68
             {% else %}
               <span class="text-muted">N/A</span>
             {% endif %}
           </td>
+          <td data-label="Quiz Score">
+            {% if user.quiz_score is not none %}
+              {{ user.quiz_score }}/20
+            {% else %}
+              <span class="text-muted">N/A</span>
+            {% endif %}
+          </td>
+          
           <td data-label="Joined">{{ user.created_at.strftime('%d %b %Y %H:%M') }}</td>
           <td data-label="Remarks">
             {% if user.remarks %}

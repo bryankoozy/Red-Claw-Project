@@ -12,7 +12,8 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
     role = db.Column(db.String(20), default='employee')  
-    score = db.Column(db.Integer, default=None)
+    pact_score = db.Column(db.Integer, default=None)
+    quiz_score = db.Column(db.Integer, default=None)    
     remark = db.Column(db.Text, default=None)  
     created_at = db.Column(db.DateTime, default=datetime.now)  
     
@@ -125,7 +126,7 @@ class PactAssessment(db.Model):
                     continue
 
         self.total_score = total
-        self.percentage_score = (total / (count * 4)) * 100 if count > 0 else 0
+        self.percentage_score = (total / 68) * 100 if total > 0 else 0
 
     def get_section_scores(self):
         try:
